@@ -29,15 +29,21 @@ try:
     conn = st.connection("gsheets", type=GSheetsConnection)
     user_df = conn.read(ttl=0) 
     
-    # Khắc phục lỗi KeyError: Đọc dữ liệu theo thứ tự cột của Google Form
-    # Cột số 1 là Tên đăng nhập, Cột số 2 là Mật khẩu (Cột 0 là Dấu thời gian)
-    if len(user_df.columns) >= 3:
+    # Khắc phục lỗi KeyError và bổ sung Cột số 3 (Email)
+    if len(user_df.columns) >= 4:
+        # Tạo từ điển Đăng nhập (Tên -> Mật khẩu)
         user_db = dict(zip(user_df.iloc[:, 1].astype(str), user_df.iloc[:, 2].astype(str)))
+        # Tạo từ điển Khôi phục (Email -> Mật khẩu)
+        email_db = dict(zip(user_df.iloc[:, 3].astype(str).str.strip(), user_df.iloc[:, 2].astype(str)))
+    elif len(user_df.columns) >= 3:
+        user_db = dict(zip(user_df.iloc[:, 1].astype(str), user_df.iloc[:, 2].astype(str)))
+        email_db = {}
     else:
         user_db = {}
+        email_db = {}
 except Exception as e:
     user_db = {}
-
+    email_db = {}
 # Khởi tạo trạng thái
 if 'is_logged_in' not in st.session_state:
     st.session_state.is_logged_in = False
