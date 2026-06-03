@@ -1,42 +1,42 @@
 import streamlit as st
 from streamlit_gsheets import GSheetsConnection
 import pandas as pd
+import streamlit.components.v1 as components
 
-# Cấu hình trang web
 st.set_page_config(page_title="Cổng Học Tập Toán Học THCS", layout="wide")
 
 # ==========================================
-# KHỞI TẠO KẾT NỐI GOOGLE SHEETS
+# ĐỌC DỮ LIỆU TỪ GOOGLE SHEETS
 # ==========================================
 try:
     conn = st.connection("gsheets", type=GSheetsConnection)
     user_df = conn.read(ttl=0) 
+    
+    # Khắc phục lỗi KeyError: Đọc dữ liệu theo thứ tự cột của Google Form
+    # Cột số 1 là Tên đăng nhập, Cột số 2 là Mật khẩu (Cột 0 là Dấu thời gian)
+    if len(user_df.columns) >= 3:
+        user_db = dict(zip(user_df.iloc[:, 1].astype(str), user_df.iloc[:, 2].astype(str)))
+    else:
+        user_db = {}
 except Exception as e:
-    st.error(f"Hệ thống báo lỗi chi tiết: {e}")
-    user_df = pd.DataFrame(columns=["username", "password"])
-    user_df = pd.DataFrame(columns=["username", "password"])
+    user_db = {}
 
-# Chuyển đổi bảng dữ liệu thành từ điển để dễ kiểm tra đăng nhập
-user_db = dict(zip(user_df['username'].astype(str), user_df['password'].astype(str)))
-
-# Khởi tạo trạng thái đăng nhập trong phiên làm việc
+# Khởi tạo trạng thái
 if 'is_logged_in' not in st.session_state:
     st.session_state.is_logged_in = False
 if 'current_user' not in st.session_state:
     st.session_state.current_user = ""
-if 'passed_lessons' not in st.session_state:
-    st.session_state.passed_lessons = set()
 
 # ==========================================
 # GIAO DIỆN ĐĂNG NHẬP / ĐĂNG KÝ
 # ==========================================
 if not st.session_state.is_logged_in:
     st.title("📐 CỔNG HỌC TẬP TOÁN HỌC TRỰC TUYẾN")
-    st.write("Vui lòng đăng nhập để vào hệ thống bài học.")
     
     tab_login, tab_register = st.tabs(["🔐 Đăng nhập", "📝 Đăng ký tài khoản"])
     
     with tab_login:
+        st.write("Vui lòng đăng nhập để vào hệ thống bài học.")
         with st.form("login_form"):
             username = st.text_input("Tên đăng nhập")
             password = st.text_input("Mật khẩu", type="password")
@@ -49,33 +49,19 @@ if not st.session_state.is_logged_in:
                     st.success(f"Đăng nhập thành công! Xin chào {username}.")
                     st.rerun()
                 else:
-                    st.error("Tên đăng nhập hoặc mật khẩu không chính xác.")
+                    st.error("Sai thông tin! Nếu bạn vừa đăng ký, vui lòng đợi 5 giây để hệ thống đồng bộ rồi bấm Đăng nhập lại.")
                     
     with tab_register:
-        with st.form("register_form"):
-            new_username = st.text_input("Tạo tên đăng nhập")
-            new_password = st.text_input("Tạo mật khẩu", type="password")
-            confirm_password = st.text_input("Xác nhận mật khẩu", type="password")
-            btn_register = st.form_submit_button("Đăng ký hoàn tất")
-            
-            if btn_register:
-                if not new_username or not new_password:
-                    st.warning("Vui lòng điền đầy đủ thông tin.")
-                elif new_username in user_db:
-                    st.error("Tên đăng nhập này đã tồn tại trên hệ thống.")
-                elif new_password != confirm_password:
-                    st.error("Mật khẩu xác nhận không khớp.")
-                else:
-                    # Tạo dòng dữ liệu mới và thêm vào file Google Sheets
-                    new_data = pd.DataFrame([{"username": new_username, "password": new_password}])
-                    updated_df = pd.concat([user_df, new_data], ignore_index=True)
-                    
-                    # Ghi đè bảng tính đã cập nhật lên Google Sheets
-                    conn.update(data=updated_df)
-                    st.success("🎉 Đăng ký thành công! Thông tin của bạn đã được lưu vĩnh viễn. Hãy chuyển sang tab Đăng nhập.")
+        st.write("Vui lòng điền thông tin vào biểu mẫu dưới đây để tạo tài khoản mới.")
+        
+        # BẠN HÃY DÁN LINK GOOGLE FORM (TỪ BIỂU TƯỢNG CON MẮT) VÀO TRONG DẤU NGOẶC KÉP DƯỚI ĐÂY:
+        link_form = "https://docs.google.com/forms/d/e/1FAIpQLScwFF84a5b7-QdhmQrTgpUczUfbgkczoa7rjeIj7v8pVe9cKw/viewform?usp=preview"
+        
+        components.iframe(link_form, height=700, scrolling=True)
+        st.info("💡 Lưu ý: Sau khi điền Form và bấm Gửi, hãy chuyển sang tab 'Đăng nhập' để vào học nhé!")
 
 # ==========================================
-# GIAO DIỆN CHÍNH (SAU KHI ĐĂNG NHẬP THÀNH CÔNG)
+# GIAO DIỆN CHÍNH
 # ==========================================
 else:
     st.sidebar.title("🗂️ DANH MỤC MÔN HỌC")
@@ -89,9 +75,4 @@ else:
         st.rerun()
 
     st.title(f"📚 Hệ Thống Bài Học - {grade_selection}")
-    st.write(f"Chào mừng bạn đến với không gian học tập trực tuyến.")
-    
-    if grade_selection == "Toán 9":
-        st.header("Chương 1: Phương trình và hệ phương trình bậc nhất")
-        st.subheader("📖 Bài 1: Khái niệm về phương trình bậc nhất hai ẩn")
-        st.markdown("Nội dung bài học và công thức toán dạng LaTeX: $ax + by = c$")
+    st.write("Chúc mừng bạn đã đăng nhập thành công vào hệ thống học tập!")
