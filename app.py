@@ -140,7 +140,13 @@ else:
             if bai_hoc_selection == "Bài 1. Tập hợp":
                 tab_ly_thuyet, tab_bai_tap, tab_mo_rong = st.tabs(["📚 Lý thuyết bài học", "✍️ Luyện tập & Bài tập", "💡 Em có biết?"])
                 
-                with tab_ly_thuyet:
+                    with tab_ly_thuyet:
+                    # KHU VỰC VIDEO BÀI GIẢNG
+                    st.markdown("**🎥 Video bài giảng trực tuyến**")
+                    # Bạn hãy xóa link youtube ví dụ dưới đây và dán link video của bạn vào (giữ nguyên dấu ngoặc kép):
+                    st.video("https://youtu.be/beV0JRiJLvQ")
+                    st.markdown("---")
+                    
                     st.subheader("1. Tập hợp và phần tử của tập hợp")
                     st.write("Một **tập hợp** (gọi tắt là **tập**) bao gồm những đối tượng nhất định. Các đối tượng ấy được gọi là những **phần tử** của tập hợp.")
                     
