@@ -10,10 +10,10 @@ st.set_page_config(page_title="Cổng Học Tập Toán Học THCS", layout="wid
 # ==========================================
 try:
     conn = st.connection("gsheets", type=GSheetsConnection)
-    # Đọc dữ liệu tài khoản từ Google Sheets
-    user_df = conn.read(ttl=0) # ttl=0 để luôn cập nhật dữ liệu mới nhất
+    user_df = conn.read(ttl=0) 
 except Exception as e:
-    st.error("Chưa cấu hình kết nối Google Sheets. Vui lòng hoàn thành Bước 4.")
+    st.error(f"Hệ thống báo lỗi chi tiết: {e}")
+    user_df = pd.DataFrame(columns=["username", "password"])
     user_df = pd.DataFrame(columns=["username", "password"])
 
 # Chuyển đổi bảng dữ liệu thành từ điển để dễ kiểm tra đăng nhập
