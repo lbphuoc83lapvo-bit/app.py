@@ -25,7 +25,8 @@ st.markdown("---")
 try:
     conn = st.connection("gsheets", type=GSheetsConnection)
     # Đọc đích danh tab mới tạo
-    user_df = conn.read(worksheet="Câu trả lời biểu mẫu 1", ttl=0) 
+    # Tự động đọc tab đầu tiên
+    user_df = conn.read(ttl=0) 
     
     # Lọc bỏ dòng trống
     user_df = user_df.dropna(subset=[user_df.columns[1], user_df.columns[2], user_df.columns[3]], how='all')
