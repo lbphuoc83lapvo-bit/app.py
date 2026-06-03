@@ -1,96 +1,133 @@
 import streamlit as st
 
 # Cấu hình trang web
-st.set_page_config(page_title="Web App Học Tập Toán Học", layout="centered")
-
-# 1. KHỞI TẠO TRẠNG THÁI (Ghi nhớ tiến độ của học sinh)
-if 'lesson_1_passed' not in st.session_state:
-    st.session_state.lesson_1_passed = False
-if 'score_lesson_1' not in st.session_state:
-    st.session_state.score_lesson_1 = 0
-
-st.title("📐 CỔNG HỌC TẬP TOÁN HỌC TRỰC TUYẾN")
-st.write("Hãy hoàn thành từng bài học và đạt từ 5 điểm trở lên để mở khóa bài tiếp theo.")
+st.set_page_config(page_title="Cổng Học Tập Toán Học THCS", layout="wide")
 
 # ==========================================
-# BÀI HỌC 1: ĐẠI SỐ
+# 1. KHỞI TẠO BỘ NHỚ TẠM (SESSION STATE)
 # ==========================================
-st.header("📖 Bài 1: Khái niệm về Phương trình bậc nhất")
+# Khởi tạo danh sách tài khoản mẫu (Tên đăng nhập: hocsinh, Mật khẩu: 123)
+if 'user_db' not in st.session_state:
+    st.session_state.user_db = {"hocsinh": "123"}
 
-# Phần 1: Video bài giảng
-st.subheader("1. Video bài giảng")
-# Thay đường dẫn video bằng link YouTube bài giảng của bạn
-st.video("https://www.youtube.com/watch?v=dQw4w9WgXcQ") 
+# Khởi tạo trạng thái đăng nhập
+if 'is_logged_in' not in st.session_state:
+    st.session_state.is_logged_in = False
+if 'current_user' not in st.session_state:
+    st.session_state.current_user = ""
 
-# Phần 2: Tài liệu đọc (Hỗ trợ công thức LaTeX)
-st.subheader("2. Tài liệu tóm tắt lý thuyết")
-st.markdown("""
-Phương trình bậc nhất một ẩn là phương trình có dạng:
-$$ax + b = 0$$
-Trong đó:
-- $a$ và $b$ là hai số đã biết ($a \neq 0$).
-- $x$ là ẩn số.
-
-**Ví dụ:** Giải phương trình $2x - 4 = 0$
-$$\Leftrightarrow 2x = 4 \Leftrightarrow x = 2$$
-""")
-
-# Phần 3: Bài tập trắc nghiệm sau bài học
-st.subheader("3. Bài tập đánh giá năng lực")
-
-with st.form(key='quiz_lesson_1'):
-    st.write("Chọn đáp án đúng cho các câu hỏi sau (Mỗi câu đúng được 5 điểm):")
-    
-    # Câu hỏi 1
-    q1 = st.radio(
-        "**Câu 1:** Phương trình nào sau đây là phương trình bậc nhất một ẩn?",
-        ["a) $0x + 3 = 0$", "b) $2x^2 - 1 = 0$", "c) $3x - 5 = 0$", "d) $\frac{1}{x} + 2 = 0$"]
-    )
-    
-    # Câu hỏi 2
-    q2 = st.radio(
-        "**Câu 2:** Nghiệm của phương trình $5x + 10 = 0$ là:",
-        ["a) $x = 2$", "b) $x = -2$", "c) $x = 5$", "d) $x = -5$"]
-    )
-    
-    submit_button = st.form_submit_button(label='Nộp bài kiểm tra')
-
-# Xử lý kết quả khi học sinh bấm nộp bài
-if submit_button:
-    score = 0
-    # Chấm câu 1 (Đáp án đúng là c)
-    if "c)" in q1:
-        score += 5
-    # Chấm câu 2 (Đáp án đúng là b)
-    if "b)" in q2:
-        score += 5
-        
-    st.session_state.score_lesson_1 = score
-    
-    if score >= 5:
-        st.session_state.lesson_1_passed = True
-        st.success(f"🎉 Chúc mừng! Bạn đạt {score}/10 điểm. Bài học tiếp theo đã được mở khóa!")
-    else:
-        st.session_state.lesson_1_passed = False
-        st.error(f"❌ Bạn đạt {score}/10 điểm. Bạn cần đạt từ 5 điểm trở lên để tiếp tục. Hãy xem lại video và làm lại bài!")
+# Khởi tạo tiến độ học tập cho tài khoản hiện tại
+if 'passed_lessons' not in st.session_state:
+    st.session_state.passed_lessons = set()
 
 # ==========================================
-# BÀI HỌC 2: TỰ ĐỘNG KHÓA/MỞ
+# 2. GIAO DIỆN ĐĂNG NHẬP / ĐĂNG KÝ
 # ==========================================
-st.markdown("---")
-st.header("🔒 Bài 2: Hệ hai phương trình bậc nhất hai ẩn")
-
-if st.session_state.lesson_1_passed:
-    st.info("🔓 Bài học này đã được mở khóa thành công!")
-    st.subheader("1. Video bài giảng Bài 2")
-    st.video("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+if not st.session_state.is_logged_in:
+    st.title("📐 CỔNG HỌC TẬP TOÁN HỌC TRỰC TUYẾN")
+    st.write("Vui lòng đăng nhập để vào hệ thống bài học.")
     
-    st.subheader("2. Lý thuyết trọng tâm")
-    st.markdown("""
-    Hệ hai phương trình bậc nhất hai ẩn có dạng tổng quát:
-    $$\\begin{cases} ax + by = c \\\\ a'x + b'y = c' \\end{cases}$$
-    Bạn có thể dùng phương pháp thế hoặc phương pháp cộng đại số để giải hệ phương trình này.
-    """)
-    # Bạn có thể tiếp tục thêm form bài tập cho Bài 2 tại đây...
+    # Tạo 2 tab: Đăng nhập và Đăng ký
+    tab_login, tab_register = st.tabs(["🔐 Đăng nhập", "📝 Đăng ký tài khoản"])
+    
+    with tab_login:
+        with st.form("login_form"):
+            username = st.text_input("Tên đăng nhập")
+            password = st.text_input("Mật khẩu", type="password")
+            btn_login = st.form_submit_button("Đăng nhập")
+            
+            if btn_login:
+                if username in st.session_state.user_db and st.session_state.user_db[username] == password:
+                    st.session_state.is_logged_in = True
+                    st.session_state.current_user = username
+                    st.success(f"Đăng nhập thành công! Xin chào {username}.")
+                    st.rerun()
+                else:
+                    st.error("Tên đăng nhập hoặc mật khẩu không chính xác.")
+                    
+    with tab_register:
+        with st.form("register_form"):
+            new_username = st.text_input("Tạo tên đăng nhập")
+            new_password = st.text_input("Tạo mật khẩu", type="password")
+            confirm_password = st.text_input("Xác nhận mật khẩu", type="password")
+            btn_register = st.form_submit_button("Đăng ký")
+            
+            if btn_register:
+                if not new_username or not new_password:
+                    st.warning("Vui lòng điền đầy đủ thông tin.")
+                elif new_username in st.session_state.user_db:
+                    st.error("Tên đăng nhập này đã tồn tại.")
+                elif new_password != confirm_password:
+                    st.error("Mật khẩu xác nhận không khớp.")
+                else:
+                    st.session_state.user_db[new_username] = new_password
+                    st.success("Đăng ký thành công! Hãy chuyển sang tab Đăng nhập.")
+
+# ==========================================
+# 3. GIAO DIỆN CHÍNH (SAU KHI ĐĂNG NHẬP)
+# ==========================================
 else:
-    st.warning("Bài học này đang bị khóa. Bạn cần hoàn thành Bài tập 1 với số điểm $\ge 5$ để mở khóa.")
+    # --- THANH ĐIỀU HƯỚNG BÊN TRÁI (SIDEBAR) ---
+    st.sidebar.title("🗂️ DANH MỤC MÔN HỌC")
+    
+    # 4 danh mục khối lớp cho học sinh lựa chọn
+    grade_selection = st.sidebar.radio(
+        "Chọn khối lớp của bạn:",
+        ["Toán 6", "Toán 7", "Toán 8", "Toán 9"]
+    )
+    
+    st.sidebar.markdown("---")
+    st.sidebar.write(f"👤 Tài khoản: **{st.session_state.current_user}**")
+    
+    # Nút đăng xuất
+    if st.sidebar.button("Đăng xuất"):
+        st.session_state.is_logged_in = False
+        st.session_state.current_user = ""
+        st.rerun()
+
+    # --- NỘI DUNG HIỂN THỊ THEO KHỐI LỚP ---
+    st.title(f"📚 Hệ Thống Bài Học - {grade_selection}")
+    st.write(f"Chào mừng bạn đến với không gian học tập của lớp {grade_selection[-1]}.")
+
+    if grade_selection == "Toán 6":
+        st.header("Chương 1: Số tự nhiên")
+        st.write("Nội dung bài học, video và bài tập trắc nghiệm Toán 6 sẽ được cập nhật tại đây.")
+        
+    elif grade_selection == "Toán 7":
+        st.header("Chương 1: Số hữu tỉ")
+        st.write("Nội dung bài học, video và bài tập trắc nghiệm Toán 7 sẽ được cập nhật tại đây.")
+        
+    elif grade_selection == "Toán 8":
+        st.header("Chương 1: Đa thức")
+        
+        # Ví dụ mẫu về cấu trúc Mastery Learning (Khóa/Mở bài cũ)
+        st.subheader("📖 Bài 1: Đơn thức và đa thức nhiều biến")
+        st.video("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+        
+        st.markdown("""
+        Biểu thức toán học hiển thị chuẩn mã LaTeX:
+        $$A = 2x^2y + 3xy^2 - 5$$
+        """)
+        
+        with st.form("quiz_t8_b1"):
+            q1 = st.radio("Đâu là đơn thức?", ["A) $2x + y$", "B) $3x^2y$", "C) $\frac{x}{y}$"])
+            submit_q = st.form_submit_button("Nộp bài")
+            
+            if submit_q:
+                if "B)" in q1:
+                    st.session_state.passed_lessons.add("t8_b1")
+                    st.success("🎉 Xuất sắc! Bạn được 10/10 điểm. Bài tiếp theo đã được mở khóa.")
+                else:
+                    st.error("❌ Kết quả chưa đạt 5 điểm. Vui lòng ôn lại lý thuyết và làm lại.")
+                    
+        st.markdown("---")
+        st.subheader("🔒 Bài 2: Các phép tính với đa thức")
+        if "t8_b1" in st.session_state.passed_lessons:
+            st.info("🔓 Bài học đã mở khóa!")
+            st.write("Nội dung chi tiết của Bài 2...")
+        else:
+            st.warning("Bài học này đang khóa. Bạn cần vượt qua bài tập trắc nghiệm Bài 1 với số điểm $\ge 5$ để mở khóa.")
+
+    elif grade_selection == "Toán 9":
+        st.header("Chương 1: Phương trình và hệ phương trình bậc nhất")
+        st.write("Nội dung bài học, video và bài tập trắc nghiệm Toán 9 sẽ được cập nhật tại đây.")
