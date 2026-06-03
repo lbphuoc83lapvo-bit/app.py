@@ -87,8 +87,6 @@ if not st.session_state.is_logged_in:
                 # =========================================================
                 # LƯU Ý CHO THẦY/CÔ: 
                 # Tại đây, hệ thống sẽ chạy giả định để bạn test giao diện.
-                # Khi nào tích hợp Form đăng ký thực tế có chứa Email, 
-                # chúng ta sẽ kết nối Google Sheets vào đoạn này sau.
                 email_ton_tai = True 
                 mat_khau_cua_hs = "123456" 
                 # =========================================================
@@ -116,13 +114,12 @@ if not st.session_state.is_logged_in:
                         server.quit()
                         
                         st.success("✅ Gửi thành công! Em hãy kiểm tra hộp thư đến (hoặc Thư rác/Spam) nhé.")
-                   except Exception as e:
-                        st.error(f"❌ Lỗi chi tiết: {e}")
+                    except Exception as e:
+                        st.error(f"❌ Lỗi chi tiết hệ thống báo về: {e}")
                 else:
                     st.error("⚠️ Email này chưa được đăng ký trong hệ thống!")
             else:
                 st.warning("Em chưa nhập địa chỉ email.")
-
 # ==========================================
 # GIAO DIỆN CHÍNH
 # ==========================================
