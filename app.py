@@ -75,13 +75,24 @@ if not st.session_state.is_logged_in:
             btn_login = st.form_submit_button("Đăng nhập")
             
             if btn_login:
-                if username in user_db and user_db[username] == password:
-                    st.session_state.is_logged_in = True
-                    st.session_state.current_user = username
-                    st.success(f"Đăng nhập thành công! Xin chào {username}.")
-                    st.rerun()
+                _user = username.strip()
+                _pass = password.strip()
+                
+                if _user == "":
+                    st.warning("Vui lòng nhập tên đăng nhập!")
+                elif _user not in user_db:
+                    st.error(f"❌ Tài khoản '{_user}' chưa xuất hiện trong dữ liệu trang web!")
+                    st.info(f"🔍 Các tài khoản web đang đọc được là: {list(user_db.keys())}")
+                    st.write("💡 Gợi ý: Hãy kiểm tra xem file Google Sheets đã có tài khoản này chưa, hoặc bấm dấu 3 chấm góc phải trên cùng -> 'Clear cache' để web cập nhật dữ liệu mới nhất.")
+                elif str(user_db[_user]) != _pass:
+                    st.error("❌ Mật khẩu không khớp!")
+                    st.info(f"🔍 Trang web đang đọc được mật khẩu của em ở Cột số 2 là: '{user_db[_user]}'")
+                    st.write("💡 Gợi ý: Thầy/Cô hãy mở Google Sheets, kiểm tra xem Cột số 2 (Cột C) có đúng là cột Mật khẩu không, hay đang bị xếp nhầm thành cột Email nhé.")
                 else:
-                    st.error("Sai thông tin! Nếu bạn vừa đăng ký, vui lòng đợi 5 giây để hệ thống đồng bộ rồi bấm Đăng nhập lại.")
+                    st.session_state.is_logged_in = True
+                    st.session_state.current_user = _user
+                    st.success(f"Đăng nhập thành công! Xin chào {_user}.")
+                    st.rerun()
                     
     with tab_register:
         st.write("Vui lòng điền thông tin vào biểu mẫu dưới đây để tạo tài khoản mới.")
