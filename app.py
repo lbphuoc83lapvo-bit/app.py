@@ -116,8 +116,8 @@ if not st.session_state.is_logged_in:
                         server.quit()
                         
                         st.success("✅ Gửi thành công! Em hãy kiểm tra hộp thư đến (hoặc Thư rác/Spam) nhé.")
-                    except Exception as e:
-                        st.error("❌ Có lỗi xảy ra trong quá trình gửi mail. Vui lòng thử lại sau.")
+                   except Exception as e:
+                        st.error(f"❌ Lỗi chi tiết: {e}")
                 else:
                     st.error("⚠️ Email này chưa được đăng ký trong hệ thống!")
             else:
