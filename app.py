@@ -6,6 +6,20 @@ import streamlit.components.v1 as components
 st.set_page_config(page_title="Cổng Học Tập Toán Học THCS", layout="wide")
 
 # ==========================================
+# HIỂN THỊ BANNER CHÍNH (THÊM MỚI TẠI ĐÂY)
+# ==========================================
+# BẠN HÃY DÁN ĐƯỜNG LINK ẢNH BANNER CÔNG KHAI CỦA BẠN VÀO TRONG DẤU NGOẶC KÉP:
+# (Ví dụ: "https://raw.githubusercontent.com/user/repo/main/banner.png")
+link_banner_anh = "https://raw.githubusercontent.com/lbphuoc83lapvo-bit/app.py/main/Back-to-School%20Math%20Educational%20Banner.png"
+
+# Dùng cột để căn chỉnh Banner ra giữa trang (tùy chỉnh tỷ lệ 1:4:1)
+col1, col_banner, col3 = st.columns([1, 4, 1])
+with col_banner:
+    # Hiển thị ảnh Banner, tự động điều chỉnh độ rộng theo màn hình
+    st.image(link_banner_anh, use_column_width=True)
+
+st.markdown("---") # Đường kẻ ngang phân cách
+# ==========================================
 # ĐỌC DỮ LIỆU TỪ GOOGLE SHEETS
 # ==========================================
 try:
