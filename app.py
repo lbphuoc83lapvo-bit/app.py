@@ -275,7 +275,7 @@ else:
                         if q9 == r"$K = \{4; 6; 9; 11\}$": diem += 1
                         if q10 == "Tất cả đều đúng": diem += 1
                         
-                       if diem >= 7:
+                        if diem >= 7:
                             st.success(f"🎉 TUYỆT VỜI! Em đạt **{diem}/10** điểm. Bài học số 2 đã được mở khóa!")
                             st.balloons()
                             # Lưu trạng thái hoàn thành vào bộ nhớ tạm
