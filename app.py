@@ -25,16 +25,16 @@ st.markdown("---") # Đường kẻ ngang phân cách
 # ==========================================
 # ĐỌC DỮ LIỆU TỪ GOOGLE SHEETS
 # ==========================================
+# ==========================================
+# ĐỌC DỮ LIỆU TỪ GOOGLE SHEETS
+# ==========================================
 try:
     conn = st.connection("gsheets", type=GSheetsConnection)
-    # Lệnh mới: Chỉ định đích danh tên tab chứa dữ liệu mới nhất
-    user_df = conn.read(worksheet="Câu trả lời biểu mẫu 2", ttl=0) 
-    
-    # Loại bỏ các dòng trống (NaN) nếu có
-    user_df = user_df.dropna(subset=[user_df.columns[1], user_df.columns[2]])
+    # Xóa phần gọi tên, để hệ thống tự động đọc tab ngoài cùng bên trái
+    user_df = conn.read(ttl=0) 
     
     if len(user_df.columns) >= 4:
-        # Lấy dữ liệu và tự động cắt bỏ mọi khoảng trắng thừa (cả đầu và cuối)
+        # Lấy dữ liệu và gọt sạch khoảng trắng thừa
         ten_dang_nhap = user_df.iloc[:, 1].astype(str).str.strip()
         mat_khau = user_df.iloc[:, 2].astype(str).str.strip()
         email_hs = user_df.iloc[:, 3].astype(str).str.strip()
@@ -51,6 +51,7 @@ try:
         user_db = {}
         email_db = {}
 except Exception as e:
+    st.error(f"⚠️ Lỗi lúc chui vào Google Sheets đọc dữ liệu: {e}")
     user_db = {}
     email_db = {}
 # Khởi tạo trạng thái
