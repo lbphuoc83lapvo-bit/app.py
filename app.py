@@ -115,9 +115,55 @@ else:
     st.title(f"📚 Hệ Thống Bài Học - {grade_selection}")
     
     if grade_selection == "Toán 6" and chapter_selection:
-        st.subheader(chapter_selection)
-        st.info("Khu vực này sẽ hiển thị lý thuyết, công thức Toán học, bài tập trắc nghiệm và trò chơi tương tác của chương.")
-        # Ví dụ một công thức Toán học hiển thị sẵn sàng:
-        # st.latex(r"A = \{x \in \mathbb{N} \mid x < 10\}")
-    else:
-        st.write("Vui lòng chọn chương học trên thanh điều hướng bên trái để bắt đầu bài học.")
+        if chapter_selection == "Chương 1: TẬP HỢP CÁC SỐ TỰ NHIÊN":
+            st.header("CHƯƠNG 1: TẬP HỢP CÁC SỐ TỰ NHIÊN")
+            
+            # Danh sách các bài học dựa trên mục lục SGK
+            danh_sach_bai = [
+                "Bài 1. Tập hợp",
+                "Bài 2. Cách ghi số tự nhiên",
+                "Bài 3. Thứ tự trong tập hợp các số tự nhiên",
+                "Bài 4. Phép cộng và phép trừ số tự nhiên",
+                "Bài 5. Phép nhân và phép chia số tự nhiên",
+                "Luyện tập chung (trang 20)",
+                "Bài 6. Luỹ thừa với số mũ tự nhiên",
+                "Bài 7. Thứ tự thực hiện các phép tính",
+                "Luyện tập chung (trang 27)",
+                "Bài tập cuối chương I"
+            ]
+            
+            # Tạo hộp thoại chọn bài học
+            bai_hoc_selection = st.selectbox("📌 Chọn bài học:", danh_sach_bai)
+            st.markdown("---") # Đường kẻ ngang phân cách
+            
+            # Cấu trúc nội dung cho từng bài
+            if bai_hoc_selection == "Bài 1. Tập hợp":
+                tab_ly_thuyet, tab_bai_tap = st.tabs(["📚 Lý thuyết", "✍️ Bài tập trắc nghiệm"])
+                
+                with tab_ly_thuyet:
+                    st.subheader("Tập hợp. Phần tử của tập hợp")
+                    st.markdown("**1. Ký hiệu và cách viết:**")
+                    st.write("Người ta thường đặt tên tập hợp bằng chữ cái in hoa: $A, B, C, X, Y...$")
+                    st.write("Ví dụ: Gọi $A$ là tập hợp các số tự nhiên nhỏ hơn 5. Ta có thể viết:")
+                    st.latex(r"A = \{0; 1; 2; 3; 4\}")
+                    st.write("Các số $0, 1, 2, 3, 4$ được gọi là các **phần tử** của tập hợp $A$.")
+                    
+                    st.markdown("**2. Quan hệ thuộc và không thuộc:**")
+                    st.write("- Ký hiệu $\in$ (thuộc): $3 \in A$ (Đọc là: 3 thuộc tập hợp A)")
+                    st.write("- Ký hiệu $\notin$ (không thuộc): $7 \notin A$ (Đọc là: 7 không thuộc tập hợp A)")
+                    
+                    st.markdown("**3. Hai cách cho một tập hợp:**")
+                    st.write("- **Cách 1:** Liệt kê các phần tử của tập hợp.")
+                    st.write("- **Cách 2:** Chỉ ra tính chất đặc trưng cho các phần tử của tập hợp đó.")
+                    st.latex(r"A = \{x \in \mathbb{N} \mid x < 5\}")
+                    
+                with tab_bai_tap:
+                    st.subheader("Kiểm tra kiến thức nhanh")
+                    st.info("Khu vực này sẽ chứa các câu hỏi trắc nghiệm tự động chấm điểm để học sinh luyện tập ngay sau khi học lý thuyết.")
+            
+            else:
+                st.info(f"Giao diện chuẩn bị nội dung cho **{bai_hoc_selection}** đã sẵn sàng. Các em học sinh hãy đón chờ nhé!")
+                
+        else:
+            st.subheader(chapter_selection)
+            st.write("Nội dung chương này đang được biên soạn và sẽ sớm cập nhật. Các em đón chờ nhé!")
