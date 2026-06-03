@@ -55,7 +55,7 @@ if not st.session_state.is_logged_in:
         st.write("Vui lòng điền thông tin vào biểu mẫu dưới đây để tạo tài khoản mới.")
         
         # BẠN HÃY DÁN LINK GOOGLE FORM (TỪ BIỂU TƯỢNG CON MẮT) VÀO TRONG DẤU NGOẶC KÉP DƯỚI ĐÂY:
-        link_form = "https://docs.google.com/forms/d/e/1FAIpQLScwFF84a5b7-QdhmQrTgpUczUfbgkczoa7rjeIj7v8pVe9cKw/viewform?usp=preview"
+        link_form = "https://docs.google.com/forms/d/e/1FAIpQLSeliSANMx280l6avDFe_NIrpXd2GUWC6ABE39su37JCZqYYRQ/viewform?usp=publish-editor"
         
         components.iframe(link_form, height=700, scrolling=True)
         st.info("💡 Lưu ý: Sau khi điền Form và bấm Gửi, hãy chuyển sang tab 'Đăng nhập' để vào học nhé!")
