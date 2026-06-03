@@ -2,6 +2,9 @@ import streamlit as st
 from streamlit_gsheets import GSheetsConnection
 import pandas as pd
 import streamlit.components.v1 as components
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 st.set_page_config(page_title="Cổng Học Tập Toán Học THCS", layout="wide")
 
@@ -47,7 +50,7 @@ if 'current_user' not in st.session_state:
 if not st.session_state.is_logged_in:
     st.title("📐 CỔNG HỌC TẬP TOÁN HỌC TRỰC TUYẾN")
     
-    tab_login, tab_register = st.tabs(["🔐 Đăng nhập", "📝 Đăng ký tài khoản"])
+    tab_login, tab_register, tab_quen_mk = st.tabs(["🔐 Đăng nhập", "📝 Đăng ký tài khoản", "🔑 Quên mật khẩu"])
     
     with tab_login:
         st.write("Vui lòng đăng nhập để vào hệ thống bài học.")
@@ -67,6 +70,52 @@ if not st.session_state.is_logged_in:
                     
     with tab_register:
         st.write("Vui lòng điền thông tin vào biểu mẫu dưới đây để tạo tài khoản mới.")
+    with tab_quen_mk:
+        st.subheader("Khôi phục mật khẩu")
+        st.write("Em hãy nhập email đã dùng để đăng ký tài khoản.")
+        
+        email_khoi_phuc = st.text_input("📧 Nhập Email của em:")
+        
+        if st.button("Gửi mật khẩu"):
+            if email_khoi_phuc:
+                # =========================================================
+                # LƯU Ý CHO THẦY/CÔ: 
+                # Tại đây, hệ thống sẽ chạy giả định để bạn test giao diện.
+                # Khi nào tích hợp Form đăng ký thực tế có chứa Email, 
+                # chúng ta sẽ kết nối Google Sheets vào đoạn này sau.
+                email_ton_tai = True 
+                mat_khau_cua_hs = "123456" 
+                # =========================================================
+                
+                if email_ton_tai:
+                    try:
+                        # Gọi tài khoản gửi email từ Két sắt (Secrets)
+                        sender_email = st.secrets["email_nguoi_gui"]
+                        sender_password = st.secrets["mat_khau_email"]
+                        
+                        # Soạn nội dung Email
+                        msg = MIMEMultipart()
+                        msg['From'] = sender_email
+                        msg['To'] = email_khoi_phuc
+                        msg['Subject'] = "Khôi phục mật khẩu - Cổng học tập Toán"
+                        
+                        body = f"Chào em,\n\nHệ thống nhận được yêu cầu khôi phục mật khẩu của em.\n🔑 Mật khẩu của em là: {mat_khau_cua_hs}\n\nChúc em học tốt nhé!"
+                        msg.attach(MIMEText(body, 'plain'))
+                        
+                        # Tiến hành kết nối và gửi qua Google
+                        server = smtplib.SMTP('smtp.gmail.com', 587)
+                        server.starttls()
+                        server.login(sender_email, sender_password)
+                        server.send_message(msg)
+                        server.quit()
+                        
+                        st.success("✅ Gửi thành công! Em hãy kiểm tra hộp thư đến (hoặc Thư rác/Spam) nhé.")
+                    except Exception as e:
+                        st.error("❌ Có lỗi xảy ra trong quá trình gửi mail. Vui lòng thử lại sau.")
+                else:
+                    st.error("⚠️ Email này chưa được đăng ký trong hệ thống!")
+            else:
+                st.warning("Em chưa nhập địa chỉ email.")
         
         # BẠN HÃY DÁN LINK GOOGLE FORM (TỪ BIỂU TƯỢNG CON MẮT) VÀO TRONG DẤU NGOẶC KÉP DƯỚI ĐÂY:
         link_form = "https://docs.google.com/forms/d/e/1FAIpQLSeliSANMx280l6avDFe_NIrpXd2GUWC6ABE39su37JCZqYYRQ/viewform?usp=publish-editor"
