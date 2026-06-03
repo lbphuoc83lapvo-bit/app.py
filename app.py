@@ -20,19 +20,26 @@ st.markdown("---")
 # ==========================================
 # 2. ĐỌC DỮ LIỆU TỪ GOOGLE SHEETS
 # ==========================================
+# ==========================================
+# 2. ĐỌC DỮ LIỆU TỪ GOOGLE SHEETS
+# ==========================================
 try:
     conn = st.connection("gsheets", type=GSheetsConnection)
     # Tự động đọc Tab ngoài cùng bên trái
     user_df = conn.read(ttl=0) 
     
     if len(user_df.columns) >= 4:
-        ten_dang_nhap = user_df.iloc[:, 1].astype(str).str.strip()
-        mat_khau = user_df.iloc[:, 2].astype(str).str.strip()
-        email_hs = user_df.iloc[:, 3].astype(str).str.strip()
+        # TỌA ĐỘ MỚI KHỚP VỚI GOOGLE SHEETS CỦA BẠN:
+        # Cột B (1): Email | Cột C (2): Tên đăng nhập | Cột D (3): Mật khẩu
+        email_hs = user_df.iloc[:, 1].astype(str).str.strip()
+        ten_dang_nhap = user_df.iloc[:, 2].astype(str).str.strip()
+        mat_khau = user_df.iloc[:, 3].astype(str).str.strip()
         
         user_db = dict(zip(ten_dang_nhap, mat_khau))
         email_db = dict(zip(email_hs, mat_khau))
+        
     elif len(user_df.columns) >= 3:
+        # Đề phòng trường hợp đọc nhầm tab biểu mẫu 1 cũ
         ten_dang_nhap = user_df.iloc[:, 1].astype(str).str.strip()
         mat_khau = user_df.iloc[:, 2].astype(str).str.strip()
         
@@ -42,7 +49,6 @@ try:
         user_db, email_db = {}, {}
 except Exception as e:
     user_db, email_db = {}, {}
-
 # Khởi tạo trạng thái đăng nhập
 if 'is_logged_in' not in st.session_state:
     st.session_state.is_logged_in = False
