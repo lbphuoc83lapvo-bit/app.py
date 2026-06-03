@@ -27,16 +27,25 @@ st.markdown("---") # Đường kẻ ngang phân cách
 # ==========================================
 try:
     conn = st.connection("gsheets", type=GSheetsConnection)
+    # Lấy dữ liệu mới nhất
     user_df = conn.read(ttl=0) 
     
-    # Khắc phục lỗi KeyError và bổ sung Cột số 3 (Email)
+    # Loại bỏ các dòng trống (NaN) nếu có
+    user_df = user_df.dropna(subset=[user_df.columns[1], user_df.columns[2]])
+    
     if len(user_df.columns) >= 4:
-        # Tạo từ điển Đăng nhập (Tên -> Mật khẩu)
-        user_db = dict(zip(user_df.iloc[:, 1].astype(str), user_df.iloc[:, 2].astype(str)))
-        # Tạo từ điển Khôi phục (Email -> Mật khẩu)
-        email_db = dict(zip(user_df.iloc[:, 3].astype(str).str.strip(), user_df.iloc[:, 2].astype(str)))
+        # Lấy dữ liệu và tự động cắt bỏ mọi khoảng trắng thừa (cả đầu và cuối)
+        ten_dang_nhap = user_df.iloc[:, 1].astype(str).str.strip()
+        mat_khau = user_df.iloc[:, 2].astype(str).str.strip()
+        email_hs = user_df.iloc[:, 3].astype(str).str.strip()
+        
+        user_db = dict(zip(ten_dang_nhap, mat_khau))
+        email_db = dict(zip(email_hs, mat_khau))
     elif len(user_df.columns) >= 3:
-        user_db = dict(zip(user_df.iloc[:, 1].astype(str), user_df.iloc[:, 2].astype(str)))
+        ten_dang_nhap = user_df.iloc[:, 1].astype(str).str.strip()
+        mat_khau = user_df.iloc[:, 2].astype(str).str.strip()
+        
+        user_db = dict(zip(ten_dang_nhap, mat_khau))
         email_db = {}
     else:
         user_db = {}
