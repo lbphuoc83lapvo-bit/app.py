@@ -283,6 +283,16 @@ else:
                         else:
                             st.error(f"⚠️ Em mới đạt **{diem}/10** điểm. Chưa đủ 7.0 điểm để qua cửa rồi. Hãy đọc lại lý thuyết và làm lại nhé!")
                             st.session_state.hoan_thanh_bai_1 = False
+                            elif bai_hoc_selection == "Bài 2. Cách ghi số tự nhiên":
+                # Kiểm tra điều kiện mở khóa
+                if st.session_state.get("hoan_thanh_bai_1", False) == True:
+                    st.header("BÀI 2: CÁCH GHI SỐ TỰ NHIÊN")
+                    st.success("🔓 Chào mừng em đến với Bài 2!")
+                    # Nội dung Bài 2 sẽ được viết tiếp ở đây
+                    st.write("Nội dung bài học đang được biên soạn...")
+                else:
+                    st.warning("🔒 **BÀI HỌC BỊ KHÓA**")
+                    st.info("Em cần quay lại **Bài 1. Tập hợp** và hoàn thành bài Đánh giá năng lực (đạt từ 7.0 điểm trở lên) để mở khóa bài học này nhé!")
 
                 with tab_mo_rong:
                     st.subheader("👨‍🔬 Nhà toán học Georg Cantor (1845 - 1918)")
