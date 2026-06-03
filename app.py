@@ -242,28 +242,72 @@ else:
 
                 with tab_bai_tap:
                     st.subheader("✍️ Đánh giá năng lực - Bài 1")
-                    st.info("🔒 **ĐIỀU KIỆN MỞ KHÓA:** Em cần trả lời đúng ít nhất **7/10 câu** để hệ thống mở khóa Bài 2 nhé!")
+                    st.info("🔒 **ĐIỀU KIỆN MỞ KHÓA:** Em cần trả lời đúng ít nhất **7/10 câu** (Đạt từ 7.0 điểm) để hệ thống mở khóa Bài 2 nhé!")
                     
+                    # Dùng form để học sinh chọn hết rồi mới nộp bài
                     with st.form("quiz_bai_1"):
+                        st.markdown("### I. Mức độ Nhận biết")
+                        
                         st.markdown(r"**Câu 1:** Cho tập hợp $A = \{2; 4; 6; 8\}$. Khẳng định nào sau đây là **đúng**?")
                         q1 = st.radio("Đáp án Câu 1:", ["-- Chọn --", r"$2 \notin A$", r"$4 \in A$", r"$5 \in A$", r"$8 \notin A$"], key="q_1")
                         
                         st.markdown(r"**Câu 2:** Tập hợp các số tự nhiên **khác 0** được kí hiệu là gì?")
                         q2 = st.radio("Đáp án Câu 2:", ["-- Chọn --", r"$\mathbb{N}$", r"$\mathbb{N}^*$", r"$\mathbb{Z}$", r"$\mathbb{N}^* = \{0; 1; 2; \dots\}$"], key="q_2")
                         
+                        st.markdown(r"**Câu 3:** Cho tập hợp $M = \{a; b; c\}$. Số phần tử của tập hợp $M$ là bao nhiêu?")
+                        q3 = st.radio("Đáp án Câu 3:", ["-- Chọn --", "1 phần tử", "2 phần tử", "3 phần tử", "4 phần tử"], key="q_3")
+                        
+                        st.markdown("---")
+                        st.markdown("### II. Mức độ Thông hiểu")
+                        
+                        st.markdown(r"**Câu 4:** Viết tập hợp $P$ các số tự nhiên nhỏ hơn 4 bằng cách liệt kê:")
+                        q4 = st.radio("Đáp án Câu 4:", ["-- Chọn --", r"$P = \{1; 2; 3; 4\}$", r"$P = \{0; 1; 2; 3; 4\}$", r"$P = \{0; 1; 2; 3\}$", r"$P = \{1; 2; 3\}$"], key="q_4")
+                        
+                        st.markdown(r"**Câu 5:** Cho tập hợp $X = \{x \in \mathbb{N} \mid 3 < x \le 6\}$. Tập hợp $X$ được viết dưới dạng liệt kê là:")
+                        q5 = st.radio("Đáp án Câu 5:", ["-- Chọn --", r"$X = \{3; 4; 5; 6\}$", r"$X = \{4; 5; 6\}$", r"$X = \{4; 5\}$", r"$X = \{3; 4; 5\}$"], key="q_5")
+                        
+                        st.markdown(r"**Câu 6:** Cho tập hợp $U = \{x \in \mathbb{N} \mid x \text{ chia hết cho } 2\}$. Số nào dưới đây **KHÔNG** thuộc tập $U$?")
+                        q6 = st.radio("Đáp án Câu 6:", ["-- Chọn --", "4", "10", "7", "22"], key="q_6")
+                        
+                        st.markdown(r"**Câu 7:** Cho tập hợp $E = \{x \in \mathbb{N}^* \mid x < 5\}$. Khẳng định nào sau đây là **SAI**?")
+                        q7 = st.radio("Đáp án Câu 7:", ["-- Chọn --", r"$0 \in E$", r"$1 \in E$", r"$4 \in E$", "Tập $E$ có 4 phần tử"], key="q_7")
+                        
+                        st.markdown("---")
+                        st.markdown("### III. Mức độ Vận dụng")
+                        
+                        st.markdown(r"**Câu 8:** Gọi $T$ là tập hợp các chữ cái xuất hiện trong cụm từ 'AN GIANG'. Cách viết nào sau đây đúng?")
+                        q8 = st.radio("Đáp án Câu 8:", ["-- Chọn --", r"$T = \{A; N; G; I; A; N; G\}$", r"$T = \{A; N; G; I\}$", r"$T = \{A; N; G; I; C\}$", r"$T = \{A; N; G\}$"], key="q_8")
+                        
+                        st.markdown(r"**Câu 9:** Gọi $K$ là tập hợp các tháng (dương lịch) có 30 ngày trong năm. Tập hợp $K$ là:")
+                        q9 = st.radio("Đáp án Câu 9:", ["-- Chọn --", r"$K = \{4; 6; 9; 11\}$", r"$K = \{2; 4; 6; 9; 11\}$", r"$K = \{4; 6; 8; 9; 11\}$", r"$K = \{1; 3; 5; 7; 8; 10; 12\}$"], key="q_9")
+                        
+                        st.markdown(r"**Câu 10:** Một khu vườn có 3 loại cây: xoài, ổi, mít. Gọi $V$ là tập hợp các loại cây trong vườn. Khẳng định nào ĐÚNG?")
+                        q10 = st.radio("Đáp án Câu 10:", ["-- Chọn --", r"$V = \{xoài; ổi; mít\}$", "Tập $V$ có 3 phần tử", r"Sầu riêng $\notin V$", "Tất cả đều đúng"], key="q_10")
+                        
+                        # Nút nộp bài
                         submit_button = st.form_submit_button("Lưu & Nộp bài")
                     
+                    # Logic chấm điểm sau khi bấm nộp
                     if submit_button:
                         diem = 0
                         if q1 == r"$4 \in A$": diem += 1
                         if q2 == r"$\mathbb{N}^*$": diem += 1
+                        if q3 == "3 phần tử": diem += 1
+                        if q4 == r"$P = \{0; 1; 2; 3\}$": diem += 1
+                        if q5 == r"$X = \{4; 5; 6\}$": diem += 1
+                        if q6 == "7": diem += 1
+                        if q7 == r"$0 \in E$": diem += 1
+                        if q8 == r"$T = \{A; N; G; I\}$": diem += 1
+                        if q9 == r"$K = \{4; 6; 9; 11\}$": diem += 1
+                        if q10 == "Tất cả đều đúng": diem += 1
                         
-                        if diem >= 2: # Điểm ví dụ
-                            st.success(f"🎉 TUYỆT VỜI! Em đạt điểm tối đa. Bài học số 2 đã được mở khóa!")
+                        if diem >= 7:
+                            st.success(f"🎉 TUYỆT VỜI! Em đạt **{diem}/10** điểm. Bài học số 2 đã được mở khóa!")
                             st.balloons()
+                            # Lưu trạng thái hoàn thành vào bộ nhớ tạm
                             st.session_state.hoan_thanh_bai_1 = True
                         else:
-                            st.error(f"⚠️ Em chưa đủ điểm. Hãy ôn lại lý thuyết và làm lại nhé!")
+                            st.error(f"⚠️ Em mới đạt **{diem}/10** điểm. Chưa đủ 7.0 điểm để qua cửa rồi. Hãy đọc lại lý thuyết và làm lại nhé!")
                             st.session_state.hoan_thanh_bai_1 = False
 
                 with tab_mo_rong:
