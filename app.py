@@ -27,8 +27,8 @@ st.markdown("---") # Đường kẻ ngang phân cách
 # ==========================================
 try:
     conn = st.connection("gsheets", type=GSheetsConnection)
-    # Lấy dữ liệu mới nhất
-    user_df = conn.read(ttl=0) 
+    # Lệnh mới: Chỉ định đích danh tên tab chứa dữ liệu mới nhất
+    user_df = conn.read(worksheet="Câu trả lời biểu mẫu 2", ttl=0) 
     
     # Loại bỏ các dòng trống (NaN) nếu có
     user_df = user_df.dropna(subset=[user_df.columns[1], user_df.columns[2]])
