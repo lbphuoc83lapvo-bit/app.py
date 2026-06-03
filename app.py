@@ -146,14 +146,14 @@ else:
                     
                     st.info("💡 *Ví dụ trực quan:* Tập hợp các bông hồng trong lọ hoa, tập hợp các con cá vàng trong bình, hoặc tập hợp các số trên mặt đồng hồ.")
                     
-                    st.write("Xét tập hợp $M$ gồm các số: 4; 1; 9; 8. Ta ký hiệu các mối quan hệ như sau:")
-                    st.write("- $4 \in M$ (đọc là: *4 thuộc M*, hoặc *4 là một phần tử của M*).")
-                    st.write("- $7 \notin M$ (đọc là: *7 không thuộc M*, hoặc *7 không là phần tử của M*).")
-                    st.write("⚠️ *Chú ý:* Khi $x \in A$, ta còn nói '*x nằm trong A*' hoặc '*A chứa x*'.")
+                    st.write(r"Xét tập hợp $M$ gồm các số: 4; 1; 9; 8. Ta ký hiệu các mối quan hệ như sau:")
+                    st.write(r"- $4 \in M$ (đọc là: 4 thuộc M, hoặc 4 là một phần tử của M).")
+                    st.write(r"- $7 \notin M$ (đọc là: 7 không thuộc M, hoặc 7 không là phần tử của M).")
+                    st.write(r"⚠️ *Chú ý:* Khi $x \in A$, ta còn nói '*x nằm trong A*' hoặc '*A chứa x*'.")
                     
                     st.markdown("---")
                     st.subheader("2. Cách mô tả một tập hợp")
-                    st.write("Người ta thường đặt tên tập hợp bằng các **chữ cái in hoa** ($A, B, C...$). Có 2 cách chính để mô tả:")
+                    st.write(r"Người ta thường đặt tên tập hợp bằng các **chữ cái in hoa** ($A, B, C...$). Có 2 cách chính để mô tả:")
                     
                     col_c1, col_c2 = st.columns(2)
                     with col_c1:
@@ -166,16 +166,16 @@ else:
                         st.latex(r"P = \{n \mid n \text{ là số tự nhiên nhỏ hơn } 6\}")
                         
                     st.markdown("---")
-                    st.subheader("3. Tập hợp các số tự nhiên $\mathbb{N}$ và $\mathbb{N}^*$")
-                    st.write("- Kí hiệu $\mathbb{N}$ là tập hợp gồm tất cả các số tự nhiên: $0; 1; 2; 3;...$")
+                    st.subheader(r"3. Tập hợp các số tự nhiên $\mathbb{N}$ và $\mathbb{N}^*$")
+                    st.write(r"- Kí hiệu $\mathbb{N}$ là tập hợp gồm tất cả các số tự nhiên: $0; 1; 2; 3;...$")
                     st.latex(r"\mathbb{N} = \{0; 1; 2; 3; ...\}")
-                    st.write("- Kí hiệu $\mathbb{N}^*$ là tập hợp các số tự nhiên **khác 0**:")
+                    st.write(r"- Kí hiệu $\mathbb{N}^*$ là tập hợp các số tự nhiên **khác 0**:")
                     st.latex(r"\mathbb{N}^* = \{1; 2; 3; ...\}")
                     
-                    st.success("📝 **Thử thách nhỏ:** Khi viết tập hợp $L$ các chữ cái trong từ 'NHA TRANG' bằng cách liệt kê, bạn Nam viết: $L = \{N; H; A; T; R; A; N; G\}$. Theo em bạn Nam viết đúng hay sai?")
+                    st.success(r"📝 **Thử thách nhỏ:** Khi viết tập hợp $L$ các chữ cái trong từ 'NHA TRANG' bằng cách liệt kê, bạn Nam viết: $L = \{N; H; A; T; R; A; N; G\}$. Theo em bạn Nam viết đúng hay sai?")
                     chose_nam = st.radio("Câu trả lời của bạn:", ["Chưa chọn", "Nam viết ĐÚNG", "Nam viết SAI"], key="quiz_nam")
                     if chose_nam == "Nam viết SAI":
-                        st.success("🎉 Chính xác! Mỗi phần tử chỉ được viết 1 lần. Chữ N và chữ A xuất hiện 2 lần nên chỉ viết lại 1 lần. Cách viết đúng là: $L = \{N; H; A; T; R; G\}$.")
+                        st.success(r"🎉 Chính xác! Mỗi phần tử chỉ được viết 1 lần. Chữ N và chữ A xuất hiện 2 lần nên chỉ viết lại 1 lần. Cách viết đúng là: $L = \{N; H; A; T; R; G\}$.")
                     elif chose_nam == "Nam viết ĐÚNG":
                         st.error("❌ Chưa chính xác rồi! Em hãy nhớ quy tắc: Mỗi phần tử chỉ được liệt kê duy nhất một lần nhé.")
 
@@ -184,15 +184,15 @@ else:
                     st.write("Các em hãy hoàn thành các bài tập dưới đây để củng cố kiến thức nhé!")
                     
                     # Bài tập 1 (Dựa theo Bài 1.2 SGK)
-                    st.markdown("**Câu 1:** Cho tập hợp $U = \{x \in \mathbb{N} \mid x \text{ chia hết cho } 3\}$. Số nào sau đây thuộc tập hợp $U$?")
+                    st.markdown(r"**Câu 1:** Cho tập hợp $U = \{x \in \mathbb{N} \mid x \text{ chia hết cho } 3\}$. Số nào sau đây thuộc tập hợp $U$?")
                     q1 = st.selectbox("Chọn đáp án của em:", ["-- Chọn số --", "5", "7", "6", "1"], key="q1")
                     if q1 == "6":
-                        st.success("🎯 Đúng rồi! 6 chia hết cho 3 nên $6 \in U$.")
+                        st.success(r"🎯 Đúng rồi! 6 chia hết cho 3 nên $6 \in U$.")
                     elif q1 != "-- Chọn số --":
                         st.error("📌 Sai rồi, số này không chia hết cho 3 nên không thuộc tập U.")
                         
                     # Bài tập 2 (Dựa theo Bài 1.3 SGK)
-                    st.markdown("**Câu 2:** Tập hợp $K$ các số tự nhiên nhỏ hơn 7 được viết theo cách liệt kê là:")
+                    st.markdown(r"**Câu 2:** Tập hợp $K$ các số tự nhiên nhỏ hơn 7 được viết theo cách liệt kê là:")
                     q2 = st.radio("Chọn một đáp án:", [
                         "Chưa chọn",
                         r"K = {1; 2; 3; 4; 5; 6}",
@@ -205,7 +205,7 @@ else:
                         st.error("📌 Hãy lưu ý: Tập hợp số tự nhiên phải chứa cả số 0, và từ 'nhỏ hơn 7' tức là không lấy số 7.")
 
                     # Bài tập 3 (Dựa theo Bài 1.5 SGK)
-                    st.markdown("**Câu 3 (Thực tế):** Hệ Mặt Trời gồm Mặt Trời ở trung tâm và 8 hành tinh quay quanh. Nếu gọi $S$ là tập hợp các hành tinh này, hành tinh nào dưới đây **không** nằm trong tập $S$?")
+                    st.markdown(r"**Câu 3 (Thực tế):** Hệ Mặt Trời gồm Mặt Trời ở trung tâm và 8 hành tinh quay quanh. Nếu gọi $S$ là tập hợp các hành tinh này, hành tinh nào dưới đây **không** nằm trong tập $S$?")
                     q3 = st.selectbox("Chọn hành tinh:", ["-- Chọn --", "Trái Đất", "Sao Hỏa", "Mặt Trăng", "Mộc tinh"], key="q3")
                     if q3 == "Mặt Trăng":
                         st.success("🎯 Chính xác! Mặt Trăng là vệ tinh của Trái Đất, không phải là một hành tinh trong 8 hành tinh quay quanh Mặt Trời.")
@@ -217,9 +217,9 @@ else:
                     st.write("Mãi đến cuối thế kỉ XIX, lí thuyết tập hợp mới được phát triển nhờ các nghiên cứu của nhà toán học Cantor, người Đức. Từ đó, lí thuyết tập hợp đã nhanh chóng trở thành nền tảng của Toán học hiện đại.")
                     
                     st.markdown("**💡 Kiến thức mở rộng thêm:**")
-                    st.write("- **Tập hữu hạn:** Là tập hợp có một số lượng phần tử đếm được. Ví dụ tập $Y = \{1; 2; 3; ...; 50\}$ có đúng 50 phần tử.")
-                    st.write("- **Tập vô hạn:** Là tập hợp có vô số phần tử. Ví dụ tập hợp số tự nhiên $\mathbb{N}$ là tập vô hạn.")
+                    st.write(r"- **Tập hữu hạn:** Là tập hợp có một số lượng phần tử đếm được. Ví dụ tập $Y = \{1; 2; 3; ...; 50\}$ có đúng 50 phần tử.")
+                    st.write(r"- **Tập vô hạn:** Là tập hợp có vô số phần tử. Ví dụ tập hợp số tự nhiên $\mathbb{N}$ là tập vô hạn.")
                     
                     st.markdown("**🤝 Giao của hai tập hợp:**")
-                    st.write("Gọi $C$ là tập hợp gồm các phần tử vừa thuộc tập $A$, vừa thuộc tập $B$. Ta gọi tập $C$ là **giao của hai tập hợp $A$ và $B$**, kí hiệu là:")
+                    st.write(r"Gọi $C$ là tập hợp gồm các phần tử vừa thuộc tập $A$, vừa thuộc tập $B$. Ta gọi tập $C$ là **giao của hai tập hợp $A$ và $B$**, kí hiệu là:")
                     st.latex(r"C = A \cap B")
