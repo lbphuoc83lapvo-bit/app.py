@@ -65,7 +65,30 @@ if not st.session_state.is_logged_in:
 # ==========================================
 else:
     st.sidebar.title("🗂️ DANH MỤC MÔN HỌC")
+    
+    # 1. Chọn khối lớp
     grade_selection = st.sidebar.radio("Chọn khối lớp của bạn:", ["Toán 6", "Toán 7", "Toán 8", "Toán 9"])
+    st.sidebar.markdown("---")
+    
+    # 2. Tạo cây thư mục (Menu con) dựa trên khối lớp
+    chapter_selection = None
+    if grade_selection == "Toán 6":
+        st.sidebar.subheader("📖 Mục lục Toán 6")
+        chapters_6 = [
+            "Chương 1: TẬP HỢP CÁC SỐ TỰ NHIÊN",
+            "Chương 2: TÍNH CHIA HẾT TRONG TẬP HỢP SỐ TỰ NHIÊN",
+            "Chương 3: SỐ NGUYÊN",
+            "Chương 4: MỘT SỐ HÌNH PHẲNG TRONG THỰC TIỄN",
+            "Chương 5: TÍNH ĐỐI XỨNG CỦA HÌNH PHẲNG TRONG THỰC TIỄN",
+            "Chương 6: PHÂN SỐ",
+            "Chương 7: SỐ THẬP PHÂN",
+            "Chương 8: NHỮNG HÌNH HÌNH HỌC CƠ BẢN",
+            "Chương 9: DỮ LIỆU VÀ XÁC SUẤT THỰC NGHIỆM"
+        ]
+        chapter_selection = st.sidebar.selectbox("Chọn chương học:", chapters_6)
+
+    # (Các khối lớp 7, 8, 9 sẽ được bổ sung mục lục sau)
+    
     st.sidebar.markdown("---")
     st.sidebar.write(f"👤 Tài khoản: **{st.session_state.current_user}**")
     
@@ -74,5 +97,13 @@ else:
         st.session_state.current_user = ""
         st.rerun()
 
+    # 3. Hiển thị nội dung tương ứng với bài học được chọn
     st.title(f"📚 Hệ Thống Bài Học - {grade_selection}")
-    st.write("Chúc mừng bạn đã đăng nhập thành công vào hệ thống học tập!")
+    
+    if grade_selection == "Toán 6" and chapter_selection:
+        st.subheader(chapter_selection)
+        st.info("Khu vực này sẽ hiển thị lý thuyết, công thức Toán học, bài tập trắc nghiệm và trò chơi tương tác của chương.")
+        # Ví dụ một công thức Toán học hiển thị sẵn sàng:
+        # st.latex(r"A = \{x \in \mathbb{N} \mid x < 10\}")
+    else:
+        st.write("Vui lòng chọn chương học trên thanh điều hướng bên trái để bắt đầu bài học.")
