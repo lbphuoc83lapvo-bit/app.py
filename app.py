@@ -91,13 +91,20 @@ if not st.session_state.is_logged_in:
         if st.button("Gửi mật khẩu"):
             if email_khoi_phuc:
                 # =========================================================
-                # LƯU Ý CHO THẦY/CÔ: 
-                # Tại đây, hệ thống sẽ chạy giả định để bạn test giao diện.
-                email_ton_tai = True 
-                mat_khau_cua_hs = "123456" 
+                # TRA CỨU MẬT KHẨU THỰC TẾ TỪ GOOGLE SHEETS
+                email_can_tim = email_khoi_phuc.strip()
+                
+                # Kiểm tra xem email có tồn tại trong dữ liệu không
+                if 'email_db' in locals() and email_can_tim in email_db:
+                    email_ton_tai = True 
+                    mat_khau_cua_hs = email_db[email_can_tim]
+                else:
+                    email_ton_tai = False
+                    mat_khau_cua_hs = ""
                 # =========================================================
                 
                 if email_ton_tai:
+                    try:
                     try:
                         # Gọi tài khoản gửi email từ Két sắt (Secrets)
                         sender_email = st.secrets["email_nguoi_gui"]
