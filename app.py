@@ -275,7 +275,7 @@ else:
                         if q9 == r"$K = \{4; 6; 9; 11\}$": diem += 1
                         if q10 == "Tất cả đều đúng": diem += 1
                         
-                        if diem >= 7:
+                       if diem >= 7:
                             st.success(f"🎉 TUYỆT VỜI! Em đạt **{diem}/10** điểm. Bài học số 2 đã được mở khóa!")
                             st.balloons()
                             # Lưu trạng thái hoàn thành vào bộ nhớ tạm
@@ -283,7 +283,8 @@ else:
                         else:
                             st.error(f"⚠️ Em mới đạt **{diem}/10** điểm. Chưa đủ 7.0 điểm để qua cửa rồi. Hãy đọc lại lý thuyết và làm lại nhé!")
                             st.session_state.hoan_thanh_bai_1 = False
-                            elif bai_hoc_selection == "Bài 2. Cách ghi số tự nhiên":
+            
+            elif bai_hoc_selection == "Bài 2. Cách ghi số tự nhiên":
                 # Kiểm tra điều kiện mở khóa
                 if st.session_state.get("hoan_thanh_bai_1", False) == True:
                     st.header("BÀI 2: CÁCH GHI SỐ TỰ NHIÊN")
@@ -293,6 +294,9 @@ else:
                 else:
                     st.warning("🔒 **BÀI HỌC BỊ KHÓA**")
                     st.info("Em cần quay lại **Bài 1. Tập hợp** và hoàn thành bài Đánh giá năng lực (đạt từ 7.0 điểm trở lên) để mở khóa bài học này nhé!")
+            
+            else:
+                st.info(f"Giao diện chuẩn bị nội dung cho **{bai_hoc_selection}** đã sẵn sàng. Các em học sinh hãy đón chờ nhé!")
 
                 with tab_mo_rong:
                     st.subheader("👨‍🔬 Nhà toán học Georg Cantor (1845 - 1918)")
