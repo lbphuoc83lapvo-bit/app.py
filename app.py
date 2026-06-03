@@ -141,7 +141,7 @@ else:
                 tab_ly_thuyet, tab_bai_tap = st.tabs(["📚 Lý thuyết", "✍️ Bài tập trắc nghiệm"])
                 
                 with tab_ly_thuyet:
-                    st.subheader("Tập hợp. Phần tử của tập hợp")
+                    st.subheader("Tập hợp")
                     st.markdown("**1. Ký hiệu và cách viết:**")
                     st.write("Người ta thường đặt tên tập hợp bằng chữ cái in hoa: $A, B, C, X, Y...$")
                     st.write("Ví dụ: Gọi $A$ là tập hợp các số tự nhiên nhỏ hơn 5. Ta có thể viết:")
