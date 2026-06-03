@@ -105,7 +105,6 @@ if not st.session_state.is_logged_in:
                 
                 if email_ton_tai:
                     try:
-                    try:
                         # Gọi tài khoản gửi email từ Két sắt (Secrets)
                         sender_email = st.secrets["email_nguoi_gui"]
                         sender_password = st.secrets["mat_khau_email"]
