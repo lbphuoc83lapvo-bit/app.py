@@ -197,6 +197,49 @@ else:
                     st.write(r"- Kí hiệu $\mathbb{N}$ là tập hợp gồm tất cả các số tự nhiên: $\mathbb{N} = \{0; 1; 2; 3; \dots\}$")
                     st.write(r"- Kí hiệu $\mathbb{N}^*$ là tập hợp các số tự nhiên **khác 0**: $\mathbb{N}^* = \{1; 2; 3; \dots\}$")
 
+                    # ==================================================
+                    # THẦY DÁN ĐOẠN CODE LUYỆN TẬP VÀO BẮT ĐẦU TỪ ĐÂY:
+                    # ==================================================
+                    st.markdown("---")
+                    st.subheader("🎯 Thử thách Luyện tập")
+                    
+                    # 1. Thử thách nhỏ (Vận dụng)
+                    st.success(r"📝 **Thử thách Vận dụng:** Khi viết tập hợp $L$ các chữ cái trong từ 'NHA TRANG' bằng cách liệt kê, bạn Nam viết: $L = \{N; H; A; T; R; A; N; G\}$. Theo em bạn Nam viết đúng hay sai?")
+                    chose_nam = st.radio("Câu trả lời của bạn:", ["Chưa chọn", "Nam viết ĐÚNG", "Nam viết SAI"], key="quiz_nam")
+                    
+                    if chose_nam == "Nam viết SAI":
+                        st.success(r"🎉 Chính xác! Mỗi phần tử chỉ được viết 1 lần. Chữ N và chữ A xuất hiện 2 lần nên chỉ viết lại 1 lần. Cách viết đúng là: $L = \{N; H; A; T; R; G\}$.")
+                    elif chose_nam == "Nam viết ĐÚNG":
+                        st.error("❌ Chưa chính xác rồi! Em hãy nhớ quy tắc: Mỗi phần tử chỉ được liệt kê duy nhất một lần nhé.")
+
+                    # 2. Luyện tập 2
+                    st.info(r"**Luyện tập 2:** Viết các tập hợp sau bằng cách liệt kê các phần tử: $A=\{x \in \mathbb{N} \mid x<5\}$ và $B=\{x \in \mathbb{N}^* \mid x<5\}$. Hãy chọn đáp án đúng nhất:")
+                    lt2 = st.radio("Chọn đáp án cho Luyện tập 2:", [
+                        "Chưa chọn", 
+                        r"$A = \{1; 2; 3; 4\}$ và $B = \{0; 1; 2; 3; 4\}$", 
+                        r"$A = \{0; 1; 2; 3; 4\}$ và $B = \{1; 2; 3; 4\}$", 
+                        r"$A = \{0; 1; 2; 3; 4; 5\}$ và $B = \{1; 2; 3; 4; 5\}$"
+                    ], key="lt2")
+                    
+                    if lt2 == r"$A = \{0; 1; 2; 3; 4\}$ và $B = \{1; 2; 3; 4\}$":
+                        st.success(r"🎉 Rất xuất sắc! $\mathbb{N}$ bắt đầu từ số 0, còn $\mathbb{N}^*$ bắt đầu từ số 1. Cả hai tập hợp đều lấy các số nhỏ hơn 5 (tức là không lấy số 5).")
+                    elif lt2 != "Chưa chọn":
+                        st.error(r"❌ Hãy cẩn thận! Tập $\mathbb{N}$ có chứa số 0, còn tập $\mathbb{N}^*$ thì không chứa số 0. Và nhớ điều kiện là $x < 5$ nhé.")
+
+                    # 3. Luyện tập 3
+                    st.info(r"**Luyện tập 3:** Gọi $M$ là tập hợp các số tự nhiên lớn hơn 6 và nhỏ hơn 10. Khẳng định nào dưới đây mô tả **ĐÚNG** nhất về tập hợp $M$?")
+                    lt3 = st.radio("Chọn đáp án cho Luyện tập 3:", [
+                        "Chưa chọn", 
+                        r"$5 \in M$, $9 \in M$ và $M = \{7; 8; 9\}$", 
+                        r"$5 \notin M$, $9 \in M$ và $M = \{7; 8; 9\}$", 
+                        r"$5 \notin M$, $9 \notin M$ và $M = \{6; 7; 8; 9; 10\}$"
+                    ], key="lt3")
+                    
+                    if lt3 == r"$5 \notin M$, $9 \in M$ và $M = \{7; 8; 9\}$":
+                        st.success(r"🎉 Chính xác! Vì $M$ gồm các số lớn hơn 6 và nhỏ hơn 10 nên $M = \{7; 8; 9\}$. Do đó số 5 không thuộc $M$, còn số 9 thuộc $M$.")
+                    elif lt3 != "Chưa chọn":
+                        st.error("❌ Chưa đúng rồi! Em hãy liệt kê các số tự nhiên nằm giữa 6 và 10 trước, sau đó xét xem số 5 và số 9 có nằm trong tập hợp đó không nhé.")
+
                 with tab_bai_tap:
                     st.subheader("✍️ Đánh giá năng lực - Bài 1")
                     st.info("🔒 **ĐIỀU KIỆN MỞ KHÓA:** Em cần trả lời đúng ít nhất **7/10 câu** để hệ thống mở khóa Bài 2 nhé!")
