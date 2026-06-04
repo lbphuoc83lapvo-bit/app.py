@@ -36,12 +36,16 @@ try:
     if len(user_df.columns) >= 4:
         email_hs = user_df.iloc[:, 1].astype(str).str.strip()
         ten_dang_nhap = user_df.iloc[:, 2].astype(str).str.strip()
+        
+        # Đọc mật khẩu và XÓA SẠCH đuôi .0 nếu hệ thống tự sinh ra
         mat_khau = user_df.iloc[:, 3].astype(str).str.strip()
-        tien_do = user_df.iloc[:, 4].astype(str).str.strip() # Đọc Cột E (Tiến độ)
+        mat_khau = mat_khau.str.replace(r'\.0$', '', regex=True)
+        
+        tien_do = user_df.iloc[:, 4].astype(str).str.strip() # Cột E
         
         user_db = dict(zip(ten_dang_nhap, mat_khau))
         email_db = dict(zip(email_hs, mat_khau))
-        progress_db = dict(zip(ten_dang_nhap, tien_do)) # Lưu trữ tiến độ
+        progress_db = dict(zip(ten_dang_nhap, tien_do))
     else:
         user_db, email_db, progress_db = {}, {}, {}
 except Exception as e:
