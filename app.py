@@ -357,17 +357,28 @@ else:
                                 
                                 if not user_idx.empty:
                                     tien_do_cu = str(user_df.loc[user_idx[0], user_df.columns[4]])
+                                    
                                     # Ghi nối thêm chữ Pass_Bai_1
                                     if "Pass_Bai_1" not in tien_do_cu:
                                         tien_do_moi = tien_do_cu + ", Pass_Bai_1" if tien_do_cu.strip() and tien_do_cu != "nan" else "Pass_Bai_1"
                                         
-                                        # CHỈ CẦN THÊM [0] VÀO DÒNG DƯỚI ĐÂY:
+                                        # Cập nhật vào df trong bộ nhớ
                                         user_df.loc[user_idx[0], user_df.columns[4]] = tien_do_moi
                                         
                                         try:
-                                            conn.update(worksheet="Câu trả lời biểu mẫu 1", data=user_df)
+                                            # CHIẾN THUẬT GHI 1 Ô (Tránh bị Google Form chặn)
+                                            # Tính số dòng trên Sheets (Dòng 1 là tiêu đề, nên index + 2)
+                                            dong_sheet = int(user_idx[0]) + 2 
+                                            o_can_ghi = f"E{dong_sheet}" # Ví dụ: E2, E3
+                                            
+                                            # Kết nối hệ thống lõi để ghi
+                                            sheet_goc = conn.client.open_by_url(st.secrets.connections.gsheets.spreadsheet).worksheet("Câu trả lời biểu mẫu 1")
+                                            sheet_goc.update_acell(o_can_ghi, tien_do_moi)
+                                            
+                                            # Xóa bộ nhớ đệm để lần đăng nhập sau web cập nhật ngay
+                                            st.cache_data.clear()
                                         except Exception as e:
-                                            st.warning("Hệ thống chưa đồng bộ lên Cloud.")
+                                            st.error(f"❌ Lỗi ghi dữ liệu: {e}")
                         else:
                             st.error(f"⚠️ Em chưa đủ điểm. Hãy ôn lại lý thuyết và làm lại nhé!")
                             st.session_state.hoan_thanh_bai_1 = False
@@ -521,16 +532,24 @@ else:
                                     
                                     if not user_idx.empty:
                                         tien_do_cu = str(user_df.loc[user_idx[0], user_df.columns[4]])
+                                        
                                         if "Pass_Bai_2" not in tien_do_cu:
                                             tien_do_moi = tien_do_cu + ", Pass_Bai_2" if tien_do_cu.strip() and tien_do_cu != "nan" else "Pass_Bai_2"
                                             
-                                            # CHỈ CẦN THÊM [0] VÀO DÒNG DƯỚI ĐÂY:
+                                            # Cập nhật vào df trong bộ nhớ
                                             user_df.loc[user_idx[0], user_df.columns[4]] = tien_do_moi
                                             
                                             try:
-                                                conn.update(worksheet="Câu trả lời biểu mẫu 1", data=user_df)
+                                                # CHIẾN THUẬT GHI 1 Ô 
+                                                dong_sheet = int(user_idx[0]) + 2 
+                                                o_can_ghi = f"E{dong_sheet}" 
+                                                
+                                                sheet_goc = conn.client.open_by_url(st.secrets.connections.gsheets.spreadsheet).worksheet("Câu trả lời biểu mẫu 1")
+                                                sheet_goc.update_acell(o_can_ghi, tien_do_moi)
+                                                
+                                                st.cache_data.clear()
                                             except Exception as e:
-                                                st.warning("Hệ thống chưa đồng bộ lên Cloud.")
+                                                st.error(f"❌ Lỗi ghi dữ liệu: {e}")
                             else:
                                 st.error(f"⚠️ Em mới đạt **{diem}/10** điểm. Chưa đủ 7.0 điểm để qua cửa rồi. Hãy ôn lại bài và làm lại nhé!")
                                 st.session_state.hoan_thanh_bai_2 = False
