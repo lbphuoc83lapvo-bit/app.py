@@ -379,6 +379,10 @@ else:
                     tab_ly_thuyet, tab_bai_tap, tab_mo_rong = st.tabs(["📚 Lý thuyết bài học", "✍️ Luyện tập & Bài tập", "💡 Em có biết?"])
                     
                     with tab_ly_thuyet:
+                        st.markdown("**🎥 Video bài giảng trực tuyến**")
+                        st.video("https://youtu.be/1hegILoKiGI")
+                        st.markdown("---")
+                        
                         st.subheader("1. Hệ thập phân")
                         st.markdown("**a) Cách ghi số tự nhiên trong hệ thập phân**")
                         st.write(r"- Mỗi số tự nhiên được viết dưới dạng một dãy những chữ số lấy trong 10 chữ số: $0, 1, 2, 3, 4, 5, 6, 7, 8, 9$.")
