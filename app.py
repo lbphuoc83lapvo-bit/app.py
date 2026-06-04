@@ -606,7 +606,7 @@ else:
                     
                     with tab_ly_thuyet:
                         st.markdown("**🎥 Video bài giảng trực tuyến**")
-                        st.info("*(https://youtu.be/m1jVUeC8s7c)*")
+                        st.info("https://youtu.be/m1jVUeC8s7c")
                         st.markdown("---")
                         
                         st.subheader("1. Thứ tự của các số tự nhiên trên tia số")
