@@ -597,6 +597,177 @@ else:
                         st.subheader("💻 Hệ nhị phân với cuộc sống")
                         st.write("Để ghi số trong **hệ nhị phân**, ta chỉ dùng hai chữ số là **0** và **1**. Hai chữ số này tương ứng với hai trạng thái 'đóng' và 'mở' của mạch điện, nên được ứng dụng cốt lõi trong **Khoa học máy tính**.")
                         st.write(r"Chẳng hạn, số **4** trong hệ thập phân được viết là **100** trong hệ nhị phân!")
+                # ---------------- BÀI 3 ----------------
+            elif bai_hoc_selection == "Bài 3. Thứ tự trong tập hợp các số tự nhiên":
+                if st.session_state.get("hoan_thanh_bai_2", False) == True:
+                    st.header("BÀI 3: THỨ TỰ TRONG TẬP HỢP CÁC SỐ TỰ NHIÊN")
+                    
+                    tab_ly_thuyet, tab_bai_tap, tab_mo_rong = st.tabs(["📚 Lý thuyết bài học", "✍️ Luyện tập & Bài tập", "💡 Em có biết?"])
+                    
+                    with tab_ly_thuyet:
+                        st.markdown("**🎥 Video bài giảng trực tuyến**")
+                        st.info("*(Thầy cô sẽ cập nhật video bài giảng tại đây)*")
+                        st.markdown("---")
+                        
+                        st.subheader("1. Thứ tự của các số tự nhiên trên tia số")
+                        st.write(r"- Tập hợp các số tự nhiên $\mathbb{N} = \{0; 1; 2; 3; \dots\}$ được biểu diễn trên một **tia số**.")
+                        st.write(r"- Mỗi số tự nhiên được biểu diễn bởi một điểm. Điểm biểu diễn số tự nhiên $a$ gọi là điểm $a$.")
+                        st.write(r"- Trong hai số tự nhiên khác nhau, luôn có một số nhỏ hơn số kia. Nếu $a$ nhỏ hơn $b$ (kí hiệu $a < b$), thì trên tia số nằm ngang, **điểm $a$ nằm bên trái điểm $b$**.")
+                        
+                        st.markdown("---")
+                        st.subheader("2. Số liền trước, số liền sau và tính chất bắc cầu")
+                        st.write("- Mỗi số tự nhiên có đúng một **số liền sau**. Hai số tự nhiên liên tiếp hơn kém nhau 1 đơn vị.")
+                        st.write(r"*(Ví dụ: 9 là số liền sau của 8; 8 là số liền trước của 9. Hai số 8 và 9 là hai số tự nhiên liên tiếp).*")
+                        st.write(r"- **Tính chất bắc cầu:** Nếu $a < b$ và $b < c$ thì $a < c$.")
+                        st.warning("🚨 **Chú ý quan trọng:** Số 0 là số tự nhiên nhỏ nhất và **không có** số tự nhiên liền trước.")
+
+                        st.markdown("---")
+                        st.subheader(r"3. Các kí hiệu $\le$ và $\ge$")
+                        st.write(r"- Kí hiệu $a \le b$ (đọc là: $a$ nhỏ hơn hoặc bằng $b$) nghĩa là $a < b$ hoặc $a = b$.")
+                        st.write(r"- Kí hiệu $a \ge b$ (đọc là: $a$ lớn hơn hoặc bằng $b$) nghĩa là $a > b$ hoặc $a = b$.")
+                        st.info(r"💡 **Ví dụ:** Tập hợp $\{x \in \mathbb{N} \mid x \le 4\} = \{0; 1; 2; 3; 4\}$. Khác với $\{x \in \mathbb{N} \mid x < 4\} = \{0; 1; 2; 3\}$.")
+
+                        # ==========================================
+                        # PHẦN THỬ THÁCH TƯƠNG TÁC (TỪ SGK)
+                        # ==========================================
+                        st.markdown("---")
+                        st.subheader("🎯 Thử thách Luyện tập & Vận dụng")
+                        
+                        st.success(r"📝 **Thử thách 1 (Luyện tập):** Hãy so sánh hai số $m = 12~036~001$ và $n = 12~035~987$. Trên tia số nằm ngang, điểm nào sẽ nằm trước (nằm bên trái)?")
+                        tt1 = st.radio("Lựa chọn của em:", [
+                            "Chưa chọn",
+                            r"$m < n$ và điểm $m$ nằm trước",
+                            r"$m > n$ và điểm $n$ nằm trước",
+                            r"$m > n$ và điểm $m$ nằm trước"
+                        ], key="b3_tt1")
+                        
+                        if tt1 == r"$m > n$ và điểm $n$ nằm trước":
+                            st.success(r"🎉 Rất chính xác! Ở hàng nghìn, số $m$ có chữ số 6 lớn hơn chữ số 5 của số $n$, nên $m > n$. Do đó số $n$ nhỏ hơn sẽ nằm bên trái (nằm trước).")
+                        elif tt1 != "Chưa chọn":
+                            st.error("❌ Em hãy so sánh từ trái sang phải nhé. Chữ số ở hàng nghìn của hai số khác nhau đấy!")
+
+                        st.info(r"📝 **Thử thách 2 (Vận dụng):** Theo dõi bán hàng, người ta nhận thấy: Số tiền thu được buổi sáng NHIỀU HƠN buổi chiều; Số tiền buổi tối ÍT HƠN buổi chiều. Hãy so sánh số tiền thu được của buổi sáng và buổi tối?")
+                        tt2 = st.radio("Kết quả so sánh:", [
+                            "Chưa chọn", 
+                            "Buổi sáng thu được nhiều tiền hơn buổi tối", 
+                            "Buổi tối thu được nhiều tiền hơn buổi sáng",
+                            "Hai buổi thu được bằng nhau"
+                        ], key="b3_tt2")
+                        
+                        if tt2 == "Buổi sáng thu được nhiều tiền hơn buổi tối":
+                            st.success(r"🎉 Xuất sắc! Đây chính là ứng dụng của **tính chất bắc cầu**. Gọi số tiền sáng, chiều, tối là S, C, T. Ta có: $S > C$ và $C > T$, suy ra $S > T$.")
+                        elif tt2 != "Chưa chọn":
+                            st.error("❌ Em hãy thử dùng tính chất bắc cầu: Sáng > Chiều, mà Chiều lại > Tối. Vậy Sáng và Tối cái nào lớn hơn?")
+
+                    with tab_bai_tap:
+                        st.subheader("✍️ Đánh giá năng lực - Bài 3")
+                        st.info("🔒 **ĐIỀU KIỆN MỞ KHÓA BÀI 4:** Em cần đạt tối thiểu **7.0/10 điểm** trong bài kiểm tra này.")
+                        
+                        with st.form("quiz_bai_3"):
+                            st.markdown("### I. Mức độ Nhận biết (3 điểm)")
+                            st.markdown(r"**Câu 1:** Số tự nhiên nhỏ nhất là số nào?")
+                            q1 = st.radio("Đáp án Câu 1:", ["-- Chọn --", "1", "0", "Không có số nhỏ nhất", "10"], key="b3_q1")
+                            
+                            st.markdown(r"**Câu 2:** Kí hiệu $\ge$ được đọc là gì?")
+                            q2 = st.radio("Đáp án Câu 2:", ["-- Chọn --", "Nhỏ hơn hoặc bằng", "Lớn hơn", "Lớn hơn hoặc bằng", "Bằng nhau"], key="b3_q2")
+                            
+                            st.markdown(r"**Câu 3:** Số tự nhiên liền sau của số $2025$ là số nào?")
+                            q3 = st.radio("Đáp án Câu 3:", ["-- Chọn --", "2024", "2026", "2027", "Không có"], key="b3_q3")
+                            
+                            st.markdown("---")
+                            st.markdown("### II. Mức độ Thông hiểu (4 điểm)")
+                            st.markdown(r"**Câu 4:** Viết tập hợp $A = \{x \in \mathbb{N} \mid x \le 3\}$ bằng cách liệt kê:")
+                            q4 = st.radio("Đáp án Câu 4:", ["-- Chọn --", r"$\{0; 1; 2\}$", r"$\{1; 2; 3\}$", r"$\{0; 1; 2; 3\}$", r"$\{1; 2; 3; 4\}$"], key="b3_q4")
+                            
+                            st.markdown(r"**Câu 5:** Cho ba số tự nhiên $a, b, c$ trong đó $a$ là số nhỏ nhất. Biết điểm $b$ nằm giữa hai điểm $a$ và $c$ trên tia số. Dùng kí hiệu biểu diễn đúng nhất là:")
+                            q5 = st.radio("Đáp án Câu 5:", ["-- Chọn --", r"$a < c < b$", r"$a < b < c$", r"$b < a < c$", r"$c < b < a$"], key="b3_q5")
+                            
+                            st.markdown(r"**Câu 6:** Trong các số 3; 5; 8; 9. Có bao nhiêu số thuộc tập hợp $B = \{x \in \mathbb{N} \mid x \ge 5\}$?")
+                            q6 = st.radio("Đáp án Câu 6:", ["-- Chọn --", "1 số", "2 số", "3 số", "4 số"], key="b3_q6")
+                            
+                            st.markdown(r"**Câu 7:** Sắp xếp các số $3532; 3529; 3531; 3530$ theo thứ tự từ bé đến lớn:")
+                            q7 = st.radio("Đáp án Câu 7:", ["-- Chọn --", "3529; 3530; 3531; 3532", "3532; 3531; 3530; 3529", "3529; 3531; 3530; 3532", "3530; 3529; 3531; 3532"], key="b3_q7")
+                            
+                            st.markdown("---")
+                            st.markdown("### III. Mức độ Vận dụng (3 điểm)")
+                            st.markdown(r"**Câu 8:** Ba bạn An, Bắc, Cường đo chiều cao. An cao 150cm, Bắc cao 153cm, Cường cao 148cm. Đánh dấu trên một cây sào từ dưới lên trên (từ thấp đến cao) thì thứ tự các bạn là:")
+                            q8 = st.radio("Đáp án Câu 8:", ["-- Chọn --", "An, Bắc, Cường", "Cường, An, Bắc", "Bắc, An, Cường", "Cường, Bắc, An"], key="b3_q8")
+                            
+                            st.markdown(r"**Câu 9:** Liệt kê các phần tử của tập hợp $M = \{x \in \mathbb{N} \mid 10 \le x < 13\}$:")
+                            q9 = st.radio("Đáp án Câu 9:", ["-- Chọn --", r"$\{11; 12\}$", r"$\{10; 11; 12\}$", r"$\{10; 11; 12; 13\}$", r"$\{11; 12; 13\}$"], key="b3_q9")
+                            
+                            st.markdown(r"**Câu 10:** Số tự nhiên lớn nhất có 3 chữ số khác nhau là:")
+                            q10 = st.radio("Đáp án Câu 10:", ["-- Chọn --", "999", "987", "989", "789"], key="b3_q10")
+                            
+                            submit_b3 = st.form_submit_button("Lưu & Nộp bài")
+                            
+                        if submit_b3:
+                            diem = 0
+                            if q1 == "0": diem += 1
+                            if q2 == "Lớn hơn hoặc bằng": diem += 1
+                            if q3 == "2026": diem += 1
+                            if q4 == r"$\{0; 1; 2; 3\}$": diem += 1
+                            if q5 == r"$a < b < c$": diem += 1
+                            if q6 == "3 số": diem += 1
+                            if q7 == "3529; 3530; 3531; 3532": diem += 1
+                            if q8 == "Cường, An, Bắc": diem += 1
+                            if q9 == r"$\{10; 11; 12\}$": diem += 1
+                            if q10 == "987": diem += 1
+                            
+                            if diem >= 7:
+                                st.success(f"🎉 RẤT XUẤT SẮC! Em đạt **{diem}/10** điểm. Bài học số 4 đã được mở khóa!")
+                                st.balloons()
+                                
+                                # GHI LÊN SHEET NẾU HỌC SINH CHƯA PASS BÀI 3
+                                if not st.session_state.get("hoan_thanh_bai_3", False):
+                                    st.session_state.hoan_thanh_bai_3 = True
+                                    current_user = st.session_state.current_user
+                                    user_idx = user_df[user_df.iloc[:, 2].astype(str).str.strip() == current_user].index
+                                    
+                                    if not user_idx.empty:
+                                        tien_do_cu = str(user_df.loc[user_idx[0], user_df.columns[4]])
+                                        if "Pass_Bai_3" not in tien_do_cu:
+                                            tien_do_moi = tien_do_cu + ", Pass_Bai_3" if tien_do_cu.strip() and tien_do_cu != "nan" else "Pass_Bai_3"
+                                            
+                                            # Cập nhật vào df trong bộ nhớ
+                                            user_df.loc[user_idx[0], user_df.columns[4]] = tien_do_moi
+                                            
+                                            try:
+                                                import gspread
+                                                kh = st.secrets["connections"]["gsheets"]
+                                                creds = {
+                                                    "type": kh["type"],
+                                                    "project_id": kh["project_id"],
+                                                    "private_key_id": kh["private_key_id"],
+                                                    "private_key": kh["private_key"],
+                                                    "client_email": kh["client_email"],
+                                                    "client_id": kh["client_id"],
+                                                    "auth_uri": kh["auth_uri"],
+                                                    "token_uri": kh["token_uri"],
+                                                    "auth_provider_x509_cert_url": kh["auth_provider_x509_cert_url"],
+                                                    "client_x509_cert_url": kh["client_x509_cert_url"]
+                                                }
+                                                gc = gspread.service_account_from_dict(creds)
+                                                sheet_goc = gc.open_by_url(kh["spreadsheet"]).worksheet("Câu trả lời biểu mẫu 1")
+                                                
+                                                dong_sheet = int(user_idx[0]) + 2 
+                                                o_can_ghi = f"E{dong_sheet}" 
+                                                sheet_goc.update_acell(o_can_ghi, tien_do_moi)
+                                                
+                                                st.cache_data.clear()
+                                            except Exception as e:
+                                                st.error(f"❌ Lỗi ghi dữ liệu: {e}")
+                            else:
+                                st.error(f"⚠️ Em mới đạt **{diem}/10** điểm. Chưa đủ 7.0 điểm để qua cửa rồi. Hãy ôn lại bài và làm lại nhé!")
+                                st.session_state.hoan_thanh_bai_3 = False
+
+                    with tab_mo_rong:
+                        st.subheader("🚀 Em có biết: Tại sao không có số tự nhiên lớn nhất?")
+                        st.write("Vì tập hợp các số tự nhiên $\mathbb{N}$ là **vô hạn**. Cứ với bất kỳ một số tự nhiên nào em nghĩ ra, ta chỉ cần cộng thêm 1 là sẽ luôn tìm được số liền sau lớn hơn nó. Quá kì diệu phải không nào!")
+
+                else:
+                    st.warning("🔒 **BÀI HỌC BỊ KHÓA**")
+                    st.info("Em cần quay lại **Bài 2. Cách ghi số tự nhiên** và hoàn thành Đánh giá năng lực (đạt từ 7.0 điểm trở lên) để mở khóa bài học này nhé!")
 
     # ---------------- NỘI DUNG TOÁN 7, 8, 9 ----------------
     else:
