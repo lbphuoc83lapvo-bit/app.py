@@ -22,6 +22,9 @@ st.markdown("---")
 # ==========================================
 # 2. ĐỌC DỮ LIỆU TỪ GOOGLE SHEETS
 # ==========================================
+# ==========================================
+# 2. ĐỌC DỮ LIỆU TỪ GOOGLE SHEETS
+# ==========================================
 try:
     conn = st.connection("gsheets", type=GSheetsConnection)
     user_df = conn.read(worksheet="Câu trả lời biểu mẫu 1", ttl=0) 
@@ -33,15 +36,18 @@ try:
     while len(user_df.columns) < 5:
         user_df[f"Cột mới {len(user_df.columns)}"] = ""
 
+    # MÀNG LỌC KIM CƯƠNG: Đổi tất cả ô trống thành rỗng và ép toàn bộ bảng thành kiểu Chữ
+    user_df = user_df.fillna("").astype(str)
+
     if len(user_df.columns) >= 4:
-        email_hs = user_df.iloc[:, 1].astype(str).str.strip()
-        ten_dang_nhap = user_df.iloc[:, 2].astype(str).str.strip()
+        email_hs = user_df.iloc[:, 1].str.strip()
+        ten_dang_nhap = user_df.iloc[:, 2].str.strip()
         
         # Đọc mật khẩu và XÓA SẠCH đuôi .0 nếu hệ thống tự sinh ra
-        mat_khau = user_df.iloc[:, 3].astype(str).str.strip()
+        mat_khau = user_df.iloc[:, 3].str.strip()
         mat_khau = mat_khau.str.replace(r'\.0$', '', regex=True)
         
-        tien_do = user_df.iloc[:, 4].astype(str).str.strip() # Cột E
+        tien_do = user_df.iloc[:, 4].str.strip() # Đọc Cột E (Tiến độ)
         
         user_db = dict(zip(ten_dang_nhap, mat_khau))
         email_db = dict(zip(email_hs, mat_khau))
@@ -50,8 +56,7 @@ try:
         user_db, email_db, progress_db = {}, {}, {}
 except Exception as e:
     st.error(f"⚠️ Lỗi kết nối dữ liệu: {e}")
-    user_db, email_db, progress_db = {}, {}, {}
-# Khởi tạo trạng thái
+    user_db, email_db, progress_db = {}, {}, {}# Khởi tạo trạng thái
 if 'is_logged_in' not in st.session_state:
     st.session_state.is_logged_in = False
 if 'current_user' not in st.session_state:
