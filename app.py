@@ -366,16 +366,30 @@ else:
                                         user_df.loc[user_idx[0], user_df.columns[4]] = tien_do_moi
                                         
                                         try:
-                                            # CHIẾN THUẬT GHI 1 Ô (Tránh bị Google Form chặn)
-                                            # Tính số dòng trên Sheets (Dòng 1 là tiêu đề, nên index + 2)
-                                            dong_sheet = int(user_idx[0]) + 2 
-                                            o_can_ghi = f"E{dong_sheet}" # Ví dụ: E2, E3
+                                            import gspread
+                                            # Lấy chìa khóa từ Két sắt
+                                            kh = st.secrets["connections"]["gsheets"]
+                                            creds = {
+                                                "type": kh["type"],
+                                                "project_id": kh["project_id"],
+                                                "private_key_id": kh["private_key_id"],
+                                                "private_key": kh["private_key"],
+                                                "client_email": kh["client_email"],
+                                                "client_id": kh["client_id"],
+                                                "auth_uri": kh["auth_uri"],
+                                                "token_uri": kh["token_uri"],
+                                                "auth_provider_x509_cert_url": kh["auth_provider_x509_cert_url"],
+                                                "client_x509_cert_url": kh["client_x509_cert_url"]
+                                            }
+                                            # Đăng nhập trực tiếp bằng thư viện gốc gspread
+                                            gc = gspread.service_account_from_dict(creds)
+                                            sheet_goc = gc.open_by_url(kh["spreadsheet"]).worksheet("Câu trả lời biểu mẫu 1")
                                             
-                                            # Kết nối hệ thống lõi để ghi
-                                            sheet_goc = conn.client.open_by_url(st.secrets.connections.gsheets.spreadsheet).worksheet("Câu trả lời biểu mẫu 1")
+                                            # Bắn tỉa: Ghi vào đúng 1 ô
+                                            dong_sheet = int(user_idx[0]) + 2 
+                                            o_can_ghi = f"E{dong_sheet}" 
                                             sheet_goc.update_acell(o_can_ghi, tien_do_moi)
                                             
-                                            # Xóa bộ nhớ đệm để lần đăng nhập sau web cập nhật ngay
                                             st.cache_data.clear()
                                         except Exception as e:
                                             st.error(f"❌ Lỗi ghi dữ liệu: {e}")
@@ -539,12 +553,26 @@ else:
                                             # Cập nhật vào df trong bộ nhớ
                                             user_df.loc[user_idx[0], user_df.columns[4]] = tien_do_moi
                                             
-                                            try:
-                                                # CHIẾN THUẬT GHI 1 Ô 
+                                           try:
+                                                import gspread
+                                                kh = st.secrets["connections"]["gsheets"]
+                                                creds = {
+                                                    "type": kh["type"],
+                                                    "project_id": kh["project_id"],
+                                                    "private_key_id": kh["private_key_id"],
+                                                    "private_key": kh["private_key"],
+                                                    "client_email": kh["client_email"],
+                                                    "client_id": kh["client_id"],
+                                                    "auth_uri": kh["auth_uri"],
+                                                    "token_uri": kh["token_uri"],
+                                                    "auth_provider_x509_cert_url": kh["auth_provider_x509_cert_url"],
+                                                    "client_x509_cert_url": kh["client_x509_cert_url"]
+                                                }
+                                                gc = gspread.service_account_from_dict(creds)
+                                                sheet_goc = gc.open_by_url(kh["spreadsheet"]).worksheet("Câu trả lời biểu mẫu 1")
+                                                
                                                 dong_sheet = int(user_idx[0]) + 2 
                                                 o_can_ghi = f"E{dong_sheet}" 
-                                                
-                                                sheet_goc = conn.client.open_by_url(st.secrets.connections.gsheets.spreadsheet).worksheet("Câu trả lời biểu mẫu 1")
                                                 sheet_goc.update_acell(o_can_ghi, tien_do_moi)
                                                 
                                                 st.cache_data.clear()
