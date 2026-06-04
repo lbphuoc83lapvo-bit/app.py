@@ -969,7 +969,7 @@ $= 200 + 600 = 800$""")
                     
                     with tab_ly_thuyet:
                         st.markdown("**🎥 Video bài giảng trực tuyến**")
-                        st.video("https://youtu.be/Mẫu_Link_Video_Của_Thầy") # Thầy thay link YouTube vào đây nhé
+                        st.video("https://youtu.be/oB12eNdEpHQ") # Thầy thay link YouTube vào đây nhé
                         st.markdown("---")
                         
                         st.subheader("1. Phép nhân số tự nhiên")
