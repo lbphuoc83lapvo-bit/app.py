@@ -332,13 +332,159 @@ else:
                     st.subheader("👨‍🔬 Kiến thức mở rộng")
                     st.write(r"Giao của hai tập hợp $A$ và $B$ được kí hiệu là $C = A \cap B$.")
                     
+            # ---------------- BÀI 2 ----------------
             elif bai_hoc_selection == "Bài 2. Cách ghi số tự nhiên":
                 if st.session_state.get("hoan_thanh_bai_1", False) == True:
                     st.header("BÀI 2: CÁCH GHI SỐ TỰ NHIÊN")
-                    st.success("🔓 Chào mừng em đến với Bài 2!")
-                else:
-                    st.warning("🔒 **BÀI HỌC BỊ KHÓA**")
-                    st.info("Em cần hoàn thành Bài 1 để mở khóa nhé!")
+                    
+                    tab_ly_thuyet, tab_bai_tap, tab_mo_rong = st.tabs(["📚 Lý thuyết bài học", "✍️ Luyện tập & Bài tập", "💡 Em có biết?"])
+                    
+                    with tab_ly_thuyet:
+                        st.subheader("1. Hệ thập phân")
+                        st.markdown("**a) Cách ghi số tự nhiên trong hệ thập phân**")
+                        st.write(r"- Mỗi số tự nhiên được viết dưới dạng một dãy những chữ số lấy trong 10 chữ số: $0, 1, 2, 3, 4, 5, 6, 7, 8, 9$.")
+                        st.write("- Vị trí của các chữ số trong dãy gọi là **hàng**.")
+                        st.write("- Cứ 10 đơn vị ở một hàng thì bằng 1 đơn vị ở hàng liền trước nó (Ví dụ: 10 chục = 1 trăm).")
+                        
+                        st.info("💡 **Chú ý:** Với các số tự nhiên khác 0, chữ số đầu tiên (từ trái sang phải) phải khác 0. Để dễ đọc, với các số có từ 4 chữ số trở lên, ta viết tách riêng từng lớp, mỗi lớp 3 chữ số từ phải sang trái.")
+                        
+                        st.markdown("**b) Giá trị các chữ số của một số tự nhiên**")
+                        st.write("Mỗi số tự nhiên viết trong hệ thập phân đều biểu diễn được thành tổng giá trị các chữ số của nó.")
+                        st.latex(r"\overline{ab} = (a \times 10) + b \quad (a \neq 0)")
+                        st.latex(r"\overline{abc} = (a \times 100) + (b \times 10) + c \quad (a \neq 0)")
+                        st.write("Ví dụ:")
+                        st.latex(r"236 = (2 \times 100) + (3 \times 10) + 6")
+
+                        st.markdown("---")
+                        st.subheader("2. Số La Mã")
+                        st.write("Để viết các số La Mã không quá 30, ta dùng các thành phần sau:")
+                        st.markdown("""
+                        | Kí hiệu | I | V | X | IV | IX |
+                        | :---: | :---: | :---: | :---: | :---: | :---: |
+                        | **Giá trị** | 1 | 5 | 10 | 4 | 9 |
+                        """)
+                        st.write(r"- **Từ 11 đến 20:** Thêm **X** vào bên trái các số từ 1 đến 10 (Ví dụ: $\text{XIV} = 14$, $\text{XVI} = 16$).")
+                        st.write(r"- **Từ 21 đến 30:** Thêm **XX** vào bên trái các số từ 1 đến 10 (Ví dụ: $\text{XXIV} = 24$, $\text{XXVII} = 27$).")
+                        st.success("📝 **Nhận xét:** Mỗi số La Mã biểu diễn một số tự nhiên bằng tổng giá trị của các thành phần viết nên số đó. **Không có số La Mã nào biểu diễn số 0.**")
+
+                        # ==========================================
+                        # PHẦN THỬ THÁCH TƯƠNG TÁC (TỪ SGK)
+                        # ==========================================
+                        st.markdown("---")
+                        st.subheader("🎯 Thử thách Luyện tập & Vận dụng")
+                        
+                        st.info(r"**Thử thách 1 (Luyện tập):** Viết số $34~604$ thành tổng giá trị các chữ số của nó.")
+                        tt1 = st.radio("Chọn cách viết đúng nhất:", [
+                            "Chưa chọn",
+                            r"$(3 \times 10~000) + (4 \times 1~000) + (6 \times 10) + 4$",
+                            r"$(3 \times 10~000) + (4 \times 1~000) + (6 \times 100) + 4$",
+                            r"$(3 \times 1~000) + (4 \times 100) + (6 \times 10) + 4$"
+                        ], key="b2_tt1")
+                        if tt1 == r"$(3 \times 10~000) + (4 \times 1~000) + (6 \times 100) + 4$":
+                            st.success("🎉 Rất chính xác! Số 6 nằm ở hàng trăm nên phải nhân với 100, và hàng chục là số 0 nên ta có thể bỏ qua.")
+                        elif tt1 != "Chưa chọn":
+                            st.error("❌ Chưa đúng rồi! Em hãy chú ý vị trí của chữ số 6 nằm ở hàng nào nhé.")
+
+                        st.info(r"**Thử thách 2 (Luyện tập):** Số tự nhiên $27$ được viết bằng số La Mã là:")
+                        tt2 = st.radio("Chọn đáp án đúng:", [
+                            "Chưa chọn", "XXV", "XXVII", "XXIIV"
+                        ], key="b2_tt2")
+                        if tt2 == "XXVII":
+                            st.success(r"🎉 Chính xác! $27 = 20 + 7$, biểu diễn là $\text{XX}$ ghép với $\text{VII}$ thành $\text{XXVII}$.")
+                        elif tt2 != "Chưa chọn":
+                            st.error(r"❌ Hãy xem lại bảng số La Mã! Nhớ rằng chữ số V không bao giờ đứng sau II nhé.")
+
+                        st.success(r"**Thử thách 3 (Vận dụng):** Bác Hoa đi chợ mang 3 loại tiền: 1 nghìn, 10 nghìn và 100 nghìn đồng. Tổng số tiền phải trả là 492 nghìn đồng. Nếu mỗi loại tiền mang không quá 9 tờ, bác phải trả mỗi loại bao nhiêu tờ để không cần nhận tiền thừa?")
+                        tt3 = st.radio("Phương án trả tiền của bác Hoa:", [
+                            "Chưa chọn",
+                            "4 tờ 100 nghìn, 9 tờ 10 nghìn, 2 tờ 1 nghìn",
+                            "4 tờ 100 nghìn, 8 tờ 10 nghìn, 12 tờ 1 nghìn",
+                            "5 tờ 100 nghìn, không dùng tiền 10 nghìn, nhận lại 8 nghìn"
+                        ], key="b2_tt3")
+                        if tt3 == "4 tờ 100 nghìn, 9 tờ 10 nghìn, 2 tờ 1 nghìn":
+                            st.success(r"🎉 Xuất sắc! Đây chính là cấu trúc phân tích số thập phân: $492 = (4 \times 100) + (9 \times 10) + 2$.")
+                        elif tt3 != "Chưa chọn":
+                            st.error("❌ Chưa đúng! Đề bài yêu cầu không cần tiền thừa và mỗi loại không quá 9 tờ. Hãy sử dụng phân tích cấu trúc số thập phân để giải nhé!")
+
+                    with tab_bai_tap:
+                        st.subheader("✍️ Đánh giá năng lực - Bài 2")
+                        st.info("🔒 **ĐIỀU KIỆN MỞ KHÓA BÀI 3:** Em cần đạt tối thiểu **7.0/10 điểm** trong bài kiểm tra này.")
+                        
+                        with st.form("quiz_bai_2"):
+                            st.markdown("### I. Mức độ Nhận biết (3 điểm)")
+                            st.markdown(r"**Câu 1:** Chữ số $4$ đứng ở hàng nào trong một số tự nhiên nếu nó có giá trị bằng $40$?")
+                            q1 = st.radio("Đáp án Câu 1:", ["-- Chọn --", "Hàng đơn vị", "Hàng chục", "Hàng trăm", "Hàng nghìn"], key="b2_q1")
+                            
+                            st.markdown(r"**Câu 2:** Số La Mã $\text{XXIV}$ tương ứng với số tự nhiên nào?")
+                            q2 = st.radio("Đáp án Câu 2:", ["-- Chọn --", "24", "26", "14", "214"], key="b2_q2")
+                            
+                            st.markdown(r"**Câu 3:** Khẳng định nào sau đây là **SAI** khi nói về số tự nhiên trong hệ thập phân?")
+                            q3 = st.radio("Đáp án Câu 3:", ["-- Chọn --", "Có 10 chữ số để ghi mọi số tự nhiên.", "Giá trị của chữ số phụ thuộc vào vị trí (hàng) của nó.", "Cứ 10 đơn vị ở một hàng thì bằng 1 đơn vị ở hàng liền sau nó.", "Số tự nhiên khác 0 luôn có chữ số đầu tiên bên trái khác 0."], key="b2_q3")
+                            
+                            st.markdown("---")
+                            st.markdown("### II. Mức độ Thông hiểu (4 điểm)")
+                            st.markdown(r"**Câu 4:** Viết số $18$ bằng số La Mã:")
+                            q4 = st.radio("Đáp án Câu 4:", ["-- Chọn --", "XVII", "XVIII", "XIVV", "XIIX"], key="b2_q4")
+                            
+                            st.markdown(r"**Câu 5:** Trong số $106~712$, chữ số $7$ có giá trị là bao nhiêu?")
+                            q5 = st.radio("Đáp án Câu 5:", ["-- Chọn --", "7", "70", "700", "7000"], key="b2_q5")
+                            
+                            st.markdown(r"**Câu 6:** Cách biểu diễn số $2~023$ thành tổng các giá trị chữ số nào sau đây là **ĐÚNG**?")
+                            q6 = st.radio("Đáp án Câu 6:", ["-- Chọn --", r"$(2 \times 1~000) + (2 \times 100) + 3$", r"$(2 \times 1~000) + (2 \times 10) + 3$", r"$(2 \times 1~000) + (20 \times 10) + 3$", r"$2 + 0 + 2 + 3$"], key="b2_q6")
+                            
+                            st.markdown(r"**Câu 7:** Số chẵn lớn nhất có $3$ chữ số khác nhau trong hệ thập phân là số nào?")
+                            q7 = st.radio("Đáp án Câu 7:", ["-- Chọn --", "998", "986", "987", "988"], key="b2_q7")
+                            
+                            st.markdown("---")
+                            st.markdown("### III. Mức độ Vận dụng (3 điểm)")
+                            st.markdown(r"**Câu 8:** Dùng các chữ số $0, 3, 5$, em hãy viết một số tự nhiên có ba chữ số khác nhau sao cho chữ số $5$ có giá trị là $50$.")
+                            q8 = st.radio("Đáp án Câu 8:", ["-- Chọn --", "305", "530", "350", "503"], key="b2_q8")
+                            
+                            st.markdown(r"**Câu 9:** Một số tự nhiên được viết bởi ba chữ số $0$ và ba chữ số $9$ nằm xen kẽ nhau. Đó là số nào?")
+                            q9 = st.radio("Đáp án Câu 9:", ["-- Chọn --", "909 090", "90 909", "900 099", "999 000"], key="b2_q9")
+                            
+                            st.markdown(r"**Câu 10:** Trong một cửa hàng, người ta đóng gói: 1 gói = 10 cái; 1 hộp = 10 gói; 1 thùng = 10 hộp. Một người mua 9 thùng, 9 hộp và 9 gói kẹo. Hỏi người đó mua tất cả bao nhiêu cái kẹo?")
+                            q10 = st.radio("Đáp án Câu 10:", ["-- Chọn --", "999 cái", "9 990 cái", "9 099 cái", "9 900 cái"], key="b2_q10")
+                            
+                            submit_b2 = st.form_submit_button("Lưu & Nộp bài")
+                            
+                        if submit_b2:
+                            diem = 0
+                            if q1 == "Hàng chục": diem += 1
+                            if q2 == "24": diem += 1
+                            if q3 == "Cứ 10 đơn vị ở một hàng thì bằng 1 đơn vị ở hàng liền sau nó.": diem += 1
+                            if q4 == "XVIII": diem += 1
+                            if q5 == "700": diem += 1
+                            if q6 == r"$(2 \times 1~000) + (2 \times 10) + 3$": diem += 1
+                            if q7 == "986": diem += 1
+                            if q8 == "350": diem += 1
+                            if q9 == "909 090": diem += 1
+                            if q10 == "9 990 cái": diem += 1
+                            
+                            if diem >= 7:
+                                st.success(f"🎉 RẤT XUẤT SẮC! Em đạt **{diem}/10** điểm. Bài học số 3 đã được mở khóa!")
+                                st.balloons()
+                                st.session_state.hoan_thanh_bai_2 = True
+                            else:
+                                st.error(f"⚠️ Em mới đạt **{diem}/10** điểm. Chưa đủ 7.0 điểm để qua cửa rồi. Hãy ôn lại bài và làm lại nhé!")
+                                st.session_state.hoan_thanh_bai_2 = False
+
+                    with tab_mo_rong:
+                        st.subheader("🏛️ Mở rộng: Hệ La Mã")
+                        st.write("Ngoài các chữ số cơ bản, hệ La Mã còn dùng các chữ số lớn hơn:")
+                        st.markdown("""
+                        - **L** = 50
+                        - **C** = 100
+                        - **D** = 500
+                        - **M** = 1000
+                        """)
+                        st.write("Quy tắc: Chữ số I, X, C, M không lặp lại quá 3 lần liên tiếp. Chữ số V, L, D có mặt không quá 1 lần.")
+                        st.info(r"Ví dụ: **MMXIX** biểu diễn số $1000 + 1000 + 10 + 9 = 2019$.")
+                        
+                        st.markdown("---")
+                        st.subheader("💻 Hệ nhị phân với cuộc sống")
+                        st.write("Để ghi số trong **hệ nhị phân**, ta chỉ dùng hai chữ số là **0** và **1**. Hai chữ số này tương ứng với hai trạng thái 'đóng' và 'mở' của mạch điện, nên được ứng dụng cốt lõi trong **Khoa học máy tính**.")
+                        st.write(r"Chẳng hạn, số **4** trong hệ thập phân được viết là **100** trong hệ nhị phân!")
 
     # ---------------- NỘI DUNG TOÁN 7, 8, 9 ----------------
     else:
