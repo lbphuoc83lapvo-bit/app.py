@@ -956,11 +956,196 @@ $= 200 + 600 = 800$""")
                     with tab_mo_rong:
                         st.subheader("💡 Em có biết?")
                         st.write("Ngày xưa, trước khi có máy tính và điện thoại thông minh, con người đã phát minh ra **Bàn tính gảy** (như bàn tính Soroban của Nhật Bản hay Suanpan của Trung Quốc) để thực hiện các phép cộng trừ những con số lên tới hàng triệu một cách nhanh chóng và chính xác như máy vi tính đấy!")
-
+            
                 else:
                     st.warning("🔒 **BÀI HỌC BỊ KHÓA**")
                     st.info("Em cần quay lại **Bài 3. Thứ tự trong tập hợp các số tự nhiên** và hoàn thành bài Đánh giá năng lực (đạt từ 7.0 điểm trở lên) để mở khóa bài học này nhé!")
+            # ---------------- BÀI 5 ----------------
+            elif bai_hoc_selection == "Bài 5. Phép nhân và phép chia số tự nhiên":
+                if st.session_state.get("hoan_thanh_bai_4", False) == True:
+                    st.header("BÀI 5: PHÉP NHÂN VÀ PHÉP CHIA SỐ TỰ NHIÊN")
+                    
+                    tab_ly_thuyet, tab_bai_tap, tab_mo_rong = st.tabs(["📚 Lý thuyết bài học", "✍️ Luyện tập & Bài tập", "💡 Em có biết?"])
+                    
+                    with tab_ly_thuyet:
+                        st.markdown("**🎥 Video bài giảng trực tuyến**")
+                        st.video("https://youtu.be/Mẫu_Link_Video_Của_Thầy") # Thầy thay link YouTube vào đây nhé
+                        st.markdown("---")
+                        
+                        st.subheader("1. Phép nhân số tự nhiên")
+                        st.write(r"- Phép nhân hai số tự nhiên $a$ và $b$ cho ta một số tự nhiên gọi là tích của $a$ và $b$, kí hiệu là $a \times b$ hoặc $a \cdot b$.")
+                        st.latex(r"a \text{ (Thừa số)} \cdot b \text{ (Thừa số)} = c \text{ (Tích)}")
+                        st.info(r"💡 **Chú ý:** Nếu các thừa số đều bằng chữ, hoặc chỉ có một thừa số bằng số thì ta có thể không viết dấu nhân. Ví dụ: $a \cdot b = ab$; $2 \cdot m = 2m$.")
+                        
+                        st.write("**Tính chất của phép nhân:**")
+                        st.write(r"- **Giao hoán:** $ab = ba$.")
+                        st.write(r"- **Kết hợp:** $(ab)c = a(bc)$.")
+                        st.write(r"- **Phân phối đối với phép cộng:** $a(b + c) = ab + ac$.")
+                        st.write(r"- **Đặc biệt:** $a \cdot 1 = a$; $a \cdot 0 = 0$.")
+                        
+                        st.warning(r"""🚀 **Mẹo tính nhẩm (Thường dùng):** $2 \cdot 5 = 10$
+                        $4 \cdot 25 = 100$
+                        $8 \cdot 125 = 1000$
+                        
+> *Ví dụ tính hợp lí:* $24 \cdot 25 = (6 \cdot 4) \cdot 25 = 6 \cdot (4 \cdot 25) = 6 \cdot 100 = 600$""")
 
+                        st.markdown("---")
+                        st.subheader("2. Phép chia hết và phép chia có dư")
+                        st.write(r"- Với hai số tự nhiên $a$ và $b$ đã cho ($b \ne 0$), ta luôn tìm được đúng hai số tự nhiên $q$ và $r$ sao cho:")
+                        st.latex(r"a = b \cdot q + r \quad (0 \le r < b)")
+                        st.write(r"Trong đó: $a$ (Số bị chia), $b$ (Số chia), $q$ (Thương), $r$ (Số dư).")
+                        
+                        st.write(r"- **Phép chia hết:** Nếu $r = 0$, ta có $a : b = q$.")
+                        st.markdown(r"> *Ví dụ:* $196 : 7 = 28$ (dư 0).")
+                        
+                        st.write(r"- **Phép chia có dư:** Nếu $r \ne 0$, ta có $a : b = q$ (dư $r$).")
+                        st.markdown(r"> *Ví dụ:* $215 : 18 = 11$ (dư 17).")
+                        st.error(r"🚨 **Lưu ý quan trọng:** Trong phép chia có dư, **số dư bao giờ cũng nhỏ hơn số chia** ($r < b$).")
+
+                        # ==========================================
+                        # PHẦN THỬ THÁCH TƯƠNG TÁC
+                        # ==========================================
+                        st.markdown("---")
+                        st.subheader("🎯 Thử thách Luyện tập & Vận dụng")
+                        
+                        st.success("📝 **Thử thách 1 (Bài toán mua gạo):** Mẹ em mua một túi 10 kg gạo ngon loại 20 nghìn đồng một kilôgam. Hỏi mẹ em phải đưa cho cô bán hàng bao nhiêu tờ 50 nghìn đồng để trả tiền gạo?")
+                        tt1 = st.radio("Lựa chọn của em:", [
+                            "Chưa chọn",
+                            "2 tờ",
+                            "4 tờ",
+                            "5 tờ"
+                        ], key="b5_tt1")
+                        
+                        if tt1 == "4 tờ":
+                            st.success(r"🎉 Chính xác! Số tiền mua gạo là: $10 \cdot 20 = 200$ (nghìn đồng). Số tờ 50 nghìn cần đưa là: $200 : 50 = 4$ (tờ).")
+                        elif tt1 != "Chưa chọn":
+                            st.error("❌ Em hãy tính tổng số tiền mua gạo trước (10 kg x 20 nghìn), sau đó chia cho 50 nghìn nhé!")
+
+                        st.info(r"📝 **Thử thách 2 (Xếp xe ô tô):** Phải dùng ít nhất bao nhiêu xe ô tô 45 chỗ ngồi để chở hết 487 cổ động viên của một đội bóng?")
+                        tt2 = st.radio("Số xe ô tô cần dùng ít nhất là:", [
+                            "Chưa chọn", 
+                            "10 xe", 
+                            "11 xe",
+                            "12 xe"
+                        ], key="b5_tt2")
+                        
+                        if tt2 == "11 xe":
+                            st.success(r"🎉 Rất thông minh! Ta có $487 : 45 = 10$ (dư 37). Xếp đủ 10 xe thì còn thừa 37 người, nên bắt buộc phải dùng thêm 1 xe nữa. Tổng cộng là 11 xe.")
+                        elif tt2 != "Chưa chọn":
+                            st.error(r"❌ Em tính lại nhé! $487 : 45$ dư bao nhiêu người? Những người dư ra đó cũng cần xe để đi mà đúng không?")
+
+                    with tab_bai_tap:
+                        st.subheader("✍️ Đánh giá năng lực - Bài 5")
+                        st.info("🔒 **ĐIỀU KIỆN MỞ KHÓA BÀI 6:** Em cần đạt tối thiểu **7.0/10 điểm** trong bài kiểm tra này.")
+                        
+                        with st.form("quiz_bai_5"):
+                            st.markdown("### I. Mức độ Nhận biết (3 điểm)")
+                            
+                            st.markdown(r"**Câu 1:** Trong phép nhân $a \cdot b = c$, $a$ và $b$ được gọi là gì?")
+                            q1 = st.radio("Đáp án Câu 1:", ["-- Chọn --", "Số hạng", "Thừa số", "Tích", "Thương"], key="b5_q1")
+                            
+                            st.markdown(r"**Câu 2:** Tính chất $a(b + c) = ab + ac$ được gọi là tính chất gì?")
+                            q2 = st.radio("Đáp án Câu 2:", ["-- Chọn --", "Giao hoán", "Kết hợp", "Phân phối của phép nhân đối với phép cộng", "Giao hoán của phép nhân"], key="b5_q2")
+                            
+                            st.markdown(r"**Câu 3:** Trong phép chia có dư $a = b \cdot q + r$ ($b \ne 0$), số dư $r$ phải thoả mãn điều kiện nào?")
+                            q3 = st.radio("Đáp án Câu 3:", ["-- Chọn --", r"$0 \le r < b$", r"$r = b$", r"$r > b$", r"$0 < r < b$"], key="b5_q3")
+                            
+                            st.markdown("---")
+                            st.markdown("### II. Mức độ Thông hiểu (4 điểm)")
+                            
+                            st.markdown(r"**Câu 4:** Kết quả của phép tính hợp lí $125 \cdot 8001 \cdot 8$ là:")
+                            q4 = st.radio("Đáp án Câu 4:", ["-- Chọn --", "8 001 000", "8 000 100", "1 000 000", "8 010 000"], key="b5_q4")
+                            
+                            st.markdown(r"**Câu 5:** Để tính nhẩm $125 \cdot 101$, cách phân tích nào sau đây là đúng?")
+                            q5 = st.radio("Đáp án Câu 5:", ["-- Chọn --", r"$125 \cdot (100 - 1)$", r"$125 \cdot (100 + 1)$", r"$125 \cdot 100 + 1$", r"$125 + 100 \cdot 1$"], key="b5_q5")
+                            
+                            st.markdown(r"**Câu 6:** Kết quả của phép chia $1~092 : 91$ là:")
+                            q6 = st.radio("Đáp án Câu 6:", ["-- Chọn --", "12 (dư 0)", "11 (dư 1)", "12 (dư 2)", "13"], key="b5_q6")
+                            
+                            st.markdown(r"**Câu 7:** Phép chia $2~059 : 17$ có số dư là bao nhiêu?")
+                            q7 = st.radio("Đáp án Câu 7:", ["-- Chọn --", "1", "2", "3", "0"], key="b5_q7")
+                            
+                            st.markdown("---")
+                            st.markdown("### III. Mức độ Vận dụng (3 điểm)")
+                            
+                            st.markdown(r"**Câu 8:** Một trường THCS có 50 phòng học, mỗi phòng có 11 bộ bàn ghế, mỗi bộ bàn ghế có thể xếp cho 4 học sinh ngồi. Trường có thể nhận nhiều nhất bao nhiêu học sinh?")
+                            q8 = st.radio("Đáp án Câu 8:", ["-- Chọn --", "2 000 học sinh", "2 200 học sinh", "2 400 học sinh", "2 500 học sinh"], key="b5_q8")
+                            
+                            st.markdown(r"**Câu 9:** Một trường có 997 học sinh dự lễ tổng kết. Ban tổ chức chuẩn bị ghế băng 5 chỗ ngồi. Cần ít nhất bao nhiêu ghế băng để tất cả đều có chỗ ngồi?")
+                            q9 = st.radio("Đáp án Câu 9:", ["-- Chọn --", "199 ghế", "200 ghế", "198 ghế", "201 ghế"], key="b5_q9")
+                            
+                            st.markdown(r"**Câu 10:** Một nhà máy dùng ô tô chuyển 1 290 kiện hàng. Nếu mỗi xe chở được 45 kiện thì phải cần ít nhất bao nhiêu chuyến xe để chở hết hàng?")
+                            q10 = st.radio("Đáp án Câu 10:", ["-- Chọn --", "28 chuyến", "29 chuyến", "30 chuyến", "31 chuyến"], key="b5_q10")
+                            
+                            submit_b5 = st.form_submit_button("Lưu & Nộp bài")
+                            
+                        if submit_b5:
+                            diem = 0
+                            if q1 == "Thừa số": diem += 1
+                            if q2 == "Phân phối của phép nhân đối với phép cộng": diem += 1
+                            if q3 == r"$0 \le r < b$": diem += 1
+                            if q4 == "8 001 000": diem += 1
+                            if q5 == r"$125 \cdot (100 + 1)$": diem += 1
+                            if q6 == "12 (dư 0)": diem += 1
+                            if q7 == "2": diem += 1
+                            if q8 == "2 200 học sinh": diem += 1
+                            if q9 == "200 ghế": diem += 1
+                            if q10 == "29 chuyến": diem += 1
+                            
+                            if diem >= 7:
+                                st.success(f"🎉 RẤT XUẤT SẮC! Em đạt **{diem}/10** điểm. Em đã chinh phục thành công Bài 5!")
+                                st.balloons()
+                                
+                                # GHI LÊN SHEET NẾU HỌC SINH CHƯA PASS BÀI 5
+                                if not st.session_state.get("hoan_thanh_bai_5", False):
+                                    st.session_state.hoan_thanh_bai_5 = True
+                                    current_user = st.session_state.current_user
+                                    user_idx = user_df[user_df.iloc[:, 2].astype(str).str.strip() == current_user].index
+                                    
+                                    if not user_idx.empty:
+                                        tien_do_cu = str(user_df.loc[user_idx[0], user_df.columns[4]])
+                                        if "Pass_Bai_5" not in tien_do_cu:
+                                            tien_do_moi = tien_do_cu + ", Pass_Bai_5" if tien_do_cu.strip() and tien_do_cu != "nan" else "Pass_Bai_5"
+                                            
+                                            user_df.loc[user_idx[0], user_df.columns[4]] = tien_do_moi
+                                            
+                                            try:
+                                                import gspread
+                                                kh = st.secrets["connections"]["gsheets"]
+                                                creds = {
+                                                    "type": kh["type"],
+                                                    "project_id": kh["project_id"],
+                                                    "private_key_id": kh["private_key_id"],
+                                                    "private_key": kh["private_key"],
+                                                    "client_email": kh["client_email"],
+                                                    "client_id": kh["client_id"],
+                                                    "auth_uri": kh["auth_uri"],
+                                                    "token_uri": kh["token_uri"],
+                                                    "auth_provider_x509_cert_url": kh["auth_provider_x509_cert_url"],
+                                                    "client_x509_cert_url": kh["client_x509_cert_url"]
+                                                }
+                                                gc = gspread.service_account_from_dict(creds)
+                                                sheet_goc = gc.open_by_url(kh["spreadsheet"]).worksheet("Câu trả lời biểu mẫu 1")
+                                                
+                                                dong_sheet = int(user_idx[0]) + 2 
+                                                o_can_ghi = f"E{dong_sheet}" 
+                                                sheet_goc.update_acell(o_can_ghi, tien_do_moi)
+                                                
+                                                st.cache_data.clear()
+                                            except Exception as e:
+                                                st.error(f"❌ Lỗi ghi dữ liệu: {e}")
+                            else:
+                                st.error(f"⚠️ Em mới đạt **{diem}/10** điểm. Chưa đủ 7.0 điểm để qua cửa rồi. Hãy ôn lại bài và làm lại nhé!")
+                                st.session_state.hoan_thanh_bai_5 = False
+
+                    with tab_mo_rong:
+                        st.subheader("💡 Em có biết: Tên gọi \"Dấu nhân\" bắt nguồn từ đâu?")
+                        st.write("Dấu nhân ($\times$) được nhà toán học người Anh William Oughtred sử dụng lần đầu tiên vào năm 1631. Sau đó, để tránh nhầm lẫn với chữ cái $x$ trong đại số, nhà toán học người Đức Gottfried Leibniz đã đề xuất sử dụng dấu chấm ($\cdot$) để thay thế. Ngày nay, chúng ta sử dụng cả hai kí hiệu này!")
+
+                else:
+                    st.warning("🔒 **BÀI HỌC BỊ KHÓA**")
+                    st.info("Em cần quay lại **Bài 4. Phép cộng và phép trừ số tự nhiên** và hoàn thành bài Đánh giá năng lực (đạt từ 7.0 điểm trở lên) để mở khóa bài học này nhé!")
+    
     # ---------------- NỘI DUNG TOÁN 7, 8, 9 ----------------
     else:
         st.info("Nội dung bài học đang được thầy cô tiếp tục biên soạn và cập nhật. Các em hãy đón chờ nhé!")
