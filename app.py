@@ -1335,11 +1335,11 @@ $= 200 + 600 = 800$""")
                                         user_idx = user_df[user_df.iloc[:, 2].astype(str).str.strip() == current_user].index
                                         
                                         if not user_idx.empty:
-                                        tien_do_cu = str(user_df.loc[user_idx[0], user_df.columns[4]])
-                                        if "Pass_LuyenTapChung" not in tien_do_cu:
-                                            tien_do_moi = tien_do_cu + ", Pass_LuyenTapChung" if tien_do_cu.strip() and tien_do_cu != "nan" else "Pass_LuyenTapChung"
+                                            tien_do_cu = str(user_df.loc[user_idx[0], user_df.columns[4]])
+                                            if "Pass_LuyenTapChung" not in tien_do_cu:
+                                                tien_do_moi = tien_do_cu + ", Pass_LuyenTapChung" if tien_do_cu.strip() and tien_do_cu != "nan" else "Pass_LuyenTapChung"
                                             
-                                            user_df.loc[user_idx[0], user_df.columns[4]] = tien_do_moi
+                                                user_df.loc[user_idx[0], user_df.columns[4]] = tien_do_moi
                                             
                                             try:
                                                 import gspread
