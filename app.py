@@ -1335,13 +1335,37 @@ $= 200 + 600 = 800$""")
                                         user_idx = user_df[user_df.iloc[:, 2].astype(str).str.strip() == current_user].index
                                         
                                         if not user_idx.empty:
-                                            tien_do_cu = str(user_df.loc[user_idx[0], user_df.columns[4]])
-                                            if "Pass_LuyenTapChung" not in tien_do_cu:
-                                            # DÒNG DƯỚI ĐÂY ĐÃ ĐƯỢC BỔ SUNG ĐẦY ĐỦ VẾ "ELSE"
+                                        tien_do_cu = str(user_df.loc[user_idx[0], user_df.columns[4]])
+                                        if "Pass_LuyenTapChung" not in tien_do_cu:
                                             tien_do_moi = tien_do_cu + ", Pass_LuyenTapChung" if tien_do_cu.strip() and tien_do_cu != "nan" else "Pass_LuyenTapChung"
                                             
                                             user_df.loc[user_idx[0], user_df.columns[4]] = tien_do_moi
-    
+                                            
+                                            try:
+                                                import gspread
+                                                kh = st.secrets["connections"]["gsheets"]
+                                                creds = {
+                                                    "type": kh["type"],
+                                                    "project_id": kh["project_id"],
+                                                    "private_key_id": kh["private_key_id"],
+                                                    "private_key": kh["private_key"],
+                                                    "client_email": kh["client_email"],
+                                                    "client_id": kh["client_id"],
+                                                    "auth_uri": kh["auth_uri"],
+                                                    "token_uri": kh["token_uri"],
+                                                    "auth_provider_x509_cert_url": kh["auth_provider_x509_cert_url"],
+                                                    "client_x509_cert_url": kh["client_x509_cert_url"]
+                                                }
+                                                gc = gspread.service_account_from_dict(creds)
+                                                sheet_goc = gc.open_by_url(kh["spreadsheet"]).worksheet("Câu trả lời biểu mẫu 1")
+                                                
+                                                dong_sheet = int(user_idx[0]) + 2 
+                                                o_can_ghi = f"E{dong_sheet}" 
+                                                sheet_goc.update_acell(o_can_ghi, tien_do_moi)
+                                                
+                                                st.cache_data.clear()
+                                            except Exception as e:
+                                                st.error(f"❌ Lỗi ghi dữ liệu: {e}")
     # ---------------- NỘI DUNG TOÁN 7, 8, 9 ----------------
     else:
         st.info("Nội dung bài học đang được thầy cô tiếp tục biên soạn và cập nhật. Các em hãy đón chờ nhé!")
