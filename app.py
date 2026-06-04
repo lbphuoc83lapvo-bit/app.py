@@ -351,7 +351,10 @@ else:
                                     # Ghi nối thêm chữ Pass_Bai_1
                                     if "Pass_Bai_1" not in tien_do_cu:
                                         tien_do_moi = tien_do_cu + ", Pass_Bai_1" if tien_do_cu.strip() and tien_do_cu != "nan" else "Pass_Bai_1"
-                                        user_df.loc[user_idx, user_df.columns[4]] = tien_do_moi
+                                        
+                                        # CHỈ CẦN THÊM [0] VÀO DÒNG DƯỚI ĐÂY:
+                                        user_df.loc[user_idx[0], user_df.columns[4]] = tien_do_moi
+                                        
                                         try:
                                             conn.update(worksheet="Câu trả lời biểu mẫu 1", data=user_df)
                                         except Exception as e:
@@ -507,7 +510,10 @@ else:
                                         tien_do_cu = str(user_df.loc[user_idx[0], user_df.columns[4]])
                                         if "Pass_Bai_2" not in tien_do_cu:
                                             tien_do_moi = tien_do_cu + ", Pass_Bai_2" if tien_do_cu.strip() and tien_do_cu != "nan" else "Pass_Bai_2"
-                                            user_df.loc[user_idx, user_df.columns[4]] = tien_do_moi
+                                            
+                                            # CHỈ CẦN THÊM [0] VÀO DÒNG DƯỚI ĐÂY:
+                                            user_df.loc[user_idx[0], user_df.columns[4]] = tien_do_moi
+                                            
                                             try:
                                                 conn.update(worksheet="Câu trả lời biểu mẫu 1", data=user_df)
                                             except Exception as e:
