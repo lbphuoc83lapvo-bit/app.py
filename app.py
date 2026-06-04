@@ -611,6 +611,12 @@ else:
                         
                         st.subheader("1. Thứ tự của các số tự nhiên trên tia số")
                         st.write(r"- Tập hợp các số tự nhiên $\mathbb{N} = \{0; 1; 2; 3; \dots\}$ được biểu diễn trên một **tia số**.")
+                        
+                        # CHÈN ẢNH TỪ FILE TRONG GITHUB TẠI ĐÂY:
+                        st.image("tiaso.png", caption="Hình 1.5: Điểm biểu diễn số tự nhiên trên tia số", use_container_width=True)
+                        
+                        st.write(r"- Mỗi số tự nhiên được biểu diễn bởi một điểm...")
+                        
                         st.write(r"- Mỗi số tự nhiên được biểu diễn bởi một điểm. Điểm biểu diễn số tự nhiên $a$ gọi là điểm $a$.")
                         st.write(r"- Trong hai số tự nhiên khác nhau, luôn có một số nhỏ hơn số kia. Nếu $a$ nhỏ hơn $b$ (kí hiệu $a < b$), thì trên tia số nằm ngang, **điểm $a$ nằm bên trái điểm $b$**.")
                         
