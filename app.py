@@ -78,9 +78,16 @@ if not st.session_state.is_logged_in:
                     st.error(f"❌ Tài khoản '{_user}' chưa xuất hiện trong hệ thống! (Hãy thử bấm Clear Cache trên trình duyệt)")
                 elif str(user_db[_user]) != _pass:
                     st.error("❌ Mật khẩu không khớp!")
-                else:
+               else:
                     st.session_state.is_logged_in = True
                     st.session_state.current_user = _user
+                    
+                    # TỰ ĐỘNG KHÔI PHỤC TIẾN ĐỘ TỪ SHEET XUỐNG BỘ NHỚ
+                    if progress_db.get(_user, "") == "Pass_Bai_2":
+                        st.session_state.hoan_thanh_bai_2 = True
+                    else:
+                        st.session_state.hoan_thanh_bai_2 = False
+                        
                     st.success(f"Đăng nhập thành công! Xin chào {_user}.")
                     st.rerun()
                     
