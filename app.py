@@ -141,6 +141,13 @@ else:
         chapters_6 = [
             "Chương 1: TẬP HỢP CÁC SỐ TỰ NHIÊN",
             "Chương 2: TÍNH CHIA HẾT TRONG TẬP HỢP SỐ TỰ NHIÊN",
+            "Chương 3: SỐ NGUYÊN",
+            "Chương 4: MỘT SỐ HÌNH PHẲNG TRONG THỰC TIỄN",
+            "Chương 5: TÍNH ĐỐI XỨNG CỦA HÌNH PHẲNG TRONG THỰC TIỄN",
+            "Chương 6: PHÂN SỐ",
+            "Chương 7: SỐ THẬP PHÂN",
+            "Chương 8: NHỮNG HÌNH HÌNH HỌC CƠ BẢN",
+            "Chương 9: DỮ LIỆU VÀ XÁC SUẤT THỰC NGHIỆM"
         ]
         chapter_selection = st.sidebar.selectbox("Chọn chương học:", chapters_6)
         
