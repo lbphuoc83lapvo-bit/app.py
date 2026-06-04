@@ -546,14 +546,13 @@ else:
                                     
                                     if not user_idx.empty:
                                         tien_do_cu = str(user_df.loc[user_idx[0], user_df.columns[4]])
-                                        
                                         if "Pass_Bai_2" not in tien_do_cu:
                                             tien_do_moi = tien_do_cu + ", Pass_Bai_2" if tien_do_cu.strip() and tien_do_cu != "nan" else "Pass_Bai_2"
                                             
                                             # Cập nhật vào df trong bộ nhớ
                                             user_df.loc[user_idx[0], user_df.columns[4]] = tien_do_moi
                                             
-                                           try:
+                                            try:
                                                 import gspread
                                                 kh = st.secrets["connections"]["gsheets"]
                                                 creds = {
