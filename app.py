@@ -1145,6 +1145,199 @@ $= 200 + 600 = 800$""")
                 else:
                     st.warning("🔒 **BÀI HỌC BỊ KHÓA**")
                     st.info("Em cần quay lại **Bài 4. Phép cộng và phép trừ số tự nhiên** và hoàn thành bài Đánh giá năng lực (đạt từ 7.0 điểm trở lên) để mở khóa bài học này nhé!")
+            # ---------------- LUYỆN TẬP CHUNG ----------------
+            elif bai_hoc_selection == "Luyện tập chung (Bài 1 - Bài 5)":
+                if st.session_state.get("hoan_thanh_bai_5", False) == True:
+                    st.header("LUYỆN TẬP CHUNG (TỪ BÀI 1 ĐẾN BÀI 5)")
+                    
+                    tab_ly_thuyet, tab_bai_tap = st.tabs(["📚 Ôn tập lý thuyết", "⏳ Bài kiểm tra (90 phút)"])
+                    
+                    with tab_ly_thuyet:
+                        st.subheader("Bảng tóm tắt kiến thức trọng tâm")
+                        st.markdown(r"""
+**1. Tập hợp và Phần tử:**
+- Kí hiệu thuộc ($\in$), không thuộc ($\notin$).
+- Tập hợp số tự nhiên: $\mathbb{N} = \{0; 1; 2; \dots\}$
+- Tập hợp số tự nhiên khác 0: $\mathbb{N}^* = \{1; 2; 3; \dots\}$
+- Hai cách mô tả: Liệt kê các phần tử và Nêu dấu hiệu đặc trưng.
+
+**2. Cách ghi số tự nhiên:**
+- Hệ thập phân: Cứ 10 đơn vị ở một hàng thì làm thành 1 đơn vị ở hàng liền trước nó.
+- Chữ số La Mã: Dùng các kí tự $I (1), V (5), X (10)...$ để ghi số.
+
+**3. Thứ tự trong tập hợp số tự nhiên:**
+- Mỗi điểm trên tia số biểu diễn một số. Điểm bên trái luôn nhỏ hơn điểm bên phải.
+- Tính chất bắc cầu: Nếu $a < b$ và $b < c$ thì $a < c$.
+
+**4. Phép cộng và Phép trừ:**
+- Phép cộng: Giao hoán ($a+b=b+a$), Kết hợp ($(a+b)+c = a+(b+c)$).
+- Phép trừ $a - b$: Chỉ thực hiện được trong $\mathbb{N}$ khi Số bị trừ $\ge$ Số trừ ($a \ge b$).
+
+**5. Phép nhân và Phép chia:**
+- Phép nhân: Phân phối đối với phép cộng ($a(b+c) = ab+ac$).
+- Phép chia có dư: $a = b \cdot q + r$ (với điều kiện $0 \le r < b$). Nếu $r=0$ là phép chia hết.
+                        """)
+                        
+                    with tab_bai_tap:
+                        st.subheader("Đánh giá tổng hợp năng lực")
+                        st.info("🔒 **ĐIỀU KIỆN MỞ KHÓA BÀI 6:** Em cần hoàn thành bài thi trong 90 phút và đạt tối thiểu **7.0/10 điểm** (Đúng 35/50 câu).")
+                        
+                        # --- CÔNG TẮC: NÚT BẮT ĐẦU LÀM BÀI ---
+                        if not st.session_state.get("bat_dau_ltc", False):
+                            st.warning("⚠️ **Lưu ý:** Bài thi có giới hạn thời gian 90 phút. Đồng hồ sẽ bắt đầu đếm ngược ngay khi em bấm nút. Hãy chuẩn bị sẵn sàng giấy nháp và bút nhé!")
+                            
+                            # Nút bấm to, màu nổi bật
+                            if st.button("🚀 BẮT ĐẦU LÀM BÀI", type="primary", use_container_width=True):
+                                st.session_state.bat_dau_ltc = True
+                                st.rerun() # Tải lại trang để hiện câu hỏi
+                        else:
+                            # --- NẾU ĐÃ BẤM NÚT, HIỂN THỊ ĐỒNG HỒ VÀ CÂU HỎI ---
+                            
+                            # Tích hợp đồng hồ đếm ngược bằng Javascript (Không bị reset khi click)
+                            timer_html = """
+                            <div id="clock" style="font-size: 24px; font-weight: bold; color: #D32F2F; text-align: center; padding: 10px; border: 2px dashed #D32F2F; border-radius: 10px; background-color: #ffebee;">
+                                Đang tải đồng hồ...
+                            </div>
+                            <script>
+                                var timerKey = "countdown_timer_ltc";
+                                var timeLimit = 90 * 60; 
+                                var storedTime = sessionStorage.getItem(timerKey);
+                                var timeRemaining = storedTime ? parseInt(storedTime) : timeLimit;
+
+                                var x = setInterval(function() {
+                                    timeRemaining--;
+                                    sessionStorage.setItem(timerKey, timeRemaining);
+                                    var minutes = Math.floor(timeRemaining / 60);
+                                    var seconds = timeRemaining % 60;
+                                    document.getElementById("clock").innerHTML = "⏳ THỜI GIAN CÒN LẠI: " + minutes + " phút " + (seconds < 10 ? "0" : "") + seconds + " giây";
+                                    if (timeRemaining < 0) {
+                                        clearInterval(x);
+                                        document.getElementById("clock").innerHTML = "🚨 ĐÃ HẾT GIỜ LÀM BÀI!";
+                                    }
+                                }, 1000);
+                            </script>
+                            """
+                            st.components.v1.html(timer_html, height=70)
+                            
+                            # --- KHO DỮ LIỆU CÂU HỎI ---
+                            cau_hoi_mcq = [
+                                # 15 Câu Nhận biết
+                                {"q": r"**Câu 1 (NB):** Kí hiệu của tập hợp các số tự nhiên là gì?", "opts": [r"$\mathbb{N}^*$", r"$\mathbb{N}$", r"$\mathbb{Z}$", r"$\mathbb{Q}$"], "ans": r"$\mathbb{N}$"},
+                                {"q": r"**Câu 2 (NB):** Kí hiệu của tập hợp các số tự nhiên khác 0 là?", "opts": [r"$\mathbb{N}^*$", r"$\mathbb{N}$", r"$\mathbb{Z}$", r"$\mathbb{Q}$"], "ans": r"$\mathbb{N}^*$"},
+                                {"q": r"**Câu 3 (NB):** Để chỉ $a$ là một phần tử của tập hợp $A$, ta dùng kí hiệu nào?", "opts": [r"$\notin$", r"$\subset$", r"$=$", r"$\in$"], "ans": r"$\in$"},
+                                {"q": r"**Câu 4 (NB):** Số tự nhiên liền sau của số 99 là:", "opts": ["98", "100", "990", "101"], "ans": "100"},
+                                {"q": r"**Câu 5 (NB):** Số tự nhiên liền trước của số 1 là:", "opts": ["0", "2", "Không có", "10"], "ans": "0"},
+                                {"q": r"**Câu 6 (NB):** Trong hệ thập phân, chữ số 5 trong số 254 có giá trị là:", "opts": ["5", "50", "500", "54"], "ans": "50"},
+                                {"q": r"**Câu 7 (NB):** Kí hiệu La Mã $V$ có giá trị trong hệ thập phân là:", "opts": ["1", "5", "10", "50"], "ans": "5"},
+                                {"q": r"**Câu 8 (NB):** Trong phép trừ $a - b = c$, số $a$ được gọi là:", "opts": ["Số trừ", "Hiệu", "Số bị trừ", "Số hạng"], "ans": "Số bị trừ"},
+                                {"q": r"**Câu 9 (NB):** Trong phép nhân $a \cdot b = c$, số $b$ được gọi là:", "opts": ["Thương", "Tích", "Thừa số", "Số hạng"], "ans": "Thừa số"},
+                                {"q": r"**Câu 10 (NB):** Phép cộng số tự nhiên KHÔNG có tính chất nào sau đây?", "opts": ["Giao hoán", "Kết hợp", "Cộng với 0", "Phân phối"], "ans": "Phân phối"},
+                                {"q": r"**Câu 11 (NB):** Điều kiện để thực hiện được phép trừ $a - b$ trong tập $\mathbb{N}$ là:", "opts": [r"$a > b$", r"$a < b$", r"$a \ge b$", r"$a \ne b$"], "ans": r"$a \ge b$"},
+                                {"q": r"**Câu 12 (NB):** Trong phép chia có dư $a = b \cdot q + r$ ($b \ne 0$), số dư $r$ phải thỏa mãn:", "opts": [r"$r < b$", r"$0 \le r < b$", r"$r = 0$", r"$r > b$"], "ans": r"$0 \le r < b$"},
+                                {"q": r"**Câu 13 (NB):** Phép chia có số dư $r = 0$ được gọi là:", "opts": ["Phép chia có dư", "Phép chia hết", "Phép chia vô nghiệm", "Phép nhân"], "ans": "Phép chia hết"},
+                                {"q": r"**Câu 14 (NB):** Có bao nhiêu cách để mô tả một tập hợp?", "opts": ["1 cách", "2 cách", "3 cách", "4 cách"], "ans": "2 cách"},
+                                {"q": r"**Câu 15 (NB):** Điểm $a$ nằm bên trái điểm $b$ trên tia số thì:", "opts": [r"$a > b$", r"$a = b$", r"$a < b$", r"$a \ge b$"], "ans": r"$a < b$"},
+                                
+                                # 20 Câu Thông hiểu
+                                {"q": r"**Câu 16 (TH):** Viết tập hợp $A = \{x \in \mathbb{N} \mid x < 3\}$ bằng cách liệt kê:", "opts": [r"$\{1; 2\}$", r"$\{0; 1; 2; 3\}$", r"$\{0; 1; 2\}$", r"$\{1; 2; 3\}$"], "ans": r"$\{0; 1; 2\}$"},
+                                {"q": r"**Câu 17 (TH):** Số phần tử của tập hợp $M = \{2; 4; 6; 8\}$ là:", "opts": ["2", "4", "6", "8"], "ans": "4"},
+                                {"q": r"**Câu 18 (TH):** Số La Mã $XIV$ biểu diễn số tự nhiên nào?", "opts": ["16", "14", "15", "9"], "ans": "14"},
+                                {"q": r"**Câu 19 (TH):** Viết số 24 bằng chữ số La Mã:", "opts": ["XXIV", "XIV", "XXVI", "XXIIII"], "ans": "XXIV"},
+                                {"q": r"**Câu 20 (TH):** So sánh hai số 2025 và 2052:", "opts": ["2025 > 2052", "2025 < 2052", "2025 = 2052", "Không so sánh được"], "ans": "2025 < 2052"},
+                                {"q": r"**Câu 21 (TH):** Kết quả của phép tính $45 + 55$ là:", "opts": ["90", "100", "110", "105"], "ans": "100"},
+                                {"q": r"**Câu 22 (TH):** Kết quả của phép tính $125 - 34$ là:", "opts": ["91", "101", "81", "90"], "ans": "91"},
+                                {"q": r"**Câu 23 (TH):** Kết quả của phép tính $15 \cdot 4$ là:", "opts": ["50", "60", "70", "45"], "ans": "60"},
+                                {"q": r"**Câu 24 (TH):** Kết quả của phép tính $144 : 12$ là:", "opts": ["11", "12", "13", "14"], "ans": "12"},
+                                {"q": r"**Câu 25 (TH):** Số dư của phép chia $26 : 5$ là:", "opts": ["0", "1", "2", "3"], "ans": "1"},
+                                {"q": r"**Câu 26 (TH):** Tìm $x$ biết: $x + 10 = 25$:", "opts": ["15", "35", "10", "5"], "ans": "15"},
+                                {"q": r"**Câu 27 (TH):** Tìm $x$ biết: $20 - x = 5$:", "opts": ["25", "10", "15", "5"], "ans": "15"},
+                                {"q": r"**Câu 28 (TH):** Tìm $x$ biết: $3 \cdot x = 18$:", "opts": ["5", "6", "15", "21"], "ans": "6"},
+                                {"q": r"**Câu 29 (TH):** Tìm $x$ biết: $x : 4 = 5$:", "opts": ["9", "1", "20", "24"], "ans": "20"},
+                                {"q": r"**Câu 30 (TH):** Tính nhẩm $4 \cdot 25 \cdot 7$ ta được:", "opts": ["700", "70", "7000", "100"], "ans": "700"},
+                                {"q": r"**Câu 31 (TH):** Tính hợp lí $34 + 56 + 66 + 44$ ta được:", "opts": ["190", "200", "210", "100"], "ans": "200"},
+                                {"q": r"**Câu 32 (TH):** Áp dụng tính chất phân phối để tính $5 \cdot 13 + 5 \cdot 7$:", "opts": ["50", "100", "150", "80"], "ans": "100"},
+                                {"q": r"**Câu 33 (TH):** Sắp xếp các số $12; 5; 20; 0$ theo thứ tự tăng dần:", "opts": ["0; 5; 12; 20", "20; 12; 5; 0", "0; 12; 5; 20", "5; 0; 12; 20"], "ans": "0; 5; 12; 20"},
+                                {"q": r"**Câu 34 (TH):** Tập hợp $M = \{x \in \mathbb{N}^* \mid x \le 3\}$ là:", "opts": [r"$\{0; 1; 2; 3\}$", r"$\{1; 2; 3\}$", r"$\{1; 2\}$", r"$\{0; 1; 2\}$"], "ans": r"$\{1; 2; 3\}$"},
+                                {"q": r"**Câu 35 (TH):** Tính: $0 \cdot 2026 + 2026$:", "opts": ["0", "1", "2026", "4052"], "ans": "2026"}
+                            ]
+                            
+                            cau_hoi_tf = [
+                                {"q": r"**Câu 36 (VD):** Tập hợp $\mathbb{N}$ và $\mathbb{N}^*$ là hai tập hợp hoàn toàn giống nhau.", "ans": "Sai"},
+                                {"q": r"**Câu 37 (VD):** Số 0 là số tự nhiên nhỏ nhất và không có số tự nhiên liền trước.", "ans": "Đúng"},
+                                {"q": r"**Câu 38 (VD):** Số 29 được viết bằng chữ số La Mã là $XXIX$.", "ans": "Đúng"},
+                                {"q": r"**Câu 39 (VD):** Trong tập hợp số tự nhiên, ta luôn có thể thực hiện được phép chia một số bất kỳ cho 0.", "ans": "Sai"},
+                                {"q": r"**Câu 40 (VD):** Biểu thức $15 \cdot (10 - 2) = 15 \cdot 10 - 15 \cdot 2$ là một khẳng định đúng.", "ans": "Đúng"},
+                                {"q": r"**Câu 41 (VD):** Trong một phép chia có dư, số dư luôn luôn phải nhỏ hơn số chia.", "ans": "Đúng"},
+                                {"q": r"**Câu 42 (VD):** Phép trừ $a - b$ luôn luôn thực hiện được với mọi số tự nhiên $a$ và $b$.", "ans": "Sai"},
+                                {"q": r"**Câu 43 (VD):** Số 99 là số tự nhiên lớn nhất có hai chữ số khác nhau.", "ans": "Sai"} # Là 98
+                            ]
+                            
+                            cau_hoi_sa = [
+                                {"q": r"**Câu 44 (VD):** Tìm $x$, biết: $(x - 10) \cdot 5 = 25$. (Chỉ nhập số)", "ans": "15"},
+                                {"q": r"**Câu 45 (VD):** Tính tổng: $1 + 2 + 3 + \dots + 10 = ?$ (Chỉ nhập số)", "ans": "55"},
+                                {"q": r"**Câu 46 (VDC):** Một lớp học có 45 học sinh, mỗi bàn xếp được 4 chỗ ngồi. Cần ít nhất bao nhiêu bàn để tất cả học sinh đều có chỗ ngồi?", "ans": "12"},
+                                {"q": r"**Câu 47 (VD):** Mẹ mua 2kg cam (giá 20000đ/kg) và 1kg táo (giá 30000đ/kg). Mẹ phải trả tổng cộng bao nhiêu tiền? (Không nhập chữ đ)", "ans": "70000"},
+                                {"q": r"**Câu 48 (VD):** Tìm số tự nhiên nhỏ nhất có ba chữ số khác nhau.", "ans": "102"},
+                                {"q": r"**Câu 49 (VD):** Tìm $x$, biết: $100 : (x - 2) = 20$.", "ans": "7"},
+                                {"q": r"**Câu 50 (VDC):** Tính nhanh: $25 \cdot 8 \cdot 4 \cdot 125 = ?$ (Chỉ nhập số)", "ans": "100000"}
+                            ]
+
+                            # --- VÒNG LẶP IN CÂU HỎI RA MÀN HÌNH ---
+                            with st.form("form_luyen_tap_chung"):
+                                st.markdown("### Phần 1: Trắc nghiệm Nhiều lựa chọn (35 câu)")
+                                for i, cau in enumerate(cau_hoi_mcq):
+                                    st.radio(cau["q"], options=["-- Chọn --"] + cau["opts"], key=f"ltc_mcq_{i}")
+                                
+                                st.markdown("---")
+                                st.markdown("### Phần 2: Trắc nghiệm Đúng / Sai (8 câu)")
+                                for i, cau in enumerate(cau_hoi_tf):
+                                    st.radio(cau["q"], options=["-- Chọn --", "Đúng", "Sai"], key=f"ltc_tf_{i}")
+                                    
+                                st.markdown("---")
+                                st.markdown("### Phần 3: Trắc nghiệm Trả lời ngắn (7 câu)")
+                                for i, cau in enumerate(cau_hoi_sa):
+                                    st.text_input(cau["q"], placeholder="Nhập đáp án của em vào đây...", key=f"ltc_sa_{i}")
+                                
+                                st.markdown("---")
+                                submit_ltc = st.form_submit_button("Nộp bài thi")
+                                
+                            # --- LOGIC CHẤM ĐIỂM TỰ ĐỘNG ---
+                            if submit_ltc:
+                                so_cau_dung = 0
+                                
+                                # Chấm Phần 1
+                                for i, cau in enumerate(cau_hoi_mcq):
+                                    if st.session_state.get(f"ltc_mcq_{i}") == cau["ans"]:
+                                        so_cau_dung += 1
+                                        
+                                # Chấm Phần 2
+                                for i, cau in enumerate(cau_hoi_tf):
+                                    if st.session_state.get(f"ltc_tf_{i}") == cau["ans"]:
+                                        so_cau_dung += 1
+                                        
+                                # Chấm Phần 3
+                                for i, cau in enumerate(cau_hoi_sa):
+                                    user_ans = str(st.session_state.get(f"ltc_sa_{i}", "")).strip()
+                                    if user_ans == cau["ans"]:
+                                        so_cau_dung += 1
+                                        
+                                # Tính điểm thang 10
+                                diem_ltc = (so_cau_dung / 50) * 10
+                                
+                                if diem_ltc >= 7.0:
+                                    st.success(f"🎉 RẤT XUẤT SẮC! Em làm đúng **{so_cau_dung}/50** câu. Đạt **{diem_ltc:.1f}/10** điểm. BÀI SỐ 6 ĐÃ ĐƯỢC MỞ KHÓA!")
+                                    st.balloons()
+                                    
+                                    # GHI LÊN SHEET NẾU CHƯA PASS
+                                    if not st.session_state.get("hoan_thanh_luyen_tap_chung", False):
+                                        st.session_state.hoan_thanh_luyen_tap_chung = True
+                                        current_user = st.session_state.current_user
+                                        user_idx = user_df[user_df.iloc[:, 2].astype(str).str.strip() == current_user].index
+                                        
+                                        if not user_idx.empty:
+                                            tien_do_cu = str(user_df.loc[user_idx[0], user_df.columns[4]])
+                                            if "Pass_LuyenTapChung" not in tien_do_cu:
+                                                tien_do_moi = tien_do_cu + ", Pass_LuyenTapChung" if tien_do_cu.strip
     
     # ---------------- NỘI DUNG TOÁN 7, 8, 9 ----------------
     else:
