@@ -83,7 +83,14 @@ if not st.session_state.is_logged_in:
                     st.session_state.current_user = _user
                     
                     # TỰ ĐỘNG KHÔI PHỤC TIẾN ĐỘ TỪ SHEET XUỐNG BỘ NHỚ
-                    if progress_db.get(_user, "") == "Pass_Bai_2":
+                    tien_do_hien_tai = progress_db.get(_user, "")
+                    
+                    if "Pass_Bai_1" in tien_do_hien_tai:
+                        st.session_state.hoan_thanh_bai_1 = True
+                    else:
+                        st.session_state.hoan_thanh_bai_1 = False
+                        
+                    if "Pass_Bai_2" in tien_do_hien_tai:
                         st.session_state.hoan_thanh_bai_2 = True
                     else:
                         st.session_state.hoan_thanh_bai_2 = False
@@ -328,13 +335,28 @@ else:
                         if q9 == r"$K = \{4; 6; 9; 11\}$": diem += 1
                         if q10 == "Tất cả đều đúng": diem += 1
                         
-                        if diem >= 7:
-                            st.success(f"🎉 TUYỆT VỜI! Em đạt **{diem}/10** điểm. Bài học số 2 đã được mở khóa!")
+                        if diem >= 7: # Điểm ví dụ
+                            st.success(f"🎉 TUYỆT VỜI! Em đạt điểm tối đa. Bài học số 2 đã được mở khóa!")
                             st.balloons()
-                            # Lưu trạng thái hoàn thành vào bộ nhớ tạm
-                            st.session_state.hoan_thanh_bai_1 = True
+                            
+                            # CHỈ GHI LÊN SHEET NẾU HỌC SINH CHƯA PASS BÀI 1
+                            if not st.session_state.get("hoan_thanh_bai_1", False):
+                                st.session_state.hoan_thanh_bai_1 = True
+                                current_user = st.session_state.current_user
+                                user_idx = user_df[user_df.iloc[:, 2].astype(str).str.strip() == current_user].index
+                                
+                                if not user_idx.empty:
+                                    tien_do_cu = str(user_df.loc[user_idx[0], user_df.columns[4]])
+                                    # Ghi nối thêm chữ Pass_Bai_1
+                                    if "Pass_Bai_1" not in tien_do_cu:
+                                        tien_do_moi = tien_do_cu + ", Pass_Bai_1" if tien_do_cu.strip() and tien_do_cu != "nan" else "Pass_Bai_1"
+                                        user_df.loc[user_idx, user_df.columns[4]] = tien_do_moi
+                                        try:
+                                            conn.update(worksheet="Câu trả lời biểu mẫu 1", data=user_df)
+                                        except Exception as e:
+                                            st.warning("Hệ thống chưa đồng bộ lên Cloud.")
                         else:
-                            st.error(f"⚠️ Em mới đạt **{diem}/10** điểm. Chưa đủ 7.0 điểm để qua cửa rồi. Hãy đọc lại lý thuyết và làm lại nhé!")
+                            st.error(f"⚠️ Em chưa đủ điểm. Hãy ôn lại lý thuyết và làm lại nhé!")
                             st.session_state.hoan_thanh_bai_1 = False
 
                 with tab_mo_rong:
