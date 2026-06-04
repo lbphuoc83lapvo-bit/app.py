@@ -774,6 +774,192 @@ else:
                 else:
                     st.warning("🔒 **BÀI HỌC BỊ KHÓA**")
                     st.info("Em cần quay lại **Bài 2. Cách ghi số tự nhiên** và hoàn thành Đánh giá năng lực (đạt từ 7.0 điểm trở lên) để mở khóa bài học này nhé!")
+            # ---------------- BÀI 4 ----------------
+            elif bai_hoc_selection == "Bài 4. Phép cộng và phép trừ số tự nhiên":
+                if st.session_state.get("hoan_thanh_bai_3", False) == True:
+                    st.header("BÀI 4: PHÉP CỘNG VÀ PHÉP TRỪ SỐ TỰ NHIÊN")
+                    
+                    tab_ly_thuyet, tab_bai_tap, tab_mo_rong = st.tabs(["📚 Lý thuyết bài học", "✍️ Luyện tập & Bài tập", "💡 Em có biết?"])
+                    
+                    with tab_ly_thuyet:
+                        st.markdown("**🎥 Video bài giảng trực tuyến**")
+                        st.info("*(Thầy cô sẽ cập nhật video bài giảng tại đây)*")
+                        st.markdown("---")
+                        
+                        st.subheader("1. Phép cộng số tự nhiên")
+                        st.write(r"- Phép cộng hai số tự nhiên $a$ và $b$ cho ta một số tự nhiên gọi là tổng của chúng, kí hiệu là $a + b$.")
+                        st.latex(r"a \text{ (Số hạng)} + b \text{ (Số hạng)} = c \text{ (Tổng)}")
+                        
+                        st.write("**Tính chất của phép cộng:**")
+                        st.write(r"- **Giao hoán:** $a + b = b + a$.")
+                        st.markdown(r"> *Ví dụ:* $28 + 34 = 34 + 28 = 62$.")
+                        
+                        st.write(r"- **Kết hợp:** $(a + b) + c = a + (b + c)$.")
+                        st.markdown(r"> *Ví dụ:* $(17 + 21) + 35 = 17 + (21 + 35) = 17 + 56 = 73$.")
+                        
+                        st.write(r"- **Cộng với 0:** $a + 0 = 0 + a = a$.")
+                        
+                        st.info(r"""💡 **Mẹo nhỏ (Tính một cách hợp lí):** Khi cộng nhiều số, ta nên dùng tính chất giao hoán và kết hợp để nhóm những số hạng có tổng là số tròn chục, tròn trăm... giúp tính nhẩm nhanh hơn.
+                        
+**Ví dụ:** Tính $66 + 289 + 134 + 311$
+Ta thấy $66+134=200$ và $289+311=600$, nên ta nhóm lại:
+$= (66 + 134) + (289 + 311)$
+$= 200 + 600 = 800$""")
+
+                        st.markdown("---")
+                        st.subheader("2. Phép trừ số tự nhiên")
+                        st.write(r"- Với hai số tự nhiên $a, b$ đã cho, nếu có số tự nhiên $c$ sao cho $a = b + c$ thì ta có phép trừ $a - b = c$.")
+                        st.latex(r"a \text{ (Số bị trừ)} - b \text{ (Số trừ)} = c \text{ (Hiệu)}")
+                        st.markdown(r"> *Ví dụ:* $7 - 4 = 3$ (vì $4 + 3 = 7$).")
+                        
+                        st.warning(r"""🚨 **Chú ý:** Trong tập hợp $\mathbb{N}$, phép trừ $a - b$ chỉ thực hiện được nếu $a \ge b$.
+                        
+**Ví dụ:** Ta thực hiện được $7 - 4 = 3$ (vì $7 \ge 4$). Nhưng ta **không thể** thực hiện phép trừ $7 - 8$ trong tập hợp số tự nhiên (vì $7 < 8$).""")
+
+                        # ==========================================
+                        # PHẦN THỬ THÁCH TƯƠNG TÁC
+                        # ==========================================
+                        st.markdown("---")
+                        st.subheader("🎯 Thử thách Luyện tập & Vận dụng")
+                        
+                        st.success("📝 **Thử thách 1 (Bài toán đi chợ):** Bạn Mai đi chợ mua cà tím hết 18 nghìn đồng, cà chua hết 21 nghìn đồng và rau cải hết 30 nghìn đồng. Mai đưa cho cô bán hàng tờ 100 nghìn đồng thì được trả lại bao nhiêu tiền?")
+                        tt1 = st.radio("Em hãy chọn số tiền cô bán hàng trả lại Mai:", [
+                            "Chưa chọn",
+                            "21 nghìn đồng",
+                            "31 nghìn đồng",
+                            "41 nghìn đồng"
+                        ], key="b4_tt1")
+                        
+                        if tt1 == "31 nghìn đồng":
+                            st.success(r"🎉 Rất xuất sắc! Tổng tiền Mai mua đồ là: $18 + 21 + 30 = 69$ (nghìn đồng). Số tiền được trả lại là: $100 - 69 = 31$ (nghìn đồng).")
+                        elif tt1 != "Chưa chọn":
+                            st.error("❌ Chưa đúng rồi! Em hãy tính tổng số tiền Mai đã mua trước, sau đó lấy 100 trừ đi tổng đó nhé.")
+
+                        st.info(r"📝 **Thử thách 2 (Tính hợp lí):** Hãy tính một cách hợp lí biểu thức sau: $117 + 68 + 23$.")
+                        tt2 = st.radio("Kết quả của biểu thức là:", [
+                            "Chưa chọn", 
+                            "208", 
+                            "198",
+                            "218"
+                        ], key="b4_tt2")
+                        
+                        if tt2 == "208":
+                            st.success(r"🎉 Chính xác! Áp dụng tính chất giao hoán và kết hợp: $(117 + 23) + 68 = 140 + 68 = 208$.")
+                        elif tt2 != "Chưa chọn":
+                            st.error(r"❌ Em tính lại nhé. Mẹo nhỏ: Hãy nhóm số $117$ và $23$ lại với nhau trước vì $7 + 3 = 10$.")
+
+                    with tab_bai_tap:
+                        st.subheader("✍️ Đánh giá năng lực - Bài 4")
+                        st.info("🔒 **ĐIỀU KIỆN MỞ KHÓA BÀI TIẾP THEO:** Em cần đạt tối thiểu **7.0/10 điểm** trong bài kiểm tra này.")
+                        
+                        with st.form("quiz_bai_4"):
+                            st.markdown("### I. Mức độ Nhận biết (3 điểm)")
+                            
+                            st.markdown(r"**Câu 1:** Trong phép trừ $a - b = c$, số $a$ được gọi là gì?")
+                            q1 = st.radio("Đáp án Câu 1:", ["-- Chọn --", "Số bị trừ", "Số trừ", "Hiệu", "Số hạng"], key="b4_q1")
+                            
+                            st.markdown(r"**Câu 2:** Tính chất $(a + b) + c = a + (b + c)$ gọi là tính chất gì của phép cộng?")
+                            q2 = st.radio("Đáp án Câu 2:", ["-- Chọn --", "Tính chất giao hoán", "Tính chất kết hợp", "Tính chất phân phối", "Cộng với 0"], key="b4_q2")
+                            
+                            st.markdown(r"**Câu 3:** Điều kiện để thực hiện được phép trừ $a - b$ trong tập hợp các số tự nhiên $\mathbb{N}$ là gì?")
+                            q3 = st.radio("Đáp án Câu 3:", ["-- Chọn --", r"$a > b$", r"$a < b$", r"$a \ge b$", r"$a \le b$"], key="b4_q3")
+                            
+                            st.markdown("---")
+                            st.markdown("### II. Mức độ Thông hiểu (4 điểm)")
+                            
+                            st.markdown(r"**Câu 4:** Kết quả của phép tính $63~548 + 19~256$ là:")
+                            q4 = st.radio("Đáp án Câu 4:", ["-- Chọn --", "82 704", "82 804", "83 804", "81 804"], key="b4_q4")
+                            
+                            st.markdown(r"**Câu 5:** Kết quả của phép tính $129~107 - 34~693$ là:")
+                            q5 = st.radio("Đáp án Câu 5:", ["-- Chọn --", "94 414", "95 414", "94 514", "93 414"], key="b4_q5")
+                            
+                            st.markdown(r"**Câu 6:** Thay \"?\" bằng số thích hợp: $? + 2~895 = 2~895 + 6~789$.")
+                            q6 = st.radio("Đáp án Câu 6:", ["-- Chọn --", "2 895", "9 684", "6 789", "0"], key="b4_q6")
+                            
+                            st.markdown(r"**Câu 7:** Tính một cách hợp lí: $285 + 470 + 115 + 230$.")
+                            q7 = st.radio("Đáp án Câu 7:", ["-- Chọn --", "1 000", "1 100", "1 200", "1 150"], key="b4_q7")
+                            
+                            st.markdown("---")
+                            st.markdown("### III. Mức độ Vận dụng (3 điểm)")
+                            
+                            st.markdown(r"**Câu 8:** Tìm số tự nhiên $x$ thoả mãn: $7 + x = 362$.")
+                            q8 = st.radio("Đáp án Câu 8:", ["-- Chọn --", "369", "350", "355", "357"], key="b4_q8")
+                            
+                            st.markdown(r"**Câu 9:** Dân số Việt Nam năm 2019 là 96 462 106 người. Năm 2020, dân số Việt Nam tăng 876 473 người so với năm 2019. Tính dân số Việt Nam năm 2020.")
+                            q9 = st.radio("Đáp án Câu 9:", ["-- Chọn --", "97 338 579 người", "95 585 633 người", "97 438 579 người", "96 338 579 người"], key="b4_q9")
+                            
+                            st.markdown(r"**Câu 10:** Nhà ga số 1 và nhà ga số 2 của một sân bay có thể tiếp nhận tương ứng 6 526 300 và 3 514 500 lượt hành khách mỗi năm. Nhờ đưa vào sử dụng nhà ga số 3 mà mỗi năm sân bay có thể tiếp nhận 22 851 200 lượt khách. Tính số lượt khách ga số 3 có thể tiếp nhận?")
+                            q10 = st.radio("Đáp án Câu 10:", ["-- Chọn --", "10 040 800 lượt", "12 810 400 lượt", "32 892 000 lượt", "13 810 400 lượt"], key="b4_q10")
+                            
+                            submit_b4 = st.form_submit_button("Lưu & Nộp bài")
+                            
+                        if submit_b4:
+                            diem = 0
+                            if q1 == "Số bị trừ": diem += 1
+                            if q2 == "Tính chất kết hợp": diem += 1
+                            if q3 == r"$a \ge b$": diem += 1
+                            if q4 == "82 804": diem += 1
+                            if q5 == "94 414": diem += 1
+                            if q6 == "6 789": diem += 1
+                            if q7 == "1 100": diem += 1
+                            if q8 == "355": diem += 1
+                            if q9 == "97 338 579 người": diem += 1
+                            if q10 == "12 810 400 lượt": diem += 1
+                            
+                            if diem >= 7:
+                                st.success(f"🎉 RẤT XUẤT SẮC! Em đạt **{diem}/10** điểm. Em đã chinh phục thành công Bài 4!")
+                                st.balloons()
+                                
+                                # GHI LÊN SHEET NẾU HỌC SINH CHƯA PASS BÀI 4
+                                if not st.session_state.get("hoan_thanh_bai_4", False):
+                                    st.session_state.hoan_thanh_bai_4 = True
+                                    current_user = st.session_state.current_user
+                                    user_idx = user_df[user_df.iloc[:, 2].astype(str).str.strip() == current_user].index
+                                    
+                                    if not user_idx.empty:
+                                        tien_do_cu = str(user_df.loc[user_idx[0], user_df.columns[4]])
+                                        if "Pass_Bai_4" not in tien_do_cu:
+                                            tien_do_moi = tien_do_cu + ", Pass_Bai_4" if tien_do_cu.strip() and tien_do_cu != "nan" else "Pass_Bai_4"
+                                            
+                                            # Cập nhật vào df trong bộ nhớ
+                                            user_df.loc[user_idx[0], user_df.columns[4]] = tien_do_moi
+                                            
+                                            try:
+                                                import gspread
+                                                kh = st.secrets["connections"]["gsheets"]
+                                                creds = {
+                                                    "type": kh["type"],
+                                                    "project_id": kh["project_id"],
+                                                    "private_key_id": kh["private_key_id"],
+                                                    "private_key": kh["private_key"],
+                                                    "client_email": kh["client_email"],
+                                                    "client_id": kh["client_id"],
+                                                    "auth_uri": kh["auth_uri"],
+                                                    "token_uri": kh["token_uri"],
+                                                    "auth_provider_x509_cert_url": kh["auth_provider_x509_cert_url"],
+                                                    "client_x509_cert_url": kh["client_x509_cert_url"]
+                                                }
+                                                gc = gspread.service_account_from_dict(creds)
+                                                sheet_goc = gc.open_by_url(kh["spreadsheet"]).worksheet("Câu trả lời biểu mẫu 1")
+                                                
+                                                dong_sheet = int(user_idx[0]) + 2 
+                                                o_can_ghi = f"E{dong_sheet}" 
+                                                sheet_goc.update_acell(o_can_ghi, tien_do_moi)
+                                                
+                                                st.cache_data.clear()
+                                            except Exception as e:
+                                                st.error(f"❌ Lỗi ghi dữ liệu: {e}")
+                            else:
+                                st.error(f"⚠️ Em mới đạt **{diem}/10** điểm. Chưa đủ 7.0 điểm để qua cửa rồi. Hãy ôn lại bài và làm lại nhé!")
+                                st.session_state.hoan_thanh_bai_4 = False
+
+                    with tab_mo_rong:
+                        st.subheader("💡 Em có biết?")
+                        st.write("Ngày xưa, trước khi có máy tính và điện thoại thông minh, con người đã phát minh ra **Bàn tính gảy** (như bàn tính Soroban của Nhật Bản hay Suanpan của Trung Quốc) để thực hiện các phép cộng trừ những con số lên tới hàng triệu một cách nhanh chóng và chính xác như máy vi tính đấy!")
+
+                else:
+                    st.warning("🔒 **BÀI HỌC BỊ KHÓA**")
+                    st.info("Em cần quay lại **Bài 3. Thứ tự trong tập hợp các số tự nhiên** và hoàn thành bài Đánh giá năng lực (đạt từ 7.0 điểm trở lên) để mở khóa bài học này nhé!")
 
     # ---------------- NỘI DUNG TOÁN 7, 8, 9 ----------------
     else:
