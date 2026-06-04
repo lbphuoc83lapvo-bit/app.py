@@ -132,7 +132,7 @@ if not st.session_state.is_logged_in:
 else:
     st.sidebar.title("🗂️ DANH MỤC MÔN HỌC")
     
-    grade_selection = st.sidebar.radio("Chọn khối lớp của bạn:", ["Toán 6", "Toán 7 (Chân trời sáng tạo)", "Toán 8", "Toán 9 (Chân trời sáng tạo)"])
+    grade_selection = st.sidebar.radio("Chọn khối lớp của bạn:", ["Toán 6", "Toán 7", "Toán 8", "Toán 9"])
     st.sidebar.markdown("---")
     
     chapter_selection = None
