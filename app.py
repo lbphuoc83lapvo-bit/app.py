@@ -783,7 +783,7 @@ else:
                     
                     with tab_ly_thuyet:
                         st.markdown("**🎥 Video bài giảng trực tuyến**")
-                        st.info("*(Thầy cô sẽ cập nhật video bài giảng tại đây)*")
+                        st.video("https://youtu.be/cdFTVZluTsk")
                         st.markdown("---")
                         
                         st.subheader("1. Phép cộng số tự nhiên")
