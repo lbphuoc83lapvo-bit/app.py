@@ -172,7 +172,18 @@ else:
     if grade_selection == "Toán 6" and chapter_selection:
         if chapter_selection == "Chương 1: TẬP HỢP CÁC SỐ TỰ NHIÊN":
             st.header("CHƯƠNG 1: TẬP HỢP CÁC SỐ TỰ NHIÊN")
-            danh_sach_bai = ["Bài 1. Tập hợp", "Bài 2. Cách ghi số tự nhiên"]
+            danh_sach_bai = [
+                "Bài 1. Tập hợp",
+                "Bài 2. Cách ghi số tự nhiên",
+                "Bài 3. Thứ tự trong tập hợp các số tự nhiên",
+                "Bài 4. Phép cộng và phép trừ số tự nhiên",
+                "Bài 5. Phép nhân và phép chia số tự nhiên",
+                "Luyện tập chung (trang 20)",
+                "Bài 6. Luỹ thừa với số mũ tự nhiên",
+                "Bài 7. Thứ tự thực hiện các phép tính",
+                "Luyện tập chung (trang 27)",
+                "Bài tập cuối chương I"
+            ]
             bai_hoc_selection = st.selectbox("📌 Chọn bài học:", danh_sach_bai)
             st.markdown("---") 
             
