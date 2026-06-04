@@ -20,31 +20,33 @@ with col_banner:
 st.markdown("---")
 
 # ==========================================
-# 2. ĐỌC DỮ LIỆU TỪ GOOGLE SHEETS MỚI
+# 2. ĐỌC DỮ LIỆU TỪ GOOGLE SHEETS
 # ==========================================
 try:
     conn = st.connection("gsheets", type=GSheetsConnection)
-    # Đọc đích danh tab mới tạo
-    # Tự động đọc tab đầu tiên
-    user_df = conn.read(ttl=0) 
+    user_df = conn.read(worksheet="Câu trả lời biểu mẫu 1", ttl=0) 
     
     # Lọc bỏ dòng trống
     user_df = user_df.dropna(subset=[user_df.columns[1], user_df.columns[2], user_df.columns[3]], how='all')
     
+    # Đảm bảo có đủ 5 cột (thêm cột Tiến độ nếu chưa có)
+    while len(user_df.columns) < 5:
+        user_df[f"Cột mới {len(user_df.columns)}"] = ""
+
     if len(user_df.columns) >= 4:
-        # Cột B(1): Email | Cột C(2): Tên đăng nhập | Cột D(3): Mật khẩu
         email_hs = user_df.iloc[:, 1].astype(str).str.strip()
         ten_dang_nhap = user_df.iloc[:, 2].astype(str).str.strip()
         mat_khau = user_df.iloc[:, 3].astype(str).str.strip()
+        tien_do = user_df.iloc[:, 4].astype(str).str.strip() # Đọc Cột E (Tiến độ)
         
         user_db = dict(zip(ten_dang_nhap, mat_khau))
         email_db = dict(zip(email_hs, mat_khau))
+        progress_db = dict(zip(ten_dang_nhap, tien_do)) # Lưu trữ tiến độ
     else:
-        user_db, email_db = {}, {}
+        user_db, email_db, progress_db = {}, {}, {}
 except Exception as e:
     st.error(f"⚠️ Lỗi kết nối dữ liệu: {e}")
-    user_db, email_db = {}, {}
-
+    user_db, email_db, progress_db = {}, {}, {}
 # Khởi tạo trạng thái
 if 'is_logged_in' not in st.session_state:
     st.session_state.is_logged_in = False
