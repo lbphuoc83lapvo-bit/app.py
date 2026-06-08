@@ -1324,8 +1324,7 @@ $= 200 + 600 = 800$""")
                                         
                                 # Tính điểm thang 10
                                 diem_ltc = (so_cau_dung / 50) * 10
-                                
-                                if diem_ltc >= 7.0:
+                               if diem_ltc >= 7.0:
                                     st.success(f"🎉 RẤT XUẤT SẮC! Em làm đúng **{so_cau_dung}/50** câu. Đạt **{diem_ltc:.1f}/10** điểm. BÀI SỐ 6 ĐÃ ĐƯỢC MỞ KHÓA!")
                                     st.balloons()
                                     
@@ -1339,41 +1338,38 @@ $= 200 + 600 = 800$""")
                                             tien_do_cu = str(user_df.loc[user_idx[0], user_df.columns[4]])
                                             if "Pass_LuyenTapChung" not in tien_do_cu:
                                                 tien_do_moi = tien_do_cu + ", Pass_LuyenTapChung" if tien_do_cu.strip() and tien_do_cu != "nan" else "Pass_LuyenTapChung"
-                                            
+                                                
                                                 user_df.loc[user_idx[0], user_df.columns[4]] = tien_do_moi
-                                            
-                                            try:
-                                                import gspread
-                                                kh = st.secrets["connections"]["gsheets"]
-                                                creds = {
-                                                    "type": kh["type"],
-                                                    "project_id": kh["project_id"],
-                                                    "private_key_id": kh["private_key_id"],
-                                                    "private_key": kh["private_key"],
-                                                    "client_email": kh["client_email"],
-                                                    "client_id": kh["client_id"],
-                                                    "auth_uri": kh["auth_uri"],
-                                                    "token_uri": kh["token_uri"],
-                                                    "auth_provider_x509_cert_url": kh["auth_provider_x509_cert_url"],
-                                                    "client_x509_cert_url": kh["client_x509_cert_url"]
-                                                }
-                                                gc = gspread.service_account_from_dict(creds)
-                                                sheet_goc = gc.open_by_url(kh["spreadsheet"]).worksheet("Câu trả lời biểu mẫu 1")
                                                 
-                                                dong_sheet = int(user_idx[0]) + 2 
-                                                o_can_ghi = f"E{dong_sheet}" 
-                                                sheet_goc.update_acell(o_can_ghi, tien_do_moi)
-                                                
-                                                st.cache_data.clear()
-                                           except Exception as e:
-                                                st.error(f"❌ Lỗi ghi dữ liệu: {e}")
-                            
-                            # Đoạn bị thiếu: Xử lý khi học sinh làm KHÔNG ĐỦ 7 điểm
-                            else:
-                                st.error(f"⚠️ Em làm đúng **{so_cau_dung}/50** câu (Đạt **{diem_ltc:.1f}/10** điểm). Hãy cố gắng ôn tập và làm lại để đạt 7.0 điểm nhé!")
-                                st.session_state.hoan_thanh_luyen_tap_chung = False
+                                                try:
+                                                    import gspread
+                                                    kh = st.secrets["connections"]["gsheets"]
+                                                    creds = {
+                                                        "type": kh["type"],
+                                                        "project_id": kh["project_id"],
+                                                        "private_key_id": kh["private_key_id"],
+                                                        "private_key": kh["private_key"],
+                                                        "client_email": kh["client_email"],
+                                                        "client_id": kh["client_id"],
+                                                        "auth_uri": kh["auth_uri"],
+                                                        "token_uri": kh["token_uri"],
+                                                        "auth_provider_x509_cert_url": kh["auth_provider_x509_cert_url"],
+                                                        "client_x509_cert_url": kh["client_x509_cert_url"]
+                                                    }
+                                                    gc = gspread.service_account_from_dict(creds)
+                                                    sheet_goc = gc.open_by_url(kh["spreadsheet"]).worksheet("Câu trả lời biểu mẫu 1")
+                                                    
+                                                    dong_sheet = int(user_idx[0]) + 2 
+                                                    o_can_ghi = f"E{dong_sheet}" 
+                                                    sheet_goc.update_acell(o_can_ghi, tien_do_moi)
+                                                    
+                                                    st.cache_data.clear()
+                                                except Exception as e:
+                                                    st.error(f"❌ Lỗi ghi dữ liệu: {e}")
+                                else:
+                                    st.error(f"⚠️ Em làm đúng **{so_cau_dung}/50** câu (Đạt **{diem_ltc:.1f}/10** điểm). Hãy cố gắng ôn tập và làm lại để đạt 7.0 điểm nhé!")
+                                    st.session_state.hoan_thanh_luyen_tap_chung = False
 
-                # Đoạn khóa bài học nếu chưa làm xong Bài 5
                 else:
                     st.warning("🔒 **BÀI LUYỆN TẬP BỊ KHÓA**")
                     st.info("Em cần hoàn thành Bài Đánh giá năng lực của **Bài 5** (đạt từ 7.0 điểm) để mở khóa phần Luyện tập chung này nhé!")
@@ -1381,7 +1377,7 @@ $= 200 + 600 = 800$""")
             # ========================================================
             # BÀI 6: LŨY THỪA VỚI SỐ MŨ TỰ NHIÊN
             # ========================================================
-            elif bai_hoc_selection == "Bài 6. Lũy thừa với số mũ tự nhiên":
+            elif bai_hoc_selection == "Bài 6. Lũy thừa với số mũ tự nhiên":                
                 if st.session_state.get("hoan_thanh_luyen_tap_chung", False) == True:
                     st.header("BÀI 6: LŨY THỪA VỚI SỐ MŨ TỰ NHIÊN")
                     
