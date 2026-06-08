@@ -1378,10 +1378,10 @@ $= 200 + 600 = 800$""")
             # BÀI 6: LŨY THỪA VỚI SỐ MŨ TỰ NHIÊN
             # ========================================================
             elif bai_hoc_selection == "Bài 6. Lũy thừa với số mũ tự nhiên":
-                elif bai_hoc_selection == "Bài 6. Lũy thừa với số mũ tự nhiên":
     # Tạm thời bỏ qua điều kiện để hiển thị nội dung
-                    if True: 
-                        st.header("BÀI 6: LŨY THỪA VỚI SỐ MŨ TỰ NHIÊN")
+                if True: 
+                    st.header("BÀI 6: LŨY THỪA VỚI SỐ MŨ TỰ NHIÊN")
+        # ... (các đoạn code hiển thị nội dung bài 6 của thầy) ...
                     # ... (các đoạn code hiển thị nội dung bài 6 của thầy) ...
                     
                     tab_ly_thuyet, tab_bai_tap, tab_mo_rong = st.tabs(["📚 Lý thuyết bài học", "✍️ Luyện tập & Bài tập", "💡 Em có biết?"])
