@@ -1558,6 +1558,7 @@ $= 200 + 600 = 800$""")
                 else:
                     st.warning("🔒 **BÀI HỌC BỊ KHÓA**")
                     st.info("Em cần hoàn thành bài thi 90 phút ở phần **Luyện tập chung (Từ Bài 1 đến Bài 5)** (đạt từ 7.0 điểm trở lên) để mở khóa Bài 6 nhé!")
+                
     # ---------------- NỘI DUNG TOÁN 7, 8, 9 ----------------
     else:
         st.info("Nội dung bài học đang được thầy cô tiếp tục biên soạn và cập nhật. Các em hãy đón chờ nhé!")
