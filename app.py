@@ -1324,7 +1324,7 @@ $= 200 + 600 = 800$""")
                                         
                                 # Tính điểm thang 10
                                 diem_ltc = (so_cau_dung / 50) * 10
-                     if diem_ltc >= 7.0:
+                                 if diem_ltc >= 7.0:
                                     st.success(f"🎉 RẤT XUẤT SẮC! Em làm đúng **{so_cau_dung}/50** câu. Đạt **{diem_ltc:.1f}/10** điểm. BÀI SỐ 6 ĐÃ ĐƯỢC MỞ KHÓA!")
                                     st.balloons()
                                     
