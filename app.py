@@ -1145,6 +1145,7 @@ $= 200 + 600 = 800$""")
                 else:
                     st.warning("🔒 **BÀI HỌC BỊ KHÓA**")
                     st.info("Em cần quay lại **Bài 4. Phép cộng và phép trừ số tự nhiên** và hoàn thành bài Đánh giá năng lực (đạt từ 7.0 điểm trở lên) để mở khóa bài học này nhé!")
+           
             # ---------------- LUYỆN TẬP CHUNG ----------------
             elif bai_hoc_selection == "Luyện tập chung (Bài 1 - Bài 5)":
                 if st.session_state.get("hoan_thanh_bai_5", False) == True:
