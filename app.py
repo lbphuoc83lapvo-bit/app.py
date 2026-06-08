@@ -1367,6 +1367,197 @@ $= 200 + 600 = 800$""")
                                                 st.cache_data.clear()
                                             except Exception as e:
                                                 st.error(f"❌ Lỗi ghi dữ liệu: {e}")
+            # ---------------- BÀI 6 ----------------
+            elif bai_hoc_selection == "Bài 6. Lũy thừa với số mũ tự nhiên":
+                # ĐIỀU KIỆN MỞ KHÓA LÀ PHẢI HOÀN THÀNH BÀI LUYỆN TẬP CHUNG
+                if st.session_state.get("hoan_thanh_luyen_tap_chung", False) == True:
+                    st.header("BÀI 6: LŨY THỪA VỚI SỐ MŨ TỰ NHIÊN")
+                    
+                    tab_ly_thuyet, tab_bai_tap, tab_mo_rong = st.tabs(["📚 Lý thuyết bài học", "✍️ Luyện tập & Bài tập", "💡 Em có biết?"])
+                    
+                    with tab_ly_thuyet:
+                        st.markdown("**🎥 Video bài giảng trực tuyến**")
+                        st.info("*(Thầy cô sẽ cập nhật video bài giảng tại đây)*")
+                        st.markdown("---")
+                        
+                        st.subheader("1. Phép nâng lên lũy thừa")
+                        st.write(r"- **Lũy thừa bậc $n$ của số tự nhiên $a$** là tích của $n$ thừa số bằng nhau, mỗi thừa số bằng $a$:")
+                        st.latex(r"a^n = \underbrace{a \cdot a \cdot \dots \cdot a}_{n \text{ thừa số}} \quad (n \in \mathbb{N}^*)")
+                        st.write(r"- Trong đó: $a$ là **cơ số**, $n$ là **số mũ**.")
+                        st.write(r"- $a^n$ đọc là \"$a$ mũ $n$\" hoặc \"$a$ lũy thừa $n$\".")
+                        
+                        st.markdown(r"> *Ví dụ:* $3 \cdot 3 \cdot 3 \cdot 3 \cdot 3 = 3^5$ (Cơ số là 3, số mũ là 5).")
+                        
+                        st.warning(r"""🚨 **Quy ước và Tên gọi đặc biệt:**
+- $a^1 = a$
+- $a^2$ còn gọi là **$a$ bình phương** (hay bình phương của $a$).
+- $a^3$ còn gọi là **$a$ lập phương** (hay lập phương của $a$).
+- Các số $0, 1, 4, 9, 16...$ (tức là $0^2, 1^2, 2^2, 3^2, 4^2...$) gọi là các **số chính phương**.""")
+
+                        st.markdown("---")
+                        st.subheader("2. Nhân và chia hai lũy thừa cùng cơ số")
+                        st.write("**a) Nhân hai lũy thừa cùng cơ số**")
+                        st.write("- Ta giữ nguyên cơ số và cộng các số mũ:")
+                        st.latex(r"a^m \cdot a^n = a^{m+n}")
+                        st.markdown(r"> *Ví dụ:* $5^3 \cdot 5^4 = 5^{3+4} = 5^7$")
+                        
+                        st.write("**b) Chia hai lũy thừa cùng cơ số**")
+                        st.write("- Ta giữ nguyên cơ số và lấy số mũ của số bị chia trừ số mũ của số chia:")
+                        st.latex(r"a^m : a^n = a^{m-n} \quad (a \ne 0, m \ge n)")
+                        st.markdown(r"> *Ví dụ:* $2^6 : 2^3 = 2^{6-3} = 2^3$")
+                        
+                        st.error(r"💡 **Quy ước bắt buộc phải nhớ:** $a^0 = 1$ (với $a \ne 0$).")
+
+                        # ==========================================
+                        # PHẦN THỬ THÁCH TƯƠNG TÁC
+                        # ==========================================
+                        st.markdown("---")
+                        st.subheader("🎯 Thử thách Luyện tập")
+                        
+                        st.success(r"📝 **Thử thách 1:** Em hãy viết gọn tích sau dưới dạng lũy thừa: $10 \cdot 10 \cdot 10 \cdot 10$")
+                        tt1 = st.radio("Đáp án của em là:", [
+                            "Chưa chọn",
+                            r"$10^3$",
+                            r"$10^4$",
+                            r"$4^{10}$"
+                        ], key="b6_tt1")
+                        
+                        if tt1 == r"$10^4$":
+                            st.success(r"🎉 Chính xác! Tích có 4 thừa số 10 nhân với nhau nên kết quả là $10^4$.")
+                        elif tt1 != "Chưa chọn":
+                            st.error("❌ Em hãy đếm kĩ xem có bao nhiêu số 10 đang nhân với nhau nhé!")
+
+                        st.info(r"📝 **Thử thách 2:** Cùng tính nhẩm nhanh nào! Giá trị của $11^2$ là bao nhiêu?")
+                        tt2 = st.radio("Kết quả là:", [
+                            "Chưa chọn", 
+                            "22", 
+                            "111",
+                            "121"
+                        ], key="b6_tt2")
+                        
+                        if tt2 == "121":
+                            st.success(r"🎉 Tuyệt vời! $11^2$ (đọc là 11 bình phương) nghĩa là $11 \cdot 11 = 121$.")
+                        elif tt2 != "Chưa chọn":
+                            st.error(r"❌ Em nhầm rồi! $11^2$ là $11 \cdot 11$, chứ không phải $11 \cdot 2$ đâu nhé.")
+
+                    with tab_bai_tap:
+                        st.subheader("✍️ Đánh giá năng lực - Bài 6")
+                        st.info("🔒 **ĐIỀU KIỆN MỞ KHÓA BÀI 7:** Em cần đạt tối thiểu **7.0/10 điểm** trong bài kiểm tra này.")
+                        
+                        with st.form("quiz_bai_6"):
+                            st.markdown("### I. Mức độ Nhận biết (3 điểm)")
+                            
+                            st.markdown(r"**Câu 1:** Phép nhân nhiều thừa số bằng nhau được gọi là phép toán gì?")
+                            q1 = st.radio("Đáp án Câu 1:", ["-- Chọn --", "Phép cộng", "Phép nhân", "Phép nâng lên lũy thừa", "Phép chia"], key="b6_q1")
+                            
+                            st.markdown(r"**Câu 2:** Trong lũy thừa $a^n$, số $a$ được gọi là gì?")
+                            q2 = st.radio("Đáp án Câu 2:", ["-- Chọn --", "Số mũ", "Cơ số", "Số hạng", "Thừa số"], key="b6_q2")
+                            
+                            st.markdown(r"**Câu 3:** Công thức nhân hai lũy thừa cùng cơ số là:")
+                            q3 = st.radio("Đáp án Câu 3:", ["-- Chọn --", r"$a^m \cdot a^n = a^{m \cdot n}$", r"$a^m \cdot a^n = a^{m - n}$", r"$a^m \cdot a^n = a^{m + n}$", r"$a^m \cdot a^n = a^{m : n}$"], key="b6_q3")
+                            
+                            st.markdown("---")
+                            st.markdown("### II. Mức độ Thông hiểu (4 điểm)")
+                            
+                            st.markdown(r"**Câu 4:** Viết gọn biểu thức $5 \cdot 5 \cdot 5 \cdot 5 \cdot 5$ dưới dạng một lũy thừa là:")
+                            q4 = st.radio("Đáp án Câu 4:", ["-- Chọn --", r"$5^5$", r"$5^4$", r"$25^5$", r"$5 \cdot 5$"], key="b6_q4")
+                            
+                            st.markdown(r"**Câu 5:** Kết quả của phép tính $2^4$ là:")
+                            q5 = st.radio("Đáp án Câu 5:", ["-- Chọn --", "8", "16", "6", "32"], key="b6_q5")
+                            
+                            st.markdown(r"**Câu 6:** Kết quả của phép chia $7^6 : 7^4$ viết dưới dạng lũy thừa là:")
+                            q6 = st.radio("Đáp án Câu 6:", ["-- Chọn --", r"$7^{10}$", r"$1^2$", r"$7^2$", r"$7^{24}$"], key="b6_q6")
+                            
+                            st.markdown(r"**Câu 7:** Quy ước nào sau đây là **ĐÚNG**?")
+                            q7 = st.radio("Đáp án Câu 7:", ["-- Chọn --", r"$a^0 = 0$", r"$a^1 = 1$", r"$a^1 = 0$", r"$a^0 = 1 \text{ (với } a \ne 0)$"], key="b6_q7")
+                            
+                            st.markdown("---")
+                            st.markdown("### III. Mức độ Vận dụng (3 điểm)")
+                            
+                            st.markdown(r"**Câu 8:** Biết $2^{10} = 1024$. Giá trị của $2^9$ là:")
+                            q8 = st.radio("Đáp án Câu 8:", ["-- Chọn --", "2048", "512", "1022", "510"], key="b6_q8")
+                            
+                            st.markdown(r"**Câu 9:** Viết số 2020 thành tổng giá trị các chữ số của nó bằng cách dùng các lũy thừa của 10:")
+                            q9 = st.radio("Đáp án Câu 9:", ["-- Chọn --", r"$2 \cdot 10^3 + 2 \cdot 10^2$", r"$2 \cdot 10^3 + 2 \cdot 10$", r"$2 \cdot 10^4 + 2 \cdot 10$", r"$2 \cdot 10^3 + 2$"], key="b6_q9")
+                            
+                            st.markdown(r"**Câu 10:** Mỗi giây cơ thể người trung bình tạo ra khoảng $25 \cdot 10^5$ tế bào hồng cầu. Hỏi mỗi phút có bao nhiêu tế bào hồng cầu được tạo ra?")
+                            q10 = st.radio("Đáp án Câu 10:", ["-- Chọn --", r"$1500 \cdot 10^5 \text{ tế bào}$", r"$150 \cdot 10^5 \text{ tế bào}$", r"$25 \cdot 10^6 \text{ tế bào}$", r"$85 \cdot 10^5 \text{ tế bào}$"], key="b6_q10")
+                            
+                            submit_b6 = st.form_submit_button("Lưu & Nộp bài")
+                            
+                        if submit_b6:
+                            diem = 0
+                            if q1 == "Phép nâng lên lũy thừa": diem += 1
+                            if q2 == "Cơ số": diem += 1
+                            if q3 == r"$a^m \cdot a^n = a^{m + n}$": diem += 1
+                            if q4 == r"$5^5$": diem += 1
+                            if q5 == "16": diem += 1
+                            if q6 == r"$7^2$": diem += 1
+                            if q7 == r"$a^0 = 1 \text{ (với } a \ne 0)$": diem += 1
+                            if q8 == "512": diem += 1
+                            if q9 == r"$2 \cdot 10^3 + 2 \cdot 10$": diem += 1
+                            if q10 == r"$1500 \cdot 10^5 \text{ tế bào}$": diem += 1
+                            
+                            if diem >= 7:
+                                st.success(f"🎉 RẤT XUẤT SẮC! Em đạt **{diem}/10** điểm. Em đã chinh phục thành công Bài 6!")
+                                st.balloons()
+                                
+                                # GHI LÊN SHEET NẾU HỌC SINH CHƯA PASS BÀI 6
+                                if not st.session_state.get("hoan_thanh_bai_6", False):
+                                    st.session_state.hoan_thanh_bai_6 = True
+                                    current_user = st.session_state.current_user
+                                    user_idx = user_df[user_df.iloc[:, 2].astype(str).str.strip() == current_user].index
+                                    
+                                    if not user_idx.empty:
+                                        tien_do_cu = str(user_df.loc[user_idx[0], user_df.columns[4]])
+                                        if "Pass_Bai_6" not in tien_do_cu:
+                                            tien_do_moi = tien_do_cu + ", Pass_Bai_6" if tien_do_cu.strip() and tien_do_cu != "nan" else "Pass_Bai_6"
+                                            
+                                            user_df.loc[user_idx[0], user_df.columns[4]] = tien_do_moi
+                                            
+                                            try:
+                                                import gspread
+                                                kh = st.secrets["connections"]["gsheets"]
+                                                creds = {
+                                                    "type": kh["type"],
+                                                    "project_id": kh["project_id"],
+                                                    "private_key_id": kh["private_key_id"],
+                                                    "private_key": kh["private_key"],
+                                                    "client_email": kh["client_email"],
+                                                    "client_id": kh["client_id"],
+                                                    "auth_uri": kh["auth_uri"],
+                                                    "token_uri": kh["token_uri"],
+                                                    "auth_provider_x509_cert_url": kh["auth_provider_x509_cert_url"],
+                                                    "client_x509_cert_url": kh["client_x509_cert_url"]
+                                                }
+                                                gc = gspread.service_account_from_dict(creds)
+                                                sheet_goc = gc.open_by_url(kh["spreadsheet"]).worksheet("Câu trả lời biểu mẫu 1")
+                                                
+                                                dong_sheet = int(user_idx[0]) + 2 
+                                                o_can_ghi = f"E{dong_sheet}" 
+                                                sheet_goc.update_acell(o_can_ghi, tien_do_moi)
+                                                
+                                                st.cache_data.clear()
+                                            except Exception as e:
+                                                st.error(f"❌ Lỗi ghi dữ liệu: {e}")
+                            else:
+                                st.error(f"⚠️ Em mới đạt **{diem}/10** điểm. Chưa đủ 7.0 điểm để qua cửa rồi. Hãy ôn lại bài và làm lại nhé!")
+                                st.session_state.hoan_thanh_bai_6 = False
+
+                    with tab_mo_rong:
+                        st.subheader("💡 Em có biết: Câu chuyện Bàn cờ vua và Hạt thóc?")
+                        st.write("Truyền thuyết Ấn Độ kể rằng, người phát minh ra bàn cờ vua đã xin nhà vua phần thưởng như sau: Ô thứ nhất để 1 hạt thóc ($2^0$), ô thứ hai 2 hạt ($2^1$), ô thứ ba 4 hạt ($2^2$)... Cứ như thế, số thóc ở ô sau gấp đôi ô trước cho đến hết 64 ô.")
+                        st.write("Nhà vua tưởng phần thưởng này rất nhỏ bé nên đã đồng ý ngay. Nhưng khi các quan tính toán lại, tổng số thóc trên 64 ô cờ là $2^{64} - 1$ hạt thóc. Toàn bộ khối lượng thóc này nặng tới **369 tỉ tấn**! Cả vương quốc gom hết lại cũng không đủ để trả cho ông ta.")
+                        st.info("Qua câu chuyện này, em thấy sức mạnh của \"Lũy thừa\" khủng khiếp như thế nào chưa!")
+                        
+                        st.markdown("---")
+                        st.subheader("🎵 Lũy thừa trong... Âm nhạc!")
+                        st.write("Trong âm nhạc, độ dài của các nốt nhạc cũng tuân theo quy luật lũy thừa của 2 đấy:")
+                        st.write("- 1 nốt tròn = $2^1$ nốt trắng = $2^2$ nốt đen = $2^3$ nốt móc đơn = $2^4$ nốt móc kép.")
+
+                else:
+                    st.warning("🔒 **BÀI HỌC BỊ KHÓA**")
+                    st.info("Em cần hoàn thành bài thi 90 phút ở phần **Luyện tập chung (Từ Bài 1 đến Bài 5)** (đạt từ 7.0 điểm trở lên) để mở khóa Bài 6 nhé!")
     # ---------------- NỘI DUNG TOÁN 7, 8, 9 ----------------
     else:
         st.info("Nội dung bài học đang được thầy cô tiếp tục biên soạn và cập nhật. Các em hãy đón chờ nhé!")
