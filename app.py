@@ -1373,7 +1373,32 @@ $= 200 + 600 = 800$""")
                 else:
                     st.warning("🔒 **BÀI LUYỆN TẬP BỊ KHÓA**")
                     st.info("Em cần hoàn thành Bài Đánh giá năng lực của **Bài 5** (đạt từ 7.0 điểm) để mở khóa phần Luyện tập chung này nhé!")
+            # ========================================================
+            # BÀI 6: LŨY THỪA VỚI SỐ MŨ TỰ NHIÊN
+            # ========================================================
+            elif bai_hoc_selection == "Bài 6. Lũy thừa với số mũ tự nhiên":
+                # Đảm bảo bài 6 chỉ hiện khi đã hoàn thành Luyện tập chung
+                if st.session_state.get("hoan_thanh_luyen_tap_chung", False) == True:
+                    st.header("BÀI 6: LŨY THỪA VỚI SỐ MŨ TỰ NHIÊN")
+                    
+                    tab_ly_thuyet, tab_bai_tap, tab_mo_rong = st.tabs(["📚 Lý thuyết", "✍️ Bài tập", "💡 Em có biết"])
+                    
+                    with tab_ly_thuyet:
+                        st.subheader("1. Phép nâng lên lũy thừa")
+                        st.write(r"Lũy thừa bậc $n$ của $a$ là tích của $n$ thừa số $a$[cite: 246]:")
+                        st.latex(r"a^n = \underbrace{a \cdot a \cdot \dots \cdot a}_{n \text{ thừa số}}")
+                        st.write("Trong đó: $a$ là cơ số, $n$ là số mũ[cite: 266, 268, 270].")
 
+                    with tab_bai_tap:
+                        st.subheader("Đánh giá năng lực")
+                        # (Thầy dán nội dung quiz vào đây sau khi đã kiểm tra lề)
+                    
+                    with tab_mo_rong:
+                        st.subheader("💡 Em có biết")
+                        st.write("Câu chuyện bàn cờ vua với các lũy thừa của 2[cite: 255, 300].")
+                else:
+                    st.warning("🔒 **BÀI HỌC BỊ KHÓA**")
+                    st.info("Hãy hoàn thành Luyện tập chung để mở khóa Bài 6.")
                 
     # ---------------- NỘI DUNG TOÁN 7, 8, 9 ----------------
     else:
