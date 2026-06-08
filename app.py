@@ -1367,9 +1367,14 @@ $= 200 + 600 = 800$""")
                                                 st.cache_data.clear()
                                             except Exception as e:
                                                 st.error(f"❌ Lỗi ghi dữ liệu: {e}")
-            # ---------------- BÀI 6 ----------------
+           else:
+                    st.warning("🔒 **BÀI LUYỆN TẬP BỊ KHÓA**")
+                    st.info("Em cần hoàn thành Bài Đánh giá năng lực của **Bài 5** (đạt từ 7.0 điểm) để mở khóa phần Luyện tập chung này nhé!")
+
+            # ========================================================
+            # BÀI 6: LŨY THỪA VỚI SỐ MŨ TỰ NHIÊN
+            # ========================================================
             elif bai_hoc_selection == "Bài 6. Lũy thừa với số mũ tự nhiên":
-                # ĐIỀU KIỆN MỞ KHÓA LÀ PHẢI HOÀN THÀNH BÀI LUYỆN TẬP CHUNG
                 if st.session_state.get("hoan_thanh_luyen_tap_chung", False) == True:
                     st.header("BÀI 6: LŨY THỪA VỚI SỐ MŨ TỰ NHIÊN")
                     
