@@ -1365,9 +1365,16 @@ $= 200 + 600 = 800$""")
                                                 sheet_goc.update_acell(o_can_ghi, tien_do_moi)
                                                 
                                                 st.cache_data.clear()
-                                            except Exception as e:
+                                           except Exception as e:
                                                 st.error(f"❌ Lỗi ghi dữ liệu: {e}")
-           else:
+                            
+                            # Đoạn bị thiếu: Xử lý khi học sinh làm KHÔNG ĐỦ 7 điểm
+                            else:
+                                st.error(f"⚠️ Em làm đúng **{so_cau_dung}/50** câu (Đạt **{diem_ltc:.1f}/10** điểm). Hãy cố gắng ôn tập và làm lại để đạt 7.0 điểm nhé!")
+                                st.session_state.hoan_thanh_luyen_tap_chung = False
+
+                # Đoạn khóa bài học nếu chưa làm xong Bài 5
+                else:
                     st.warning("🔒 **BÀI LUYỆN TẬP BỊ KHÓA**")
                     st.info("Em cần hoàn thành Bài Đánh giá năng lực của **Bài 5** (đạt từ 7.0 điểm) để mở khóa phần Luyện tập chung này nhé!")
 
