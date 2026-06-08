@@ -205,7 +205,7 @@ else:
                 "Bài 4. Phép cộng và phép trừ số tự nhiên",
                 "Bài 5. Phép nhân và phép chia số tự nhiên",
                 "Luyện tập chung",
-                "Bài 6. Luỹ thừa với số mũ tự nhiên",
+                "Bài 6. Lũy thừa với số mũ tự nhiên",
                 "Bài 7. Thứ tự thực hiện các phép tính",
                 "Luyện tập chung (trang 27)",
                 "Bài tập cuối chương I"
