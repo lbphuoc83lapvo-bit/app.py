@@ -1379,7 +1379,7 @@ $= 200 + 600 = 800$""")
             # ========================================================
             elif bai_hoc_selection == "Bài 6. Lũy thừa với số mũ tự nhiên":
     # Tạm thời bỏ qua điều kiện để hiển thị nội dung
-                if st.session_state.get("hoan_thanh_luyen_tap_chung", False) == True:
+                if True:
                     st.header("BÀI 6: LŨY THỪA VỚI SỐ MŨ TỰ NHIÊN")
                      # ... (các đoạn code hiển thị nội dung bài 6 của thầy) ...
                     
