@@ -5,6 +5,7 @@ import streamlit.components.v1 as components
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+import extra_streamlit_components as stx
 
 st.set_page_config(page_title="Cổng Học Tập Toán Học THCS", layout="wide")
 
@@ -56,11 +57,44 @@ try:
         user_db, email_db, progress_db = {}, {}, {}
 except Exception as e:
     st.error(f"⚠️ Lỗi kết nối dữ liệu: {e}")
-    user_db, email_db, progress_db = {}, {}, {}# Khởi tạo trạng thái
+    user_db, email_db, progress_db = {}, {}, {}
+# ==========================================
+# QUẢN LÝ COOKIE (CHỐNG F5 BỊ OUT ĐĂNG NHẬP)
+# ==========================================
+@st.cache_resource(experimental_allow_widgets=True)
+def get_manager():
+    return stx.CookieManager()
+
+cookie_manager = get_manager()
+
+# Khởi tạo trạng thái mặc định
 if 'is_logged_in' not in st.session_state:
     st.session_state.is_logged_in = False
 if 'current_user' not in st.session_state:
     st.session_state.current_user = ""
+
+# ĐỌC COOKIE ĐỂ GIỮ ĐĂNG NHẬP
+user_cookie = cookie_manager.get(cookie="current_user")
+if user_cookie:
+    st.session_state.is_logged_in = True
+    st.session_state.current_user = user_cookie
+
+# ==========================================
+# KIỂM SOÁT TIẾN ĐỘ NGHIÊM NGẶT TỪ GOOGLE SHEETS
+# (Luôn chạy mỗi khi tải trang để khóa/mở bài chính xác)
+# ==========================================
+if st.session_state.is_logged_in and st.session_state.current_user != "":
+    _user = st.session_state.current_user
+    tien_do_hien_tai = str(progress_db.get(_user, ""))
+    
+    # Chỉ mở khóa nếu trong Sheet thực sự có chữ Pass tương ứng
+    st.session_state.hoan_thanh_bai_1 = "Pass_Bai_1" in tien_do_hien_tai
+    st.session_state.hoan_thanh_bai_2 = "Pass_Bai_2" in tien_do_hien_tai
+    st.session_state.hoan_thanh_bai_3 = "Pass_Bai_3" in tien_do_hien_tai
+    st.session_state.hoan_thanh_bai_4 = "Pass_Bai_4" in tien_do_hien_tai
+    st.session_state.hoan_thanh_bai_5 = "Pass_Bai_5" in tien_do_hien_tai
+    st.session_state.hoan_thanh_luyen_tap_chung = "Pass_LuyenTapChung" in tien_do_hien_tai
+    st.session_state.hoan_thanh_bai_6 = "Pass_Bai_6" in tien_do_hien_tai
 
 # ==========================================
 # 3. GIAO DIỆN ĐĂNG NHẬP / ĐĂNG KÝ
@@ -84,24 +118,14 @@ if not st.session_state.is_logged_in:
                 if _user == "":
                     st.warning("Vui lòng nhập tên đăng nhập!")
                 elif _user not in user_db:
-                    st.error(f"❌ Tài khoản '{_user}' chưa xuất hiện trong hệ thống! (Hãy thử bấm Clear Cache trên trình duyệt)")
+                    st.error(f"❌ Tài khoản '{_user}' chưa xuất hiện trong hệ thống!")
                 elif str(user_db[_user]) != _pass:
                     st.error("❌ Mật khẩu không khớp!")
                 else:
+                    # Lưu đăng nhập vào Session và thiết lập Cookie
                     st.session_state.is_logged_in = True
                     st.session_state.current_user = _user
-                    
-                  # TỰ ĐỘNG KHÔI PHỤC TIẾN ĐỘ TỪ SHEET XUỐNG BỘ NHỚ
-                    tien_do_hien_tai = str(progress_db.get(_user, ""))
-                    
-                    # Quét qua toàn bộ tiến độ và mở khóa tự động
-                    st.session_state.hoan_thanh_bai_1 = "Pass_Bai_1" in tien_do_hien_tai
-                    st.session_state.hoan_thanh_bai_2 = "Pass_Bai_2" in tien_do_hien_tai
-                    st.session_state.hoan_thanh_bai_3 = "Pass_Bai_3" in tien_do_hien_tai
-                    st.session_state.hoan_thanh_bai_4 = "Pass_Bai_4" in tien_do_hien_tai
-                    st.session_state.hoan_thanh_bai_5 = "Pass_Bai_5" in tien_do_hien_tai
-                    st.session_state.hoan_thanh_luyen_tap_chung = "Pass_LuyenTapChung" in tien_do_hien_tai
-                    st.session_state.hoan_thanh_bai_6 = "Pass_Bai_6" in tien_do_hien_tai
+                    cookie_manager.set("current_user", _user, key="set_user") 
                     
                     st.success(f"Đăng nhập thành công! Xin chào {_user}.")
                     st.rerun()
@@ -188,6 +212,7 @@ else:
     if st.sidebar.button("Đăng xuất"):
         st.session_state.is_logged_in = False
         st.session_state.current_user = ""
+        cookie_manager.delete("current_user", key="delete_user") # <-- CHÈN THÊM DÒNG NÀY VÀO ĐÂY
         st.rerun()
 
     st.title(f"📚 Hệ Thống Bài Học - {grade_selection}")
