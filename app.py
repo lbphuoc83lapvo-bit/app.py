@@ -3,6 +3,12 @@ from streamlit_gsheets import GSheetsConnection
 import pandas as pd
 import streamlit.components.v1 as components
 import smtplib
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+import extra_streamlit_components as stx
+import datetime 
+import time # <--- THÊM THƯ VIỆN NÀY ĐỂ XỬ LÝ ĐỘ TRỄ COOKIE
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import extra_streamlit_components as stx
@@ -59,26 +65,30 @@ except Exception as e:
     st.error(f"⚠️ Lỗi kết nối dữ liệu: {e}")
     user_db, email_db, progress_db = {}, {}, {}
 # ==========================================
-# QUẢN LÝ COOKIE (CHỐNG F5 BỊ OUT ĐĂNG NHẬP)
+# 3. QUẢN LÝ COOKIE (CHỐNG F5 BỊ OUT ĐĂNG NHẬP)
 # ==========================================
-# Khởi tạo Cookie Manager và lưu vào session_state để tránh cảnh báo
-if 'cookie_manager' not in st.session_state:
-    st.session_state['cookie_manager'] = stx.CookieManager()
-    
-cookie_manager = st.session_state['cookie_manager']
-
 # Khởi tạo trạng thái mặc định
 if 'is_logged_in' not in st.session_state:
     st.session_state.is_logged_in = False
 if 'current_user' not in st.session_state:
     st.session_state.current_user = ""
 
+cookie_manager = stx.CookieManager(key="cookie_manager")
+
+# MẸO QUAN TRỌNG: Bắt buộc phải đợi Cookie load xong khi vừa F5
+all_cookies = cookie_manager.get_all()
+
+if all_cookies is None:
+    # Nếu all_cookies là None (tức là Iframe chưa load xong), ta dừng code lại.
+    # Ngay khi Iframe lấy được cookie từ trình duyệt, nó sẽ tự động chạy lại (rerun)
+    st.stop()
+
 # ĐỌC COOKIE ĐỂ GIỮ ĐĂNG NHẬP
 user_cookie = cookie_manager.get(cookie="current_user")
-if user_cookie:
+if user_cookie and not st.session_state.is_logged_in:
     st.session_state.is_logged_in = True
     st.session_state.current_user = user_cookie
-
+    st.rerun()
 # ==========================================
 # KIỂM SOÁT TIẾN ĐỘ NGHIÊM NGẶT TỪ GOOGLE SHEETS
 # (Luôn chạy mỗi khi tải trang để khóa/mở bài chính xác)
@@ -97,7 +107,7 @@ if st.session_state.is_logged_in and st.session_state.current_user != "":
     st.session_state.hoan_thanh_bai_6 = "Pass_Bai_6" in tien_do_hien_tai
 
 # ==========================================
-# 3. GIAO DIỆN ĐĂNG NHẬP / ĐĂNG KÝ
+# 3. GIAO DIỆN ĐĂNG NNHẬP / ĐĂNG KÝ
 # ==========================================
 if not st.session_state.is_logged_in:
     st.title("📐 CỔNG HỌC TẬP TOÁN HỌC TRỰC TUYẾN")
@@ -122,16 +132,20 @@ if not st.session_state.is_logged_in:
                 elif str(user_db[_user]) != _pass:
                     st.error("❌ Mật khẩu không khớp!")
                 else:
-                    # Lưu đăng nhập vào Session và thiết lập Cookie
+                    # Lưu đăng nhập vào Session
                     st.session_state.is_logged_in = True
                     st.session_state.current_user = _user
-                    cookie_manager.set("current_user", _user, key="set_user") 
                     
-                    st.success(f"Đăng nhập thành công! Xin chào {_user}.")
+                    # Lưu vào Cookie, sống trong 30 ngày
+                    cookie_manager.set("current_user", _user, expires_at=datetime.datetime.now() + datetime.timedelta(days=30)) 
+                    
+                    st.success(f"Đăng nhập thành công! Xin chào {_user}. Hệ thống đang chuyển hướng...")
+                    
+                    time.sleep(0.5)
                     st.rerun()
                     
     # --- ĐĂNG KÝ ---
-    with tab_register:
+with tab_register:
         st.write("Vui lòng điền thông tin vào biểu mẫu dưới đây để tạo tài khoản mới.")
         # THAY LINK GOOGLE FORM MỚI CỦA BẠN VÀO ĐÂY:
         link_form = "https://docs.google.com/forms/d/e/1FAIpQLSf7iu4VKmLegqRKqCg6PahJprCNAEhfDZkfEo6fcje7BgJK4g/viewform?usp=preview"
@@ -213,6 +227,7 @@ else:
         st.session_state.is_logged_in = False
         st.session_state.current_user = ""
         cookie_manager.delete("current_user", key="delete_user") # <-- CHÈN THÊM DÒNG NÀY VÀO ĐÂY
+        time.sleep(0.5)
         st.rerun()
 
     st.title(f"📚 Hệ Thống Bài Học - {grade_selection}")
