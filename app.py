@@ -153,7 +153,7 @@ with tab_register:
         st.info("💡 Lưu ý: Sau khi điền Form và bấm Gửi, hãy chuyển sang tab 'Đăng nhập' để vào học nhé!")
         
     # --- QUÊN MẬT KHẨU ---
-    with tab_quen_mk:
+with tab_quen_mk:
         st.subheader("Khôi phục mật khẩu")
         st.write("Em hãy nhập email đã dùng để đăng ký tài khoản.")
         email_khoi_phuc = st.text_input("📧 Nhập Email của em:")
