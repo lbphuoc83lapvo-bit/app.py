@@ -61,10 +61,11 @@ except Exception as e:
 # ==========================================
 # QUẢN LÝ COOKIE (CHỐNG F5 BỊ OUT ĐĂNG NHẬP)
 # ==========================================
-@st.cache_resource
-def get_manager():
-    return stx.CookieManager()
-cookie_manager = get_manager()
+# Khởi tạo Cookie Manager và lưu vào session_state để tránh cảnh báo
+if 'cookie_manager' not in st.session_state:
+    st.session_state['cookie_manager'] = stx.CookieManager()
+    
+cookie_manager = st.session_state['cookie_manager']
 
 # Khởi tạo trạng thái mặc định
 if 'is_logged_in' not in st.session_state:
