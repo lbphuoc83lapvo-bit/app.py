@@ -191,7 +191,6 @@ with tab_quen_mk:
 # ==========================================
 # 4. GIAO DIỆN HỌC TẬP CHÍNH
 # ==========================================
-else:
     st.sidebar.title("🗂️ DANH MỤC MÔN HỌC")
     
     grade_selection = st.sidebar.radio("Chọn khối lớp của bạn:", ["Toán 6", "Toán 7", "Toán 8", "Toán 9"])
