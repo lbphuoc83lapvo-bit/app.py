@@ -3,22 +3,17 @@ from streamlit_gsheets import GSheetsConnection
 import pandas as pd
 import streamlit.components.v1 as components
 import smtplib
-import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import extra_streamlit_components as stx
-import datetime 
-import time # <--- THÊM THƯ VIỆN NÀY ĐỂ XỬ LÝ ĐỘ TRỄ COOKIE
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
-import extra_streamlit_components as stx
+import datetime
+import time
 
 st.set_page_config(page_title="Cổng Học Tập Toán Học THCS", layout="wide")
 
 # ==========================================
-# 1. HIỂN THỊ BANNER
+# 1. BANNER & GOOGLE SHEETS
 # ==========================================
-# THAY LINK BANNER CỦA BẠN VÀO ĐÂY:
 link_banner_anh = "https://raw.githubusercontent.com/lbphuoc83lapvo-bit/app.py/main/Back-to-School%20Math%20Educational%20Banner.png"
 
 col1, col_banner, col3 = st.columns([1, 4, 1])
@@ -26,36 +21,19 @@ with col_banner:
     st.image(link_banner_anh, use_column_width=True)
 st.markdown("---")
 
-# ==========================================
-# 2. ĐỌC DỮ LIỆU TỪ GOOGLE SHEETS
-# ==========================================
-# ==========================================
-# 2. ĐỌC DỮ LIỆU TỪ GOOGLE SHEETS
-# ==========================================
 try:
     conn = st.connection("gsheets", type=GSheetsConnection)
-    user_df = conn.read(worksheet="Câu trả lời biểu mẫu 1", ttl=0) 
-    
-    # Lọc bỏ dòng trống
+    user_df = conn.read(worksheet="Câu trả lời biểu mẫu 1", ttl=0)
     user_df = user_df.dropna(subset=[user_df.columns[1], user_df.columns[2], user_df.columns[3]], how='all')
-    
-    # Đảm bảo có đủ 5 cột (thêm cột Tiến độ nếu chưa có)
     while len(user_df.columns) < 5:
         user_df[f"Cột mới {len(user_df.columns)}"] = ""
-
-    # MÀNG LỌC KIM CƯƠNG: Đổi tất cả ô trống thành rỗng và ép toàn bộ bảng thành kiểu Chữ
     user_df = user_df.fillna("").astype(str)
 
     if len(user_df.columns) >= 4:
         email_hs = user_df.iloc[:, 1].str.strip()
         ten_dang_nhap = user_df.iloc[:, 2].str.strip()
-        
-        # Đọc mật khẩu và XÓA SẠCH đuôi .0 nếu hệ thống tự sinh ra
-        mat_khau = user_df.iloc[:, 3].str.strip()
-        mat_khau = mat_khau.str.replace(r'\.0$', '', regex=True)
-        
-        tien_do = user_df.iloc[:, 4].str.strip() # Đọc Cột E (Tiến độ)
-        
+        mat_khau = user_df.iloc[:, 3].str.strip().str.replace(r'\.0$', '', regex=True)
+        tien_do = user_df.iloc[:, 4].str.strip()
         user_db = dict(zip(ten_dang_nhap, mat_khau))
         email_db = dict(zip(email_hs, mat_khau))
         progress_db = dict(zip(ten_dang_nhap, tien_do))
@@ -64,40 +42,31 @@ try:
 except Exception as e:
     st.error(f"⚠️ Lỗi kết nối dữ liệu: {e}")
     user_db, email_db, progress_db = {}, {}, {}
+
 # ==========================================
-# 3. QUẢN LÝ COOKIE (CHỐNG F5 BỊ OUT ĐĂNG NHẬP)
+# 3. QUẢN LÝ COOKIE
 # ==========================================
-# Khởi tạo trạng thái mặc định
 if 'is_logged_in' not in st.session_state:
     st.session_state.is_logged_in = False
 if 'current_user' not in st.session_state:
     st.session_state.current_user = ""
 
 cookie_manager = stx.CookieManager(key="cookie_manager")
-
-# MẸO QUAN TRỌNG: Bắt buộc phải đợi Cookie load xong khi vừa F5
 all_cookies = cookie_manager.get_all()
 
 if all_cookies is None:
-    # Nếu all_cookies là None (tức là Iframe chưa load xong), ta dừng code lại.
-    # Ngay khi Iframe lấy được cookie từ trình duyệt, nó sẽ tự động chạy lại (rerun)
     st.stop()
 
-# ĐỌC COOKIE ĐỂ GIỮ ĐĂNG NHẬP
 user_cookie = cookie_manager.get(cookie="current_user")
 if user_cookie and not st.session_state.is_logged_in:
     st.session_state.is_logged_in = True
     st.session_state.current_user = user_cookie
     st.rerun()
-# ==========================================
-# KIỂM SOÁT TIẾN ĐỘ NGHIÊM NGẶT TỪ GOOGLE SHEETS
-# (Luôn chạy mỗi khi tải trang để khóa/mở bài chính xác)
-# ==========================================
+
+# Kiểm soát tiến độ
 if st.session_state.is_logged_in and st.session_state.current_user != "":
     _user = st.session_state.current_user
     tien_do_hien_tai = str(progress_db.get(_user, ""))
-    
-    # Chỉ mở khóa nếu trong Sheet thực sự có chữ Pass tương ứng
     st.session_state.hoan_thanh_bai_1 = "Pass_Bai_1" in tien_do_hien_tai
     st.session_state.hoan_thanh_bai_2 = "Pass_Bai_2" in tien_do_hien_tai
     st.session_state.hoan_thanh_bai_3 = "Pass_Bai_3" in tien_do_hien_tai
@@ -107,96 +76,53 @@ if st.session_state.is_logged_in and st.session_state.current_user != "":
     st.session_state.hoan_thanh_bai_6 = "Pass_Bai_6" in tien_do_hien_tai
 
 # ==========================================
-# 3. GIAO DIỆN ĐĂNG NNHẬP / ĐĂNG KÝ
+# 4. GIAO DIỆN CHÍNH
 # ==========================================
 if not st.session_state.is_logged_in:
     st.title("📐 CỔNG HỌC TẬP TOÁN HỌC TRỰC TUYẾN")
     tab_login, tab_register, tab_quen_mk = st.tabs(["🔐 Đăng nhập", "📝 Đăng ký tài khoản", "🔑 Quên mật khẩu"])
     
-    # --- ĐĂNG NHẬP ---
     with tab_login:
-        st.write("Vui lòng đăng nhập để vào hệ thống bài học.")
         with st.form("login_form"):
             username = st.text_input("Tên đăng nhập")
             password = st.text_input("Mật khẩu", type="password")
-            btn_login = st.form_submit_button("Đăng nhập")
-            
-            if btn_login:
-                _user = username.strip()
-                _pass = password.strip()
-                
-                if _user == "":
-                    st.warning("Vui lòng nhập tên đăng nhập!")
-                elif _user not in user_db:
-                    st.error(f"❌ Tài khoản '{_user}' chưa xuất hiện trong hệ thống!")
-                elif str(user_db[_user]) != _pass:
-                    st.error("❌ Mật khẩu không khớp!")
-                else:
-                    # Lưu đăng nhập vào Session
+            if st.form_submit_button("Đăng nhập"):
+                if username.strip() in user_db and str(user_db[username.strip()]) == password.strip():
                     st.session_state.is_logged_in = True
-                    st.session_state.current_user = _user
-                    
-                    # Lưu vào Cookie, sống trong 30 ngày
-                    cookie_manager.set("current_user", _user, expires_at=datetime.datetime.now() + datetime.timedelta(days=30)) 
-                    
-                    st.success(f"Đăng nhập thành công! Xin chào {_user}. Hệ thống đang chuyển hướng...")
-                    
+                    st.session_state.current_user = username.strip()
+                    cookie_manager.set("current_user", username.strip(), expires_at=datetime.datetime.now() + datetime.timedelta(days=30))
                     time.sleep(0.5)
                     st.rerun()
-                    
-    # --- ĐĂNG KÝ ---
-with tab_register:
-        st.write("Vui lòng điền thông tin vào biểu mẫu dưới đây để tạo tài khoản mới.")
-        # THAY LINK GOOGLE FORM MỚI CỦA BẠN VÀO ĐÂY:
-        link_form = "https://docs.google.com/forms/d/e/1FAIpQLSf7iu4VKmLegqRKqCg6PahJprCNAEhfDZkfEo6fcje7BgJK4g/viewform?usp=preview"
-        components.iframe(link_form, height=700, scrolling=True)
-        st.info("💡 Lưu ý: Sau khi điền Form và bấm Gửi, hãy chuyển sang tab 'Đăng nhập' để vào học nhé!")
-        
-    # --- QUÊN MẬT KHẨU ---
-with tab_quen_mk:
-        st.subheader("Khôi phục mật khẩu")
-        st.write("Em hãy nhập email đã dùng để đăng ký tài khoản.")
-        email_khoi_phuc = st.text_input("📧 Nhập Email của em:")
-        
-        if st.button("Gửi mật khẩu"):
-            if email_khoi_phuc:
-                email_can_tim = email_khoi_phuc.strip()
-                if email_can_tim in email_db:
-                    try:
-                        sender_email = st.secrets["email_nguoi_gui"]
-                        sender_password = st.secrets["mat_khau_email"]
-                        
-                        msg = MIMEMultipart()
-                        msg['From'] = sender_email
-                        msg['To'] = email_khoi_phuc
-                        msg['Subject'] = "Khôi phục mật khẩu - Cổng học tập Toán"
-                        
-                        body = f"Chào em,\n\nHệ thống nhận được yêu cầu khôi phục mật khẩu của em.\n🔑 Mật khẩu của em là: {email_db[email_can_tim]}\n\nChúc em học tốt nhé!"
-                        msg.attach(MIMEText(body, 'plain'))
-                        
-                        server = smtplib.SMTP('smtp.gmail.com', 587)
-                        server.starttls()
-                        server.login(sender_email, sender_password)
-                        server.send_message(msg)
-                        server.quit()
-                        
-                        st.success("✅ Gửi thành công! Em hãy kiểm tra hộp thư đến (hoặc Thư rác/Spam) nhé.")
-                    except Exception as e:
-                        st.error(f"❌ Có lỗi xảy ra trong quá trình gửi mail: {e}")
                 else:
-                    st.error("⚠️ Email này chưa được đăng ký trong hệ thống!")
-            else:
-                st.warning("Em chưa nhập địa chỉ email.")
+                    st.error("❌ Sai thông tin đăng nhập!")
 
-# ==========================================
-# 4. GIAO DIỆN HỌC TẬP CHÍNH
-# ==========================================
-st.sidebar.title("🗂️ DANH MỤC MÔN HỌC")
-grade_selection = st.sidebar.radio("Chọn khối lớp của bạn:", ["Toán 6", "Toán 7", "Toán 8", "Toán 9"])
-st.sidebar.markdown("---")
+    with tab_register:
+        st.write("Vui lòng điền thông tin vào biểu mẫu dưới đây.")
+        components.iframe("https://docs.google.com/forms/d/e/1FAIpQLSf7iu4VKmLegqRKqCg6PahJprCNAEhfDZkfEo6fcje7BgJK4g/viewform?usp=preview", height=700, scrolling=True)
+
+    with tab_quen_mk:
+        email_khoi_phuc = st.text_input("📧 Nhập Email:")
+        if st.button("Gửi mật khẩu"):
+            st.info("Chức năng đang bảo trì.")
+
+else:
+    # GIAO DIỆN HỌC TẬP (Mọi thứ thụt vào 1 Tab)
+    st.sidebar.title("🗂️ DANH MỤC MÔN HỌC")
+    grade_selection = st.sidebar.radio("Chọn khối lớp:", ["Toán 6", "Toán 7", "Toán 8", "Toán 9"])
+    st.sidebar.markdown("---")
     
-    chapter_selection = None
+    if st.sidebar.button("Đăng xuất"):
+        st.session_state.is_logged_in = False
+        st.session_state.current_user = ""
+        cookie_manager.delete("current_user")
+        time.sleep(0.5)
+        st.rerun()
+
+    st.title(f"📚 Hệ Thống Bài Học - {grade_selection}")
+    
+    # ... (Các logic bài học của thầy ở đây - lưu ý nhớ thụt lề khối code vào trong 'else')
     if grade_selection == "Toán 6":
+        st.write("Chọn chương học trong sidebar...")
         st.sidebar.subheader("📖 Mục lục Toán 6")
         chapters_6 = [
             "Chương 1: TẬP HỢP CÁC SỐ TỰ NHIÊN",
