@@ -61,10 +61,9 @@ except Exception as e:
 # ==========================================
 # QUẢN LÝ COOKIE (CHỐNG F5 BỊ OUT ĐĂNG NHẬP)
 # ==========================================
-@st.cache_resource(experimental_allow_widgets=True)
+@st.cache_resource
 def get_manager():
     return stx.CookieManager()
-
 cookie_manager = get_manager()
 
 # Khởi tạo trạng thái mặc định
