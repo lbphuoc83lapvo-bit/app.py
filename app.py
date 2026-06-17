@@ -91,20 +91,18 @@ if not st.session_state.is_logged_in:
                     st.session_state.is_logged_in = True
                     st.session_state.current_user = _user
                     
-                    # TỰ ĐỘNG KHÔI PHỤC TIẾN ĐỘ TỪ SHEET XUỐNG BỘ NHỚ
-                    # Dùng str() để ép kiểu, xử lý triệt để lỗi TypeError khi ô Sheet bị trống
+                  # TỰ ĐỘNG KHÔI PHỤC TIẾN ĐỘ TỪ SHEET XUỐNG BỘ NHỚ
                     tien_do_hien_tai = str(progress_db.get(_user, ""))
                     
-                    if "Pass_Bai_1" in tien_do_hien_tai:
-                        st.session_state.hoan_thanh_bai_1 = True
-                    else:
-                        st.session_state.hoan_thanh_bai_1 = False
-                        
-                    if "Pass_Bai_2" in tien_do_hien_tai:
-                        st.session_state.hoan_thanh_bai_2 = True
-                    else:
-                        st.session_state.hoan_thanh_bai_2 = False
-                        
+                    # Quét qua toàn bộ tiến độ và mở khóa tự động
+                    st.session_state.hoan_thanh_bai_1 = "Pass_Bai_1" in tien_do_hien_tai
+                    st.session_state.hoan_thanh_bai_2 = "Pass_Bai_2" in tien_do_hien_tai
+                    st.session_state.hoan_thanh_bai_3 = "Pass_Bai_3" in tien_do_hien_tai
+                    st.session_state.hoan_thanh_bai_4 = "Pass_Bai_4" in tien_do_hien_tai
+                    st.session_state.hoan_thanh_bai_5 = "Pass_Bai_5" in tien_do_hien_tai
+                    st.session_state.hoan_thanh_luyen_tap_chung = "Pass_LuyenTapChung" in tien_do_hien_tai
+                    st.session_state.hoan_thanh_bai_6 = "Pass_Bai_6" in tien_do_hien_tai
+                    
                     st.success(f"Đăng nhập thành công! Xin chào {_user}.")
                     st.rerun()
                     
