@@ -1149,7 +1149,7 @@ $= 200 + 600 = 800$""")
                     st.warning("🔒 **BÀI HỌC BỊ KHÓA**")
                     st.info("Em cần quay lại **Bài 4. Phép cộng và phép trừ số tự nhiên** và hoàn thành bài Đánh giá năng lực (đạt từ 7.0 điểm trở lên) để mở khóa bài học này nhé!")
            
-            # ---------------- LUYỆN TẬP CHUNG ----------------
+# ---------------- LUYỆN TẬP CHUNG ----------------
             elif bai_hoc_selection == "Luyện tập chung":
                 if st.session_state.get("hoan_thanh_bai_5", False) == True:
                     st.header("LUYỆN TẬP CHUNG (TỪ BÀI 1 ĐẾN BÀI 5)")
@@ -1190,40 +1190,15 @@ $= 200 + 600 = 800$""")
                         if not st.session_state.get("bat_dau_ltc", False):
                             st.warning("⚠️ **Lưu ý:** Bài thi có giới hạn thời gian 90 phút. Đồng hồ sẽ bắt đầu đếm ngược ngay khi em bấm nút. Hãy chuẩn bị sẵn sàng giấy nháp và bút nhé!")
                             
-                            # Nút bấm to, màu nổi bật
                             if st.button("🚀 BẮT ĐẦU LÀM BÀI", type="primary", use_container_width=True):
                                 st.session_state.bat_dau_ltc = True
-                                st.rerun() # Tải lại trang để hiện câu hỏi
+                                st.session_state.da_nop_bai_ltc = False # Đặt lại trạng thái nộp bài
+                                st.rerun()
                         else:
-                            # --- NẾU ĐÃ BẤM NÚT, HIỂN THỊ ĐỒNG HỒ VÀ CÂU HỎI ---
+                            # --- 1. TẠO KHÔNG GIAN TRỐNG ĐỂ CHÈN ĐỒNG HỒ SAU ---
+                            dong_ho_placeholder = st.empty()
                             
-                            # Tích hợp đồng hồ đếm ngược bằng Javascript (Không bị reset khi click)
-                            timer_html = """
-                            <div id="clock" style="font-size: 24px; font-weight: bold; color: #D32F2F; text-align: center; padding: 10px; border: 2px dashed #D32F2F; border-radius: 10px; background-color: #ffebee;">
-                                Đang tải đồng hồ...
-                            </div>
-                            <script>
-                                var timerKey = "countdown_timer_ltc";
-                                var timeLimit = 90 * 60; 
-                                var storedTime = sessionStorage.getItem(timerKey);
-                                var timeRemaining = storedTime ? parseInt(storedTime) : timeLimit;
-
-                                var x = setInterval(function() {
-                                    timeRemaining--;
-                                    sessionStorage.setItem(timerKey, timeRemaining);
-                                    var minutes = Math.floor(timeRemaining / 60);
-                                    var seconds = timeRemaining % 60;
-                                    document.getElementById("clock").innerHTML = "⏳ THỜI GIAN CÒN LẠI: " + minutes + " phút " + (seconds < 10 ? "0" : "") + seconds + " giây";
-                                    if (timeRemaining < 0) {
-                                        clearInterval(x);
-                                        document.getElementById("clock").innerHTML = "🚨 ĐÃ HẾT GIỜ LÀM BÀI!";
-                                    }
-                                }, 1000);
-                            </script>
-                            """
-                            st.components.v1.html(timer_html, height=70)
-                            
-                            # --- KHO DỮ LIỆU CÂU HỎI ---
+                            # --- 2. KHO DỮ LIỆU CÂU HỎI ---
                             cau_hoi_mcq = [
                                 # 15 Câu Nhận biết
                                 {"q": r"**Câu 1 (NB):** Kí hiệu của tập hợp các số tự nhiên là gì?", "opts": [r"$\mathbb{N}^*$", r"$\mathbb{N}$", r"$\mathbb{Z}$", r"$\mathbb{Q}$"], "ans": r"$\mathbb{N}$"},
@@ -1271,111 +1246,7 @@ $= 200 + 600 = 800$""")
                                 {"q": r"**Câu 38 (VD):** Số 29 được viết bằng chữ số La Mã là $XXIX$.", "ans": "Đúng"},
                                 {"q": r"**Câu 39 (VD):** Trong tập hợp số tự nhiên, ta luôn có thể thực hiện được phép chia một số bất kỳ cho 0.", "ans": "Sai"},
                                 {"q": r"**Câu 40 (VD):** Biểu thức $15 \cdot (10 - 2) = 15 \cdot 10 - 15 \cdot 2$ là một khẳng định đúng.", "ans": "Đúng"},
-                                {"q": r"**Câu 41 (VD):** Trong một phép chia có dư, số dư luôn luôn phải nhỏ hơn số chia.", "ans": "Đúng"},
-                                {"q": r"**Câu 42 (VD):** Phép trừ $a - b$ luôn luôn thực hiện được với mọi số tự nhiên $a$ và $b$.", "ans": "Sai"},
-                                {"q": r"**Câu 43 (VD):** Số 99 là số tự nhiên lớn nhất có hai chữ số khác nhau.", "ans": "Sai"} # Là 98
-                            ]
-                            
-                            cau_hoi_sa = [
-                                {"q": r"**Câu 44 (VD):** Tìm $x$, biết: $(x - 10) \cdot 5 = 25$. (Chỉ nhập số)", "ans": "15"},
-                                {"q": r"**Câu 45 (VD):** Tính tổng: $1 + 2 + 3 + \dots + 10 = ?$ (Chỉ nhập số)", "ans": "55"},
-                                {"q": r"**Câu 46 (VDC):** Một lớp học có 45 học sinh, mỗi bàn xếp được 4 chỗ ngồi. Cần ít nhất bao nhiêu bàn để tất cả học sinh đều có chỗ ngồi?", "ans": "12"},
-                                {"q": r"**Câu 47 (VD):** Mẹ mua 2kg cam (giá 20000đ/kg) và 1kg táo (giá 30000đ/kg). Mẹ phải trả tổng cộng bao nhiêu tiền? (Không nhập chữ đ)", "ans": "70000"},
-                                {"q": r"**Câu 48 (VD):** Tìm số tự nhiên nhỏ nhất có ba chữ số khác nhau.", "ans": "102"},
-                                {"q": r"**Câu 49 (VD):** Tìm $x$, biết: $100 : (x - 2) = 20$.", "ans": "7"},
-                                {"q": r"**Câu 50 (VDC):** Tính nhanh: $25 \cdot 8 \cdot 4 \cdot 125 = ?$ (Chỉ nhập số)", "ans": "100000"}
-                            ]
-
-                            # --- VÒNG LẶP IN CÂU HỎI RA MÀN HÌNH ---
-                            with st.form("form_luyen_tap_chung"):
-                                st.markdown("### Phần 1: Trắc nghiệm Nhiều lựa chọn (35 câu)")
-                                for i, cau in enumerate(cau_hoi_mcq):
-                                    st.radio(cau["q"], options=["-- Chọn --"] + cau["opts"], key=f"ltc_mcq_{i}")
-                                
-                                st.markdown("---")
-                                st.markdown("### Phần 2: Trắc nghiệm Đúng / Sai (8 câu)")
-                                for i, cau in enumerate(cau_hoi_tf):
-                                    st.radio(cau["q"], options=["-- Chọn --", "Đúng", "Sai"], key=f"ltc_tf_{i}")
-                                    
-                                st.markdown("---")
-                                st.markdown("### Phần 3: Trắc nghiệm Trả lời ngắn (7 câu)")
-                                for i, cau in enumerate(cau_hoi_sa):
-                                    st.text_input(cau["q"], placeholder="Nhập đáp án của em vào đây...", key=f"ltc_sa_{i}")
-                                
-                                st.markdown("---")
-                                submit_ltc = st.form_submit_button("Nộp bài thi")
-                                
-                            # --- LOGIC CHẤM ĐIỂM TỰ ĐỘNG ---
-                            if submit_ltc:
-                                so_cau_dung = 0
-                                
-                                # Chấm Phần 1
-                                for i, cau in enumerate(cau_hoi_mcq):
-                                    if st.session_state.get(f"ltc_mcq_{i}") == cau["ans"]:
-                                        so_cau_dung += 1
-                                        
-                                # Chấm Phần 2
-                                for i, cau in enumerate(cau_hoi_tf):
-                                    if st.session_state.get(f"ltc_tf_{i}") == cau["ans"]:
-                                        so_cau_dung += 1
-                                        
-                                # Chấm Phần 3
-                                for i, cau in enumerate(cau_hoi_sa):
-                                    user_ans = str(st.session_state.get(f"ltc_sa_{i}", "")).strip()
-                                    if user_ans == cau["ans"]:
-                                        so_cau_dung += 1
-                                        
-                                # Tính điểm thang 10
-                                diem_ltc = (so_cau_dung / 50) * 10
-                                if diem_ltc >= 7.0:
-                                    st.success(f"🎉 RẤT XUẤT SẮC! Em làm đúng **{so_cau_dung}/50** câu. Đạt **{diem_ltc:.1f}/10** điểm. BÀI SỐ 6 ĐÃ ĐƯỢC MỞ KHÓA!")
-                                    st.balloons()
-                                    
-                                    # GHI LÊN SHEET NẾU CHƯA PASS
-                                    if not st.session_state.get("hoan_thanh_luyen_tap_chung", False):
-                                        st.session_state.hoan_thanh_luyen_tap_chung = True
-                                        current_user = st.session_state.current_user
-                                        user_idx = user_df[user_df.iloc[:, 2].astype(str).str.strip() == current_user].index
-                                        
-                                        if not user_idx.empty:
-                                            tien_do_cu = str(user_df.loc[user_idx[0], user_df.columns[4]])
-                                            if "Pass_LuyenTapChung" not in tien_do_cu:
-                                                tien_do_moi = tien_do_cu + ", Pass_LuyenTapChung" if tien_do_cu.strip() and tien_do_cu != "nan" else "Pass_LuyenTapChung"
-                                                
-                                                user_df.loc[user_idx[0], user_df.columns[4]] = tien_do_moi
-                                                
-                                                try:
-                                                    import gspread
-                                                    kh = st.secrets["connections"]["gsheets"]
-                                                    creds = {
-                                                        "type": kh["type"],
-                                                        "project_id": kh["project_id"],
-                                                        "private_key_id": kh["private_key_id"],
-                                                        "private_key": kh["private_key"],
-                                                        "client_email": kh["client_email"],
-                                                        "client_id": kh["client_id"],
-                                                        "auth_uri": kh["auth_uri"],
-                                                        "token_uri": kh["token_uri"],
-                                                        "auth_provider_x509_cert_url": kh["auth_provider_x509_cert_url"],
-                                                        "client_x509_cert_url": kh["client_x509_cert_url"]
-                                                    }
-                                                    gc = gspread.service_account_from_dict(creds)
-                                                    sheet_goc = gc.open_by_url(kh["spreadsheet"]).worksheet("Câu trả lời biểu mẫu 1")
-                                                    
-                                                    dong_sheet = int(user_idx[0]) + 2 
-                                                    o_can_ghi = f"E{dong_sheet}" 
-                                                    sheet_goc.update_acell(o_can_ghi, tien_do_moi)
-                                                    
-                                                    st.cache_data.clear()
-                                                except Exception as e:
-                                                    st.error(f"❌ Lỗi ghi dữ liệu: {e}")
-                                else:
-                                    st.error(f"⚠️ Em làm đúng **{so_cau_dung}/50** câu (Đạt **{diem_ltc:.1f}/10** điểm). Hãy cố gắng ôn tập và làm lại để đạt 7.0 điểm nhé!")
-                                    st.session_state.hoan_thanh_luyen_tap_chung = False
-
-                else:
-                    st.warning("🔒 **BÀI LUYỆN TẬP BỊ KHÓA**")
-                    st.info("Em cần hoàn thành Bài Đánh giá năng lực của **Bài 5** (đạt từ 7.0 điểm) để mở khóa phần Luyện tập chung này nhé!")
+                                {"q": r"**Câu 41 (VD):** Trong một phép chia có dư, số dư luôn luôn
             # ----Bài 6 ---
             elif bai_hoc_selection == "Bài 6. Lũy thừa với số mũ tự nhiên":
                 # ĐIỀU KIỆN MỞ KHÓA LÀ PHẢI HOÀN THÀNH BÀI LUYỆN TẬP CHUNG
