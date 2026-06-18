@@ -600,13 +600,6 @@ else:
                         # ... (các dòng code phần mở rộng) ...
                         st.write("Để ghi số trong **hệ nhị phân**, ta chỉ dùng hai chữ số là **0** và **1**. Hai chữ số này tương ứng với hai trạng thái 'đóng' và 'mở' của mạch điện, nên được ứng dụng cốt lõi trong **Khoa học máy tính**.")
                         st.write(r"Chẳng hạn, số **4** trong hệ thập phân được viết là **100** trong hệ nhị phân!")
-                
-                # ====== THÊM PHẦN ELSE VÀO ĐÂY ======
-                else:
-                    st.header("BÀI 2: CÁCH GHI SỐ TỰ NHIÊN")
-                    st.warning("🔒 **BÀI HỌC CHƯA ĐƯỢC MỞ KHÓA**")
-                    st.info("⚠️ Em cần học và hoàn thành bài kiểm tra của **Bài 1** (đạt đủ điểm yêu cầu) để có thể xem nội dung bài này nhé!")
-                # ====================================
 
             # ---------------- BÀI 3 ----------------
             elif bai_hoc_selection == "Bài 3. ...":
