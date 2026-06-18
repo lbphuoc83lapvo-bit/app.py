@@ -1246,7 +1246,7 @@ $= 200 + 600 = 800$""")
                                 {"q": r"**Câu 38 (VD):** Số 29 được viết bằng chữ số La Mã là $XXIX$.", "ans": "Đúng"},
                                 {"q": r"**Câu 39 (VD):** Trong tập hợp số tự nhiên, ta luôn có thể thực hiện được phép chia một số bất kỳ cho 0.", "ans": "Sai"},
                                 {"q": r"**Câu 40 (VD):** Biểu thức $15 \cdot (10 - 2) = 15 \cdot 10 - 15 \cdot 2$ là một khẳng định đúng.", "ans": "Đúng"},
-                                {"q": r"**Câu 41 (VD):** Trong một phép chia có dư, số dư luôn luôn}
+                                {"q": r"**Câu 41 (VD):** Trong một phép chia có dư, số dư luôn luôn phải nhỏ hơn số chia.", "ans": "Đúng"},
             # ----Bài 6 ---
             elif bai_hoc_selection == "Bài 6. Lũy thừa với số mũ tự nhiên":
                 # ĐIỀU KIỆN MỞ KHÓA LÀ PHẢI HOÀN THÀNH BÀI LUYỆN TẬP CHUNG
