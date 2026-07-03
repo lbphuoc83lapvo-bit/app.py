@@ -22,9 +22,6 @@ st.markdown("---")
 # ==========================================
 # 2. ĐỌC DỮ LIỆU TỪ GOOGLE SHEETS
 # ==========================================
-# ==========================================
-# 2. ĐỌC DỮ LIỆU TỪ GOOGLE SHEETS
-# ==========================================
 try:
     conn = st.connection("gsheets", type=GSheetsConnection)
     user_df = conn.read(worksheet="Câu trả lời biểu mẫu 1", ttl=0) 
